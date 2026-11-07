@@ -21,7 +21,7 @@ const INITIAL_HASH='BMudVUSoFqYhvXV7JkAqkyZkAjfGJbS5yTob9hEDohT3';
 const EMPTY_CODE='11111111111111111111111111111111';
 const POLICIES=['job=bilingual;min_price=90;birth_floor=120','job=bilingual;min_price=80;birth_floor=140','job=translation;min_price=30;birth_floor=180','job=short;min_price=40;birth_floor=120'];
 const ALLOWED_METHODS=new Set(['register','create_job','bid_job','set_demand','cancel_job','tick','pay_creature','claim_job','settle_job','set_goal','birth']);
-const ALLOWED_RPC=new Set(['query','gas_price','EXPERIMENTAL_protocol_config','tx']);
+const ALLOWED_RPC=new Set(['query','gas_price','EXPERIMENTAL_protocol_config','tx','block']);
 export const near=n=>{n=BigInt(n);const sign=n<0n?'-':'';const s=(n<0n?-n:n).toString().padStart(25,'0');return sign+s.slice(0,-24)+'.'+s.slice(-24).replace(/0+$/,'').padEnd(1,'0');};
 let stopRequested=false;
 export const base58=bytes=>{const abc='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let n=BigInt('0x'+Buffer.from(bytes).toString('hex'));let out='';while(n){out=abc[Number(n%58n)]+out;n/=58n;}for(const b of bytes){if(b)break;out='1'+out;}return out||'1';};
@@ -33,7 +33,7 @@ export class ReadOnlyRpc{
  async request(method,params){if(!ALLOWED_RPC.has(method))throw Error('RPC writes are prohibited; signing is exclusively through near-cli');const r=await this.fetcher(RPC_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:'feral-read-only',method,params}),signal:AbortSignal.timeout(30000)});if(!r.ok)throw Error(`RPC HTTP ${r.status}`);const j=await r.json();if(j.error){const err=Error('NEAR RPC query failed');err.rpcError=j.error;throw err;}return j.result;}
  async account(id){try{return await this.request('query',{request_type:'view_account',finality:'final',account_id:id});}catch(e){if(JSON.stringify(e.rpcError??'').includes('UNKNOWN_ACCOUNT'))return null;throw e;}}
  async view(method,args={}){const r=await this.request('query',{request_type:'call_function',finality:'final',account_id:IDS.controller,method_name:method,args_base64:Buffer.from(JSON.stringify(args)).toString('base64')});return JSON.parse(Buffer.from(r.result).toString());}
- async tx(hash,sender){return this.request('tx',{tx_hash:hash,sender_account_id:sender,wait_until:'FINAL'});}
+ async tx(hash,sender,waitUntil='FINAL'){return this.request('tx',{tx_hash:hash,sender_account_id:sender,wait_until:waitUntil});}
 }
 export function makeOperations(controllerFunding){
  const create=(id,receiver,amount)=>({id,kind:'create',signer:ROOT,receiver,amount:String(amount)});
@@ -117,7 +117,7 @@ export function verifyActions(t,op){if(!t||t.signer_id!==op.signer||t.receiver_i
 export function verifyTransaction(outcome,op){
  verifyActions(outcome.transaction,op);
  const failed=outcome.status?.Failure;
- if(op.expectedFailure){if(!failed||!JSON.stringify(failed).includes(op.expectedFailure))throw Error('Expected extinct rejection was not observed');return 'expected-failure';}
+ if(op.expectedFailure){const panic=failed?.ActionError?.kind?.FunctionCallError?.ExecutionError;if(typeof panic!=='string'||!new RegExp(`(?:^|\\b)${op.expectedFailure}(?:$|\\b)`).test(panic))throw Error('Expected extinct rejection was not observed');return 'expected-failure';}
  if(failed)throw Error('Transaction failed; inspect recorded explorer link before any retry');
  if(!('SuccessValue'in(outcome.status??{})))throw Error('Transaction final outcome unknown');return 'success';
 }
@@ -132,7 +132,13 @@ function writeEvidence(j){
  md+=`\n\nRun complete ${Boolean(j.complete)}\n\nChild account https://testnet.nearblocks.io/address/${IDS.child}\n\nBirth is a root transaction with an asynchronous child creation receipt. Both identifiers are recorded in JSON when available. Native funding and MUNCH remain separate.\n`;
  if(j.last_error)md+='\nStopped safely '+esc(j.last_error)+'\n';writeFileSync(MD,md);
 }
-async function finalized(rpc,hash,sender){for(let n=0;n<30;n++){try{return await rpc.tx(hash,sender);}catch(e){if(n===29)throw Error('Could not confirm transaction finality. Submission retained; do not resend.');await wait(2000);}}}
+export async function finalized(rpc,hash,sender,{attempts=3,pause=wait}={}){
+ // Each public RPC request is capped at 30 seconds. Never multiply that by 30.
+ for(let n=0;n<attempts;n++){try{const result=await rpc.tx(hash,sender,'NONE');if(result.final_execution_status!=='FINAL')throw Error('Transaction not final yet');return result;}catch(e){
+  if(n===attempts-1)throw Error('Could not confirm transaction finality after bounded reads. Hash retained; no automatic resend.');
+  await pause(2000);
+ }}
+}
 export function saveSignedArgs(op,filename,recovery){
  const args=cliArgs(op);args.pop();
  if(recovery)args.push('--signer-public-key',recovery.public_key,'--nonce',String(recovery.nonce));
@@ -140,15 +146,16 @@ export function saveSignedArgs(op,filename,recovery){
 }
 export const broadcastSignedArgs=filename=>['transaction','send-signed-transaction','file-with-base64-signed-transaction',filename,'network-config','testnet','send'];
 export function classifyCliResult(code,signal,timedOut,text){
- return {exit_code:code,signal:signal??null,timed_out:timedOut,output_bytes:Buffer.byteLength(text),flags:{timeout:/timed?\s*out|timeout/i.test(text),rate_limited:/429|too many requests/i.test(text),connection:/connection|connect error|dns|resolve host/i.test(text),invalid_nonce:/InvalidNonce|invalid nonce/i.test(text)},reported_hash:extractTxHash(text)};
+ return {exit_code:code,signal:signal??null,timed_out:timedOut,output_bytes:Buffer.byteLength(text),flags:{timeout:/timed?\s*out|timeout/i.test(text),rate_limited:/429|too many requests/i.test(text),connection:/connection|connect error|dns|resolve host/i.test(text),invalid_nonce:/InvalidNonce|invalid nonce/i.test(text),expired:/Expired|expired transaction/i.test(text),insufficient_balance:/NotEnoughBalance|insufficient balance|not enough balance/i.test(text),contract_panic:/Smart contract panicked|FunctionCallError|ExecutionError/i.test(text),rpc_error:/RPC|JSON.RPC|TransportError|Server error/i.test(text)},reported_hash:extractTxHash(text)};
 }
-async function cliProcess(args){
+export async function cliProcess(args,{spawnProcess=spawn,timeoutMs=90000,killGraceMs=2000}={}){
  return new Promise((resolve,reject)=>{
-  const child=spawn('near',args,{cwd:BASE,stdio:['ignore','pipe','pipe'],env:{...process.env,NO_COLOR:'1'}});let buffer='',timedOut=false;
+  const child=spawnProcess('near',args,{cwd:BASE,stdio:['ignore','pipe','pipe'],env:{...process.env,NO_COLOR:'1'}});let buffer='',timedOut=false;
   const capture=data=>{buffer=(buffer+data.toString()).slice(-256000);};child.stdout.on('data',capture);child.stderr.on('data',capture);
-  const timeout=setTimeout(()=>{timedOut=true;child.kill('SIGTERM');},240000);
-  const stop=()=>{stopRequested=true;child.kill('SIGTERM');};process.once('SIGINT',stop);process.once('SIGTERM',stop);
-  const cleanup=()=>{clearTimeout(timeout);process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);};
+  let force;const terminate=()=>{child.kill('SIGTERM');force??=setTimeout(()=>child.kill('SIGKILL'),killGraceMs);};
+  const timeout=setTimeout(()=>{timedOut=true;terminate();},timeoutMs);
+  const stop=()=>{stopRequested=true;terminate();};process.once('SIGINT',stop);process.once('SIGTERM',stop);
+  const cleanup=()=>{clearTimeout(timeout);clearTimeout(force);process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);};
   child.once('error',()=>{cleanup();reject(Error('near-cli could not start'));});
   child.once('close',(code,signal)=>{cleanup();const result=classifyCliResult(code,signal,timedOut,buffer);buffer='';resolve(result);});
  });
@@ -157,6 +164,35 @@ export function inspectSigned(filename){
  const r=spawnSync(INSPECTOR,[filename],{encoding:'utf8',maxBuffer:2*1024*1024,timeout:30000});
  if(r.status!==0)throw Error('Offline signed transaction inspection failed; no raw blob or diagnostic is exposed');
  return JSON.parse(r.stdout);
+}
+export async function guardRejectionRecovery(j,rpc,id,inspect=inspectSigned){
+ if(id!=='refused-post-death-spend')throw Error('Recovery exception is only for the extinct rejection');
+ const entry=j?.steps?.[id];if(!entry?.hash||!entry.prepared||['success','expected-failure'].includes(entry.state))throw Error('Missing unresolved prepared rejection');
+ const template=makeOperations(0n).find(x=>x.id===id);assertOperationTemplate(template,entry.op,{},j);
+ // A known outcome must go through ordinary verification, never rebroadcast.
+ try{await rpc.tx(entry.hash,IDS.ash,'NONE');throw Error('Transaction is known. Resume normally without the retry option.');}
+ catch(e){if(e.rpcError?.cause?.name!=='UNKNOWN_TRANSACTION')throw e;}
+ const meta=inspect(path.join(SIGNED_DIR,id+'.json'));verifyActions(meta.transaction,entry.op);
+ if(meta.hash!==entry.hash||meta.transaction.hash!==entry.hash||String(meta.transaction.nonce)!==entry.prepared.nonce||meta.transaction.public_key!==entry.prepared.public_key||meta.block_hash!==entry.prepared.block_hash)throw Error('Saved signed transaction changed; no retry');
+ const [keys,ash,balance,account,protocol,gas,block]=await Promise.all([
+  rpc.request('query',{request_type:'view_access_key_list',finality:'final',account_id:IDS.ash}),
+  rpc.view('creature',{id:IDS.ash}),rpc.view('ft_balance_of',{account_id:IDS.ash}),rpc.account(IDS.ash),
+  rpc.request('EXPERIMENTAL_protocol_config',{finality:'final'}),rpc.request('gas_price',[null]),rpc.request('block',{block_id:entry.prepared.block_hash})]);
+ if(!Number.isSafeInteger(block.header?.height)||!Number.isSafeInteger(keys.block_height)||!Number.isSafeInteger(protocol.transaction_validity_period)||keys.block_height-block.header.height>=protocol.transaction_validity_period)throw Error('Signed transaction expired or validity unknown; no retry');
+ const key=keys.keys.find(k=>k.public_key===entry.prepared.public_key);
+ if(!key||key.access_key.permission!=='FullAccess'||BigInt(key.access_key.nonce)+1n!==BigInt(entry.prepared.nonce))throw Error('Ash nonce changed; locate transaction before retry');
+ if(ash?.active!==false||balance!=='5')throw Error('Death lock or frozen balance mismatch');
+ const spendable=BigInt(account.amount)-BigInt(account.storage_usage)*BigInt(protocol.runtime_config.storage_amount_per_byte);
+ if(spendable<BigInt(entry.op.gas)*10n**12n*BigInt(gas.gas_price)*2n)throw Error('Ash lacks conservative gas balance');
+ return entry;
+}
+export async function rebroadcastRejection(j,rpc,id,{inspect=inspectSigned,processRunner=cliProcess,persist=writeEvidence}={}){
+ const entry=await guardRejectionRecovery(j,rpc,id,inspect);
+ // Send the SAME bytes, hash and nonce. Never prepare a replacement or erase a step.
+ entry.state='broadcasting';persist(j);
+ const result=await processRunner(broadcastSignedArgs(path.join(SIGNED_DIR,id+'.json')));
+ (entry.cli_diagnostics??=[]).push({phase:'rebroadcast-identical',...result});persist(j);
+ if(result.reported_hash&&result.reported_hash!==entry.hash)throw Error('CLI reported a different transaction hash');
 }
 export async function runCli(op,onHash,context={}){
  const dir=context.directory??SIGNED_DIR;mkdirSync(dir,{recursive:true,mode:0o700});chmodSync(dir,0o700);
@@ -257,6 +293,7 @@ export async function executeStep(j,rpc,template,work,options={}){
   if(!entry.hash)throw Error(`Submission ${op.id} has no captured hash. It is deliberately NOT retried. Use --resolve-hash after review.`);
  }
  assertOperationTemplate(template,entry.op,work,j);
+ entry.state='confirming';persist(j);
  const result=await finalized(rpc,entry.hash,entry.op.signer);
  entry.receipt_ids=result.receipts_outcome?.map(x=>({id:x.id,executor:x.outcome.executor_id,status:x.outcome.status}))??[];
  try{entry.state=verifyTransaction(result,entry.op);persist(j);await (options.assertPost??assertPost)(rpc,entry.op,work);}catch(e){entry.state='stopped-review';entry.error=String(e.message);persist(j);throw e;}
@@ -264,7 +301,7 @@ export async function executeStep(j,rpc,template,work,options={}){
  if(!j.events.some(e=>e.step===entry.id)){j.events.push({step:entry.id,transaction:entry.hash,explorer:`https://testnet.nearblocks.io/txns/${entry.hash}`,state:entry.state,...(entry.op.kind==='create'?{}:{snapshot:await (options.snapshot??snapshot)(rpc)})});persist(j);}
  console.log(`${entry.id} ${entry.state} https://testnet.nearblocks.io/txns/${entry.hash}`);
 }
-function parseArgs(args){let mode='dry-run',stopAfter=null,retryTick=null;const resolutions=[];for(let i=0;i<args.length;i++){const a=args[i];if(a==='--execute')mode='execute';else if(a==='--dry-run')mode='dry-run';else if(a==='--account'){if(args[++i]!==ROOT)throw Error('Only the approved throwaway root is allowed');}else if(a==='--stop-after')stopAfter=args[++i];else if(a==='--retry-unconfirmed-tick')retryTick=args[++i];else if(a==='--resolve-hash')resolutions.push(args[++i]);else if(a==='--help')return {help:true};else throw Error('Unknown option '+a);}if(args.includes('--execute')&&args.includes('--dry-run'))throw Error('Choose dry-run or execute, not both');return {mode,stopAfter,resolutions,retryTick};}
+function parseArgs(args){let mode='dry-run',stopAfter=null,retryTick=null,retryRejection=null;const resolutions=[];for(let i=0;i<args.length;i++){const a=args[i];if(a==='--execute')mode='execute';else if(a==='--dry-run')mode='dry-run';else if(a==='--account'){if(args[++i]!==ROOT)throw Error('Only the approved throwaway root is allowed');}else if(a==='--stop-after')stopAfter=args[++i];else if(a==='--retry-unconfirmed-rejection')retryRejection=args[++i];else if(a==='--retry-unconfirmed-tick')retryTick=args[++i];else if(a==='--resolve-hash')resolutions.push(args[++i]);else if(a==='--help')return {help:true};else throw Error('Unknown option '+a);}if(args.includes('--execute')&&args.includes('--dry-run'))throw Error('Choose dry-run or execute, not both');return {mode,stopAfter,resolutions,retryTick,retryRejection};}
 export async function guardTickRecovery(j,rpc,id){
  if(id!=='death-tick')throw Error('Recovery exception is only for the monotonic death-tick');
  const entry=j?.steps?.[id];if(!entry||entry.hash||entry.state!=='submitting')throw Error('Only the legacy hashless tick intent can be recovered this way');
@@ -285,7 +322,7 @@ export function acquireRunLock(filename){
  return ()=>{closeSync(fd);unlinkSync(filename);};
 }
 export async function main(argv=process.argv.slice(2)){
- const options=parseArgs(argv);if(options.help){console.log('testnet-run.sh [--dry-run | --execute] [--account feral-039832.testnet] [--stop-after STEP] [--resolve-hash STEP=HASH] [--retry-unconfirmed-tick death-tick]');return;}
+ const options=parseArgs(argv);if(options.help){console.log('testnet-run.sh [--dry-run | --execute] [--account feral-039832.testnet] [--stop-after STEP] [--resolve-hash STEP=HASH] [--retry-unconfirmed-tick death-tick] [--retry-unconfirmed-rejection refused-post-death-spend]');return;}
  if(options.mode==='dry-run')return mainWithOptions(options);
  const release=acquireRunLock(path.join(BASE,'evidence/testnet-run.lock'));
  try{return await mainWithOptions(options);}finally{release();}
@@ -296,8 +333,9 @@ async function mainWithOptions(options){
  if(j&&(j.root!==ROOT||j.wasm_sha256!==EXPECTED_WASM||j.transcript_hash!==work.source_hash))throw Error('Journal identity, WASM or transcript mismatch');
  const completed=new Set(j?Object.values(j.steps).filter(s=>['success','expected-failure'].includes(s.state)).map(s=>s.id):[]);
  const plan=await publicPlan(rpc,wasm.length,completed);
+ if(options.retryRejection&&options.retryRejection!=='refused-post-death-spend')throw Error('Only the extinct rejection supports identical retry');
  if(options.stopAfter&&!plan.operations.some(o=>o.id===options.stopAfter))throw Error('Unknown stop-after step');
- if(options.mode==='dry-run'&&options.resolutions.length)throw Error('Hash resolution requires execute mode; dry-run never changes the journal');
+ if(options.mode==='dry-run'&&(options.resolutions.length||options.retryRejection))throw Error('Hash resolution requires execute mode; dry-run never changes the journal');
  if(options.mode==='dry-run'){
   // This branch NEVER starts near-cli, opens credentials, signs or broadcasts.
   atomic(path.join(BASE,'evidence/testnet-plan.json'),plan);
@@ -317,7 +355,7 @@ async function mainWithOptions(options){
  if(options.retryTick){const recovery=await guardTickRecovery(j,rpc,options.retryTick);(j.recovered_intents??=[]).push(j.steps['death-tick']);delete j.steps['death-tick'];j.tick_recovery=recovery;writeEvidence(j);}
  for(const item of options.resolutions){const at=item.indexOf('=');const id=item.slice(0,at),hash=item.slice(at+1);if(at<1||!j.steps[id]||!/^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(hash))throw Error('Invalid hash resolution');if(j.steps[id].hash&&j.steps[id].hash!==hash)throw Error('Cannot replace an already captured hash');j.steps[id].hash=hash;writeEvidence(j);}
  try{
-  for(const template of plan.operations){if(stopRequested){console.log('Stopped safely after signal; no further submission');return;}await executeStep(j,rpc,template,work);if(stopRequested||template.id===options.stopAfter){console.log('Stopped at requested durable checkpoint');return;}}
+  for(const template of plan.operations){if(stopRequested){console.log('Stopped safely after signal; no further submission');return;}if(options.retryRejection===template.id){await rebroadcastRejection(j,rpc,options.retryRejection);options.retryRejection=null;}await executeStep(j,rpc,template,work);if(stopRequested||template.id===options.stopAfter){console.log('Stopped at requested durable checkpoint');return;}}
   const final=await snapshot(rpc);const balances=final.creatures.map(c=>BigInt(c.balance));if(!equal(balances.map(String),['190','155','5','90'])||final.economy.supply!=='950'||final.economy.burned!=='50'||final.creatures[2].creature.active)throw Error('Final fixture invariants differ. Evidence retained for review.');
   if((await rpc.view('bid',{actor:IDS.child,job_id:'child-first'}))!=='80')throw Error('Child first bid mismatch');
   j.complete=true;j.final=final;delete j.last_error;writeEvidence(j);console.log('Feral public NEAR testnet gate completed. Evidence is in evidence/testnet-run.md and testnet-transactions.json.');

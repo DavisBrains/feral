@@ -1,10 +1,11 @@
 import test from 'node:test';
+import {EventEmitter} from 'node:events';
 import assert from 'node:assert/strict';
 import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
-import {ROOT,IDS,NEAR,ReadOnlyRpc,estimatePlan,makeOperations,near,base58,cliArgs,extractTxHash,verifyTransaction,resumePolicy,executeStep,assertOperationTemplate,acquireRunLock,checkedLiveDecision,publicPlan,saveSignedArgs,broadcastSignedArgs,classifyCliResult,runCli,guardTickRecovery} from './testnet-run.mjs';
+import {ROOT,IDS,NEAR,ReadOnlyRpc,estimatePlan,makeOperations,near,base58,cliArgs,extractTxHash,verifyTransaction,resumePolicy,executeStep,assertOperationTemplate,acquireRunLock,checkedLiveDecision,publicPlan,saveSignedArgs,broadcastSignedArgs,classifyCliResult,runCli,guardTickRecovery,guardRejectionRecovery,rebroadcastRejection,cliProcess,finalized} from './testnet-run.mjs';
 const HASH='BMudVUSoFqYhvXV7JkAqkyZkAjfGJbS5yTob9hEDohT3';
 const root={amount:String(10n*NEAR),storage_usage:182};
 const protocol={protocol_version:88,runtime_config:{storage_amount_per_byte:'10000000000000000000'}};
@@ -13,7 +14,7 @@ const plan=()=>estimatePlan(root,protocol,gas,337694);
 const ops=()=>plan().operations;
 const op=id=>ops().find(x=>x.id===id);
 const fn=o=>({FunctionCall:{method_name:o.method??'new',args:Buffer.from(JSON.stringify(o.args)).toString('base64'),gas:String(BigInt(o.gas)*10n**12n),deposit:o.deposit}});
-function outcome(o){return {transaction:{signer_id:o.signer,receiver_id:o.receiver,actions:o.kind==='create'?['CreateAccount',{Transfer:{deposit:o.amount}},{AddKey:{public_key:'ed25519:public-placeholder',access_key:{nonce:0,permission:'FullAccess'}}}]:o.kind==='deploy'?[{DeployContract:{code:'omitted'}},fn(o)]:[fn(o)]},status:{SuccessValue:''},receipts_outcome:[]};}
+function outcome(o){return {final_execution_status:'FINAL',transaction:{signer_id:o.signer,receiver_id:o.receiver,actions:o.kind==='create'?['CreateAccount',{Transfer:{deposit:o.amount}},{AddKey:{public_key:'ed25519:public-placeholder',access_key:{nonce:0,permission:'FullAccess'}}}]:o.kind==='deploy'?[{DeployContract:{code:'omitted'}},fn(o)]:[fn(o)]},status:{SuccessValue:''},receipts_outcome:[]};}
 const journal=()=>({steps:{},events:[],decisions:{}});
 const work={source_hash:'a'.repeat(64),translation_hash:'b'.repeat(64),output_hash:'c'.repeat(64)};
 const clone=x=>structuredClone(x);
@@ -59,3 +60,62 @@ function tickGuardFixture(){const j=journal(),o=op('cancel-old-job');j.steps['ca
 test('legacy tick recovery pins exactly the unchanged signer next nonce',async()=>{const {j,rpc}=tickGuardFixture();const r=await guardTickRecovery(j,rpc,'death-tick');assert.equal(r.nonce,'42');assert.equal(r.base_nonce,'41');assert.equal(j.steps['death-tick'].state,'submitting');await assert.rejects(guardTickRecovery(j,rpc,'paid-job'),/only/);});
 test('tick recovery refuses any nonce change, applied tick, known hash or other key',async()=>{for(const mutate of [f=>f.keys.keys[0].access_key.nonce++,f=>f.economy.turn++,f=>f.j.steps['death-tick'].hash=HASH,f=>f.keys.keys.push({...f.keys.keys[0]})]){const f=tickGuardFixture();mutate(f);await assert.rejects(guardTickRecovery(f.j,f.rpc,'death-tick'));}});
 test('recovery nonce mismatch never reaches broadcast',async()=>{const dir=mkdtempSync(path.join(os.tmpdir(),'feral-prepare-'));try{const o=op('death-tick'),tx={...outcome(o).transaction,hash:HASH,nonce:43,public_key:'fixture'};await assert.rejects(runCli(o,()=>assert.fail('must not record wrong nonce'),{directory:dir,fileExists:()=>true,inspect:()=>({hash:HASH,transaction:tx}),recovery:{nonce:'42',public_key:'fixture'},processRunner:async()=>assert.fail('must not broadcast')}),/pinned/);}finally{rmSync(dir,{recursive:true,force:true});}});
+
+function rejectionFixture(){
+ const j=journal(),o=op('refused-post-death-spend');
+ j.steps[o.id]={id:o.id,op:o,state:'broadcasting',hash:HASH,prepared:{nonce:'42',public_key:'fixture',block_hash:'block-fixture'}};
+ const meta={hash:HASH,block_hash:'block-fixture',transaction:{...outcome(o).transaction,hash:HASH,nonce:42,public_key:'fixture'}};
+ const keys={block_height:100,keys:[{public_key:'fixture',access_key:{nonce:41,permission:'FullAccess'}}]};
+ const account={amount:String(NEAR/100n),storage_usage:182};
+ const rpc={tx:async()=>{const e=Error('unknown');e.rpcError={cause:{name:'UNKNOWN_TRANSACTION'}};throw e;},account:async()=>account,
+ view:async m=>m==='creature'?{active:false}:'5',request:async(m)=>m==='query'?keys:m==='gas_price'?gas:m==='block'?{header:{height:99}}:{...protocol,transaction_validity_period:86400}};
+ return {j,o,rpc,meta,keys,account,inspect:()=>meta};
+}
+test('identical rejection recovery only uses existing hash bytes and nonce',async()=>{
+ const f=rejectionFixture();let sends=0,persists=0;
+ await rebroadcastRejection(f.j,f.rpc,f.o.id,{inspect:f.inspect,persist:()=>persists++,processRunner:async args=>{sends++;assert.deepEqual(args,broadcastSignedArgs(path.resolve('.local-transactions/refused-post-death-spend.json')));assert.equal(f.j.steps[f.o.id].hash,HASH);return {exit_code:1,reported_hash:null};}});
+ assert.equal(sends,1);assert.equal(persists,2);assert.equal(f.j.steps[f.o.id].cli_diagnostics[0].phase,'rebroadcast-identical');
+});
+test('rejection retry refuses known tx, RPC outage, changed bytes, nonce, live ash, low gas or expiry',async()=>{
+ for(const mutate of [
+ f=>f.rpc.tx=async()=>outcome(f.o),f=>f.rpc.tx=async()=>{throw Error('network');},
+ f=>f.meta.transaction.nonce++,f=>f.meta.hash='wrong',f=>f.keys.keys[0].access_key.nonce++,
+ f=>f.rpc.view=async m=>m==='creature'?{active:true}:'5',f=>f.account.amount='1',
+ f=>f.keys.block_height=100000,
+ f=>f.j.steps[f.o.id].state='expected-failure',
+ ]){const f=rejectionFixture();mutate(f);await assert.rejects(rebroadcastRejection(f.j,f.rpc,f.o.id,{inspect:f.inspect,persist:()=>assert.fail('no mutation'),processRunner:()=>assert.fail('must not send')}));}
+ const f=rejectionFixture();await assert.rejects(guardRejectionRecovery(f.j,f.rpc,'funded-child-account-creation',f.inspect),/only/);
+});
+test('CLI timeout escalates to SIGKILL when SIGTERM is ignored',async()=>{
+ const child=new EventEmitter();child.stdout=new EventEmitter();child.stderr=new EventEmitter();const signals=[];
+ child.kill=s=>{signals.push(s);if(s==='SIGKILL')setImmediate(()=>child.emit('close',null,s));};
+ const result=await cliProcess([],{spawnProcess:()=>child,timeoutMs:5,killGraceMs:5});
+ assert.deepEqual(signals,['SIGTERM','SIGKILL']);assert.equal(result.timed_out,true);assert.equal(result.signal,'SIGKILL');
+});
+test('confirmation retries are bounded and never rebroadcast',async()=>{
+ let calls=0,pauses=0;await assert.rejects(finalized({tx:async()=>{calls++;throw Error('unknown');}},HASH,IDS.ash,{pause:async()=>pauses++}),/bounded reads/);
+ assert.equal(calls,3);assert.equal(pauses,2);
+});
+test('CLI nonzero exit with real extinct panic confirms and permits later steps including birth',async()=>{
+ const j=journal(),o=op('refused-post-death-spend');const x=outcome(o);x.status={Failure:{ActionError:{kind:{FunctionCallError:{ExecutionError:'Smart contract panicked: extinct'}}}}};
+ let sends=0;const options={persist:()=>{},resolveOperation:async t=>t,assertPost:async()=>{},snapshot:async()=>({}),runCli:async(t,onHash)=>{sends++;onHash(HASH);return {hash:HASH,diagnostic:{exit_code:1}};}};
+ await quiet(()=>executeStep(j,{tx:async()=>x},o,work,options));assert.equal(j.steps[o.id].state,'expected-failure');
+ const next=op('create-card-job');next.args.requirements_hash=work.source_hash;
+ await quiet(()=>executeStep(j,{tx:async()=>outcome(next)},op('create-card-job'),work,{...options,resolveOperation:async()=>next}));
+ const birth=op('funded-child-account-creation');await quiet(()=>executeStep(j,{tx:async()=>outcome(birth)},birth,work,options));
+ assert.equal(j.steps[birth.id].state,'success');assert.equal(sends,3);
+});
+test('expected failure requires a contract panic rather than arbitrary extinct text',()=>{
+ const o=op('refused-post-death-spend'),x=outcome(o);x.status={Failure:{error:'extinct'}};assert.throws(()=>verifyTransaction(x,o));
+ x.status={Failure:{ActionError:{kind:{FunctionCallError:{ExecutionError:'unextinct'}}}}};assert.throws(()=>verifyTransaction(x,o));
+});
+test('classifier stores safe cause flags without raw CLI text',()=>{
+ const r=classifyCliResult(1,null,false,'RPC Expired InvalidNonce NotEnoughBalance Smart contract panicked: extinct secret-do-not-store');
+ for(const flag of ['rpc_error','expired','invalid_nonce','insufficient_balance','contract_panic'])assert.equal(r.flags[flag],true);
+ assert.equal(JSON.stringify(r).includes('secret-do-not-store'),false);
+});
+
+test('confirmation polls without server-side waiting and requires FINAL',async()=>{
+ let calls=0;const o=op('refused-post-death-spend');const result=await finalized({tx:async(h,s,w)=>{assert.equal(w,'NONE');calls++;return {...outcome(o),final_execution_status:calls===1?'EXECUTED_OPTIMISTIC':'FINAL'};}},HASH,IDS.ash,{pause:async()=>{}});
+ assert.equal(calls,2);assert.equal(result.final_execution_status,'FINAL');
+});
