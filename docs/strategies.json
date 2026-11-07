@@ -1,0 +1,6 @@
+{
+  "0": "job=bilingual;min_price=90;birth_floor=120",
+  "1": "job=bilingual;min_price=80;birth_floor=140",
+  "2": "job=translation;min_price=30;birth_floor=180",
+  "3": "job=short;min_price=40;birth_floor=120"
+}
