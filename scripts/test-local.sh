@@ -11,7 +11,7 @@ cargo near build non-reproducible-wasm --no-abi --manifest-path controller/Cargo
 cargo near build non-reproducible-wasm --no-abi --manifest-path controller/Cargo.toml
 cargo near build non-reproducible-wasm --no-abi --manifest-path mock-signer/Cargo.toml
 cargo test -p feral-integration --tests -- --nocapture
-node --test agents/brain.test.mjs
+node --test agents/brain.test.mjs scripts/testnet-run.test.mjs
 # Start agents/model_server.py before selecting the live route.
 # Without these explicit flags, this runner is labelled deterministic replay.
 cargo run -p feral-integration --example terrarium

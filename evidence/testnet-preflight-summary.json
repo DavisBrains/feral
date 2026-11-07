@@ -1,0 +1,44 @@
+{
+  "test_commands": [
+    "bash scripts/test-local.sh",
+    "node --test scripts/testnet-run.test.mjs",
+    "bash scripts/testnet-run.sh --dry-run --account feral-039832.testnet"
+  ],
+  "combined_pipeline_exit_code": 0,
+  "unique_tests": 92,
+  "passed": 92,
+  "failed": 0,
+  "skipped": 0,
+  "counts": {
+    "rust_unit": 27,
+    "sandbox_integration": 4,
+    "agent_tools": 10,
+    "runner_safety": 29,
+    "app_voucher": 7,
+    "forge": 15
+  },
+  "live_model": {
+    "id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "decisions": 7,
+    "fallback_decisions": 0,
+    "min_seconds": 1.2251539089993455,
+    "median_seconds": 2.674119482999231,
+    "max_seconds": 3.081330840999726
+  },
+  "public_execution_by_executor": false,
+  "public_runner_journal_created": false,
+  "dry_run": {
+    "root_balance": "10000000000000000000000000",
+    "controller_funding": "3800000000000000000000000",
+    "remaining_transfers": "4150000000000000000000000",
+    "fee_allowance": "1000000000000000000000000",
+    "max_outlay_estimate": "5150000000000000000000000",
+    "remaining_root_estimate": "4850000000000000000000000",
+    "affordable": true
+  },
+  "known_limitations": [
+    "The public runner has not been executed against testnet",
+    "Caption rendering uses supplied bilingual text, not automatic translation",
+    "Public MPC, destination chain observer and payment reconciliation remain outside this gate"
+  ]
+}

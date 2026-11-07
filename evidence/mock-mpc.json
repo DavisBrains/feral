@@ -2,15 +2,15 @@
   "ethers_digest_matches": true,
   "expected_fixture_signer": "0xf284663698d3B8e0e02D8ceA7e93d003FBC834ef",
   "liability": {
-    "actor": "dev-20261107081837-90913750959912.test.near",
-    "digest": "6f9bb910513be5d62bac4a11f6c51713f7cbc6c4f2b1545db6f30955b25f4da8",
-    "signature": "{\"big_r\":{\"affine_point\":\"025ae8daf9bfc8b3ed8a4f3b0fb19c76ddebfc1631287f7918a0a9573ec03121ff\"},\"recovery_id\":0,\"s\":{\"scalar\":\"6524d9153b8e59083443ae3e21a43e2e518b0474c4eb20a432ca541f299f0872\"}}",
+    "actor": "dev-20261107083558-38618614112917.test.near",
+    "digest": "5166a250de0cdd457f5bafacf49ee5e9ecf7db6f86132b474182d3650b0b2cd5",
+    "signature": "{\"big_r\":{\"affine_point\":\"02c2aa5c1cdc780284e8985604ec034e117b2122997a7a09a1d519c6fcf7d0a481\"},\"recovery_id\":0,\"s\":{\"scalar\":\"13fc6abc0756cadaf4e8a69d8eb094e32792f394ed2faf7564f19ce904682554\"}}",
     "state": "signature-returned",
     "voucher": {
       "amount": "7",
       "campaign": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "creature": "b773815cd5b4c31f8f37b86f84f8b607e4cbd61653507b71e824d3b0d21483fc",
-      "expiry": 1794040120,
+      "creature": "59184b51c5a21be03279d10eb7fd5e741389f20c0f53ab4f9c8ae5405d71a879",
+      "expiry": 1794041161,
       "job": "de3349c50a8deddeb675ce3931bebeb7b3d23c3fb6d3c26b6c3a89aadb722067",
       "nonce": 0,
       "output_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -21,12 +21,12 @@
   "network": "sandbox",
   "public_mpc_called": false,
   "request": {
-    "predecessor": "dev-20261107081836-42609768138019.test.near",
+    "predecessor": "dev-20261107083557-87756294845763.test.near",
     "request": {
       "domain_id": 0,
-      "path": "feral-sepolia-v1/dev-20261107081837-90913750959912.test.near",
+      "path": "feral-sepolia-v1/dev-20261107083558-38618614112917.test.near",
       "payload_v2": {
-        "Ecdsa": "6f9bb910513be5d62bac4a11f6c51713f7cbc6c4f2b1545db6f30955b25f4da8"
+        "Ecdsa": "5166a250de0cdd457f5bafacf49ee5e9ecf7db6f86132b474182d3650b0b2cd5"
       }
     }
   },

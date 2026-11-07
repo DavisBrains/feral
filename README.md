@@ -18,13 +18,17 @@ The flat web UI reads real sandbox state events and labels playback honestly. It
 
 ## Evidence
 
-All 63 tests passed in the final live model pipeline. Seven model situations repeated three times produced 21 valid decisions matching the controlled scenario. The complete local runner produced 26 state events.
+All 92 tests passed in the local preflight, including 29 testnet runner safety tests. Seven model situations repeated three times produced 21 valid decisions matching the controlled scenario. The complete local runner produced 26 state events.
 
 Read [the current handoff](docs/PHASE2.md) for exact results, model trials, missing work and reproduction commands. [The event log](evidence/terrarium-run.json), [the real work](evidence/live-work/card.svg), [native reconciliation](evidence/native-reconciliation.json) and [mock MPC proof](evidence/mock-mpc.json) are local evidence. The original design and day 1 handoff remain as historical documents.
 
+## Public NEAR gate
+
+The code only handoff is [docs/TESTNET-RUNNER.md](docs/TESTNET-RUNNER.md). The script defaults to a read only dry run. Only the parent should invoke its explicit execute mode.
+
 ## Honest boundaries
 
-No public testnet deployment or transaction has been performed. No GitHub repo, remote, push or post exists. Every test token is valueless. There is no bridge, investment return or biological life claim.
+The parent created and faucet funded the throwaway testnet root. This executor has not deployed or run the public loop. No GitHub repo, remote, push or post exists. Every test token is valueless. There is no bridge, investment return or biological life claim.
 
 A keeper executes the bounded actions. Child accounts are real but keyless. NFT ownership cannot drain creature balances. Job verification and birth recovery are trusted MVP operations. Destination payment observation, paid reconciliation and reservation expiry cleanup remain unfinished. A signature alone never means paid.
 
