@@ -1,0 +1,45 @@
+✔ 10 NEAR budget is affordable with 5.15 NEAR conservative outlay (1.692892ms)
+✔ budget includes child funding once through the parent reserve (0.393052ms)
+✔ low balance is refused and signed negative estimates format correctly (0.173312ms)
+✔ resume budget excludes completed transfers; complete plan costs zero (0.168171ms)
+✔ missing account and unsupported protocol rejected (0.208855ms)
+✔ RPC refuses broadcast before touching the network (0.468572ms)
+✔ RPC reads use only the pinned public testnet endpoint (0.66318ms)
+✔ account missing is distinct from transient RPC error (0.234773ms)
+✔ public plan performs only three allowed read operations (0.635469ms)
+✔ CLI scope denies outside receivers, signers, MPC and arbitrary deployment (0.476826ms)
+✔ CLI uses only legacy keychain and fixed testnet config (0.508575ms)
+✔ unresolved live prices cannot reach CLI (0.171512ms)
+✔ every planned CLI command parses locally with --help and never executes (1088.998933ms)
+✔ transaction parser accepts CLI links and ANSI output, not public keys (0.575971ms)
+✔ create verification handles actual string CreateAccount representation (0.367159ms)
+✔ creation rejects extra actions, wrong funding and restricted keys (0.204222ms)
+✔ call and deployment verify exact domain, arguments, deposit and gas (0.534797ms)
+✔ only specifically expected extinct failure counts as expected rejection (0.286834ms)
+✔ unknown result or ordinary failure never counts as success (0.178045ms)
+✔ resumption never blindly resends unknown submission (0.105551ms)
+✔ static journal operation tampering rejected (0.400667ms)
+✔ live decisions reject fallback, extra input and unexpected actions even on resume (0.314576ms)
+✔ resumed live prices must match validated decision and work hashes (0.307553ms)
+✔ execute lock blocks concurrent runners and permits clean resume (0.723868ms)
+✔ completed step is verified without invoking signer or duplicating event (1.247801ms)
+✔ interruption after durable hash capture recovers without resending (0.318836ms)
+✔ submission with no hash blocks all retries and RPC confirmation (0.240919ms)
+✔ mismatched recovered transaction stops for review without submitting (0.225559ms)
+✔ base58 hashes preserve leading zero bytes (0.186551ms)
+✔ save-before-send and broadcast command grammars parse without signing (86.058521ms)
+✔ canonical hash is recorded before broadcasting even when CLI prints no hash (0.863371ms)
+✔ prepare failure is diagnosed and never broadcasts (0.410918ms)
+✔ broadcast timeout retains a precomputed hash and phase diagnostic (0.412649ms)
+✔ diagnostic classifier never includes raw potentially sensitive CLI output (0.227903ms)
+✔ legacy tick recovery pins exactly the unchanged signer next nonce (17.196052ms)
+✔ tick recovery refuses any nonce change, applied tick, known hash or other key (1.412603ms)
+✔ recovery nonce mismatch never reaches broadcast (0.463719ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1275.225625

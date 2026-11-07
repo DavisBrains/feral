@@ -1,0 +1,773 @@
+{
+  "network": "testnet",
+  "root": "feral-039832.testnet",
+  "controller": "ctrl.feral-039832.testnet",
+  "faucet_creation": {
+    "hash": "BMudVUSoFqYhvXV7JkAqkyZkAjfGJbS5yTob9hEDohT3",
+    "explorer": "https://testnet.nearblocks.io/txns/BMudVUSoFqYhvXV7JkAqkyZkAjfGJbS5yTob9hEDohT3",
+    "source": "parent supplied existing creation"
+  },
+  "transactions": [
+    {
+      "label": "create-controller",
+      "hash": "5x5KzkB1GAExJdijsqHzMJjjAu2BQxaZVFj2NzNNkLP1",
+      "explorer": "https://testnet.nearblocks.io/txns/5x5KzkB1GAExJdijsqHzMJjjAu2BQxaZVFj2NzNNkLP1",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "FeC37Pg7xHt9AWAdEYWq332K9hqUdvj6mAT1FXrx6M53",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "6X2UyXnQGuw5tTauunk43HWPQVKA2ypN9jq4fUCUgaTt",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "deploy-controller",
+      "hash": "913kMBrX2SQRS4dvyG6X6ccX52bLDA1fqyQv3i4E69LQ",
+      "explorer": "https://testnet.nearblocks.io/txns/913kMBrX2SQRS4dvyG6X6ccX52bLDA1fqyQv3i4E69LQ",
+      "state": "success",
+      "signer": "ctrl.feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "Ai1sGoyZXHPXzE8DkAbcskzsQTBDJ8SxuYMjRvhmWCXh",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "5pgKPxvdkpiAuWFsHSehZkGPtvpKszq57dcT5J5bMbLi",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "create-moss-account",
+      "hash": "6ZZDiiMMqAEqwfWZYvypY7P2by77og2p3rMroyynUvFE",
+      "explorer": "https://testnet.nearblocks.io/txns/6ZZDiiMMqAEqwfWZYvypY7P2by77og2p3rMroyynUvFE",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "moss.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "HePdxy6QYb3Ry8uS9phPyKrqxwNabzucrLBouEdFy3W1",
+          "executor": "moss.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "2YYctkhfP4dbDZwTk2LQGHf7D4MpRb1oKYQMYo4ZmWLL",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "create-echo-account",
+      "hash": "6Wz8bEm7EnbFG7X7Hoi2ZxGxwd96fg9ptWKvmCz6iEwH",
+      "explorer": "https://testnet.nearblocks.io/txns/6Wz8bEm7EnbFG7X7Hoi2ZxGxwd96fg9ptWKvmCz6iEwH",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "echo.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "5cM7fwQkbWkYnV8uuxtNTD62fYPK8eqApGojfz2GJrRS",
+          "executor": "echo.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "W43W4GTjB76bj6kBo5mNNsUZTRkVySKBx26s911qrGe",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "create-ash-account",
+      "hash": "G6xUcPaMXVh1reuzdP5nL1CyP88piJQYQnSabtzT4chR",
+      "explorer": "https://testnet.nearblocks.io/txns/G6xUcPaMXVh1reuzdP5nL1CyP88piJQYQnSabtzT4chR",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ash.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "BsZ2xG3Q94hsahhmmJsmytDj437fEp2LmoAZ4bWt85eT",
+          "executor": "ash.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "9BWjMM8S64rb1gezn1FNwPK5oYJhVEwiyF5Ns7c631Vb",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "register-moss",
+      "hash": "Bpau9a8naNbMZLruzrMUaSiSHTy97pojZDvfUEaRSqUD",
+      "explorer": "https://testnet.nearblocks.io/txns/Bpau9a8naNbMZLruzrMUaSiSHTy97pojZDvfUEaRSqUD",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "DmqcKwWTNgGwvxTpabWWuU9cY1Z99efFAsaaxnyN4YP1",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "G2yHwyLpE85ypzteAKegXaFZV4urQW1cjEK89j248GZt",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "register-echo",
+      "hash": "UuJF1a5rC2jQoaBnX23dPEouSC59rjpUwAakynNYKgZ",
+      "explorer": "https://testnet.nearblocks.io/txns/UuJF1a5rC2jQoaBnX23dPEouSC59rjpUwAakynNYKgZ",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "6zSByTY7bCCa627UVo1Z1TX7xWPxMuNatgrsMt5jRqFM",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "DwL8BYvaqQAoimvx2LNZf1caWPRdbxorEbAw5XaP2M7N",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "register-ash",
+      "hash": "4tJ4iGeiMvzag4XZo5avabRfxefNBkXxzaFowQtQP2MJ",
+      "explorer": "https://testnet.nearblocks.io/txns/4tJ4iGeiMvzag4XZo5avabRfxefNBkXxzaFowQtQP2MJ",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "6JCJvreL6ewW1Pm11er6t7xgvMpwonCfWRxuayN9qCPv",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "31DeXg9v1SJdo7reKYMjsgMNPRAAb9HvyXU17gCkmiZQ",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "create-old-job",
+      "hash": "65Ns5r2ejQydVKFv1P7QCsR2wWrQ3TYjyEaCfCHufvZ7",
+      "explorer": "https://testnet.nearblocks.io/txns/65Ns5r2ejQydVKFv1P7QCsR2wWrQ3TYjyEaCfCHufvZ7",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "5hAYy9YMBjhzZ5awGJBK1PdaWVqQgwAfuWBAzbW5aZYt",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "8Ue82858ihuzyZ7M7BEdLDU1vqf6FTWRVEEgt1gF3DTQ",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "old-short-bid",
+      "hash": "DhE57JAk68VzhFQ3oF7NvMQDEJkFC77ny6nMeo4gJR2P",
+      "explorer": "https://testnet.nearblocks.io/txns/DhE57JAk68VzhFQ3oF7NvMQDEJkFC77ny6nMeo4gJR2P",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "7zg21xsAXQn1LdpZMnmMJXniUZHEuR9KszxhFw8RsfZM",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "3cMroVMdXhxbQ78dEymGsoTs1prkQyswBfbsEv2xcDUL",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "demand-shock",
+      "hash": "HTMJvkEfbFJqPVHbAu4UHUsJxvXPcexxGGyDDEoiqioV",
+      "explorer": "https://testnet.nearblocks.io/txns/HTMJvkEfbFJqPVHbAu4UHUsJxvXPcexxGGyDDEoiqioV",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "7d2PF2dEqdGXnkjtMpoT7tUFZXxYFH3EDpBtvBXmsgpZ",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "CK5zoAD6t6YbjTM1rKGkCrXNwFH85MNb2WWLij2Phjvg",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    },
+    {
+      "label": "cancel-old-job",
+      "hash": "Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5",
+      "explorer": "https://testnet.nearblocks.io/txns/Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "3bKFrRoTMTZjaTfiu4eX8ZJXnkAYHc5vQGFFZmV3PeMv",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "AvyKE3pwKZHQZx1ryvsG6Fc1cLS2xziT9pZqaaz3Frdm",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false
+    }
+  ],
+  "decisions": {
+    "old-demand": {
+      "observation": {
+        "actor": "ash.feral-039832.testnet",
+        "policy": 3,
+        "goal": 0,
+        "active": true,
+        "balance": 5,
+        "jobs": [
+          {
+            "kind": "short",
+            "reward": 40
+          }
+        ],
+        "needs_translation": true,
+        "has_translation": true,
+        "provider_active": true,
+        "can_reproduce": false
+      },
+      "result": {
+        "mode": "local-model",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "seconds": 3.2145562379992043,
+        "decision": {
+          "action": "bid",
+          "job": "short",
+          "price": 40
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "step": "create-controller",
+      "transaction": "5x5KzkB1GAExJdijsqHzMJjjAu2BQxaZVFj2NzNNkLP1",
+      "explorer": "https://testnet.nearblocks.io/txns/5x5KzkB1GAExJdijsqHzMJjjAu2BQxaZVFj2NzNNkLP1",
+      "state": "success"
+    },
+    {
+      "step": "deploy-controller",
+      "transaction": "913kMBrX2SQRS4dvyG6X6ccX52bLDA1fqyQv3i4E69LQ",
+      "explorer": "https://testnet.nearblocks.io/txns/913kMBrX2SQRS4dvyG6X6ccX52bLDA1fqyQv3i4E69LQ",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 0,
+          "market": "1000",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": []
+      }
+    },
+    {
+      "step": "create-moss-account",
+      "transaction": "6ZZDiiMMqAEqwfWZYvypY7P2by77og2p3rMroyynUvFE",
+      "explorer": "https://testnet.nearblocks.io/txns/6ZZDiiMMqAEqwfWZYvypY7P2by77og2p3rMroyynUvFE",
+      "state": "success"
+    },
+    {
+      "step": "create-echo-account",
+      "transaction": "6Wz8bEm7EnbFG7X7Hoi2ZxGxwd96fg9ptWKvmCz6iEwH",
+      "explorer": "https://testnet.nearblocks.io/txns/6Wz8bEm7EnbFG7X7Hoi2ZxGxwd96fg9ptWKvmCz6iEwH",
+      "state": "success"
+    },
+    {
+      "step": "create-ash-account",
+      "transaction": "G6xUcPaMXVh1reuzdP5nL1CyP88piJQYQnSabtzT4chR",
+      "explorer": "https://testnet.nearblocks.io/txns/G6xUcPaMXVh1reuzdP5nL1CyP88piJQYQnSabtzT4chR",
+      "state": "success"
+    },
+    {
+      "step": "register-moss",
+      "transaction": "Bpau9a8naNbMZLruzrMUaSiSHTy97pojZDvfUEaRSqUD",
+      "explorer": "https://testnet.nearblocks.io/txns/Bpau9a8naNbMZLruzrMUaSiSHTy97pojZDvfUEaRSqUD",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 0,
+          "market": "750",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "250",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "register-echo",
+      "transaction": "UuJF1a5rC2jQoaBnX23dPEouSC59rjpUwAakynNYKgZ",
+      "explorer": "https://testnet.nearblocks.io/txns/UuJF1a5rC2jQoaBnX23dPEouSC59rjpUwAakynNYKgZ",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 0,
+          "market": "605",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "250",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "145",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "register-ash",
+      "transaction": "4tJ4iGeiMvzag4XZo5avabRfxefNBkXxzaFowQtQP2MJ",
+      "explorer": "https://testnet.nearblocks.io/txns/4tJ4iGeiMvzag4XZo5avabRfxefNBkXxzaFowQtQP2MJ",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 0,
+          "market": "600",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "250",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "145",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "create-old-job",
+      "transaction": "65Ns5r2ejQydVKFv1P7QCsR2wWrQ3TYjyEaCfCHufvZ7",
+      "explorer": "https://testnet.nearblocks.io/txns/65Ns5r2ejQydVKFv1P7QCsR2wWrQ3TYjyEaCfCHufvZ7",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 0,
+          "market": "560",
+          "pending": "0",
+          "job_escrow": "40",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "250",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "145",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "old-short-bid",
+      "transaction": "DhE57JAk68VzhFQ3oF7NvMQDEJkFC77ny6nMeo4gJR2P",
+      "explorer": "https://testnet.nearblocks.io/txns/DhE57JAk68VzhFQ3oF7NvMQDEJkFC77ny6nMeo4gJR2P",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 0,
+          "market": "560",
+          "pending": "0",
+          "job_escrow": "40",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "250",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "145",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "demand-shock",
+      "transaction": "HTMJvkEfbFJqPVHbAu4UHUsJxvXPcexxGGyDDEoiqioV",
+      "explorer": "https://testnet.nearblocks.io/txns/HTMJvkEfbFJqPVHbAu4UHUsJxvXPcexxGGyDDEoiqioV",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 1,
+          "market": "560",
+          "pending": "0",
+          "job_escrow": "40",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "250",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "145",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "cancel-old-job",
+      "transaction": "Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5",
+      "explorer": "https://testnet.nearblocks.io/txns/Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 0,
+          "demand": 1,
+          "market": "600",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "0",
+          "supply": "1000"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "250",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "145",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "complete": false
+}

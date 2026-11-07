@@ -1,0 +1,29 @@
+{
+  "executor_public_sends": 0,
+  "executor_public_signing": false,
+  "live_journal_changed_by_executor": false,
+  "tick_finalized": false,
+  "controller_turn": 0,
+  "ash_active": true,
+  "signer_nonce": "276606257000011",
+  "last_success_hash": "Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5",
+  "last_success_nonce": "276606257000011",
+  "tick_retry_nonce": "276606257000012",
+  "cli_failure_elapsed_seconds": 0.694,
+  "original_cli_failure_cause": "Unavailable because the old runner discarded CLI diagnostics; timing rules out its 240 second watchdog",
+  "combined_local_pipeline_exit_code": 0,
+  "tests": {
+    "unique_passed": 103,
+    "failed": 0,
+    "skipped": 0,
+    "rust_controller": 27,
+    "sandbox_integration": 4,
+    "offline_decoder": 3,
+    "agent_tools": 10,
+    "runner": 37,
+    "app_voucher": 7,
+    "forge": 15
+  },
+  "parent_resume_command": "cd /workspace/near/feral && bash scripts/testnet-run.sh --execute --account feral-039832.testnet --retry-unconfirmed-tick death-tick",
+  "fix": "Official NEAR CLI save-to-file, offline canonical hash and signature validation, durable hash and nonce journal before CLI broadcast, redacted phase diagnostics, narrowly pinned nonce recovery"
+}

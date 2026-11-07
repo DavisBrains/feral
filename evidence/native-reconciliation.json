@@ -7,35 +7,35 @@
       "contract_reward": "0",
       "controller_after": "100140000000000000000000000",
       "controller_before": "100200000000000000000000000",
-      "gross_gas_charge": "7631838486922600000000",
+      "gross_gas_charge": "7631847537238600000000",
       "identity": "before total = after total + gross gas charges - contract rewards; storage backing is included in total",
-      "net_protocol_debit": "7631838486922600000000",
+      "net_protocol_debit": "7631847537238600000000",
       "network": "sandbox",
-      "owner_after": "99791500552797971300000000",
-      "owner_before": "99799132391284893900000000",
-      "transaction": "4EAE6gRXCdr5psUxDiDkYo63P4WaBmrAULSFdpuhkBnp"
+      "owner_after": "99791500525647023300000000",
+      "owner_before": "99799132373184261900000000",
+      "transaction": "8T5j6y89a4TUrcimxNhCuaoS4ktN9cB1ELFPxDDpkxgy"
     },
     {
-      "after_total": "199922019909666419300000000",
-      "before_total": "199923500430269786900000000",
+      "after_total": "199922019864414839300000000",
+      "before_total": "199923500403118838900000000",
       "case": "failed batch and refunded funding",
       "child_storage_backing": "1820000000000000000000",
       "child_total": "100000000000000000000000",
       "contract_reward": "0",
-      "gross_gas_charge": "1480520603367600000000",
-      "net_protocol_debit": "1480520603367600000000",
-      "transaction": "4gWYAXcENy7MAYe7ayQidGTczhKPsztZRBRJFThZaVM5"
+      "gross_gas_charge": "1480538703999600000000",
+      "net_protocol_debit": "1480538703999600000000",
+      "transaction": "8sHrSmsU9p93aKd3zraDjpKB6yfzXu3bi13p1KjR55ue"
     },
     {
-      "after_total": "199813996383672904600000000",
-      "before_total": "199822019909666419300000000",
+      "after_total": "199813996329371008600000000",
+      "before_total": "199822019864414839300000000",
       "case": "successful creation and callback",
       "child_storage_backing": "1000000000000000000000",
       "child_total": "60000000000000000000000",
       "contract_reward": "0",
-      "gross_gas_charge": "8023525993514700000000",
-      "net_protocol_debit": "8023525993514700000000",
-      "transaction": "F8oWXGF9YoZjWiNAkFibFbbe44YdvHcfVH3UQWHP35U"
+      "gross_gas_charge": "8023535043830700000000",
+      "net_protocol_debit": "8023535043830700000000",
+      "transaction": "7ccaRnGqGxeiCDyibkQK1B7Dj2t1SKNqPZGea3kSPXgS"
     }
   ],
   "network": "sandbox",

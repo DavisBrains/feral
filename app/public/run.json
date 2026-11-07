@@ -1,14 +1,14 @@
 {
   "controlled_participants": true,
-  "controller": "dev-20261107083617-68459143300452.test.near",
+  "controller": "dev-20261107084932-22836589159300.test.near",
   "events": [
     {
       "data": {
         "labels": {
-          "dev-20261107083618-18969318176613.test.near": "Moss",
-          "dev-20261107083619-50282062227949.test.near": "Echo",
-          "dev-20261107083619-92965248827539.test.near": "Ash",
-          "pip.dev-20261107083617-68459143300452.test.near": "Pip"
+          "dev-20261107084933-47244776580396.test.near": "Ash",
+          "dev-20261107084933-70580138100138.test.near": "Echo",
+          "dev-20261107084933-85165417172504.test.near": "Moss",
+          "pip.dev-20261107084932-22836589159300.test.near": "Pip"
         }
       },
       "kind": "seeded",
@@ -28,8 +28,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -44,8 +44,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -60,8 +60,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -87,7 +87,7 @@
         "method": "create_job"
       },
       "kind": "old-demand",
-      "receipt": "9LBPFXaQx44QrMHRXj8uecwwhrGBcEJQEZwfE8N15TvF",
+      "receipt": "5LdV6pyDn3MYJ5q2aSr2Uw8pHE3u3aBrABWMQvRdcazC",
       "seq": 1,
       "state": {
         "creatures": [
@@ -103,8 +103,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -119,8 +119,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -135,8 +135,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -153,10 +153,10 @@
     },
     {
       "data": {
-        "actor": "dev-20261107083619-92965248827539.test.near",
+        "actor": "dev-20261107084933-47244776580396.test.near",
         "observation": {
           "active": true,
-          "actor": "dev-20261107083619-92965248827539.test.near",
+          "actor": "dev-20261107084933-47244776580396.test.near",
           "balance": 5,
           "can_reproduce": false,
           "goal": 0,
@@ -179,7 +179,7 @@
           },
           "mode": "local-model",
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
-          "seconds": 3.081330840999726
+          "seconds": 3.3110755660018185
         }
       },
       "kind": "decision",
@@ -199,8 +199,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -215,8 +215,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -231,8 +231,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -250,14 +250,14 @@
     {
       "data": {
         "args": {
-          "actor": "dev-20261107083619-92965248827539.test.near",
+          "actor": "dev-20261107084933-47244776580396.test.near",
           "job_id": "short-v0",
           "price": "40"
         },
         "method": "bid_job"
       },
       "kind": "old-bid",
-      "receipt": "3ojKUucSjd3WrPqKVVYmhGuE4Dh7nP6QV3V5PzF4fqKc",
+      "receipt": "6pbyzoMSELFzEmWCHafvfAGNwdGpnwUSNngWuhqFKJmy",
       "seq": 3,
       "state": {
         "creatures": [
@@ -273,8 +273,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -289,8 +289,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -305,8 +305,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -329,7 +329,7 @@
         "method": "set_demand"
       },
       "kind": "demand-shock",
-      "receipt": "CubwDQAryMknrwYFXAQZRKvDrxUcNbxT9M6kcV6nzYP7",
+      "receipt": "DrnhuAWxUwzXs73hvL1Euae4BBhxHdQUJpi9orXDsKV4",
       "seq": 4,
       "state": {
         "creatures": [
@@ -345,8 +345,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -361,8 +361,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -377,8 +377,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -401,7 +401,7 @@
         "method": "cancel_job"
       },
       "kind": "old-work-cancelled",
-      "receipt": "9QwHBD2zcBM4HujUgUTvkzjqouSXfutemWbxnScLApTQ",
+      "receipt": "H1f1fA5dduFSZLJvHvJ7CVcvPzWWeCwyZsUfhZuTXt7K",
       "seq": 5,
       "state": {
         "creatures": [
@@ -417,8 +417,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -433,8 +433,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -449,8 +449,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -473,7 +473,7 @@
         "method": "tick"
       },
       "kind": "extinction",
-      "receipt": "9Va81eHsCMhE95SH9gKZLRi6TwY9J1ZLRF3Ly32mG3sH",
+      "receipt": "G1tHHdewwL5R3jWUhNMjYcC8Xupr1XF4wANKDMpJrw5c",
       "seq": 6,
       "state": {
         "creatures": [
@@ -489,8 +489,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -505,8 +505,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -521,8 +521,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -539,10 +539,10 @@
     },
     {
       "data": {
-        "actor": "dev-20261107083619-92965248827539.test.near",
+        "actor": "dev-20261107084933-47244776580396.test.near",
         "observation": {
           "active": false,
-          "actor": "dev-20261107083619-92965248827539.test.near",
+          "actor": "dev-20261107084933-47244776580396.test.near",
           "balance": 5,
           "can_reproduce": false,
           "goal": 0,
@@ -563,7 +563,7 @@
           },
           "mode": "local-model",
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
-          "seconds": 1.2251539089993455
+          "seconds": 1.2197489549980671
         }
       },
       "kind": "decision",
@@ -583,8 +583,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -599,8 +599,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -615,8 +615,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           }
         ],
@@ -633,12 +633,12 @@
     },
     {
       "data": {
-        "actor": "dev-20261107083619-92965248827539.test.near",
+        "actor": "dev-20261107084933-47244776580396.test.near",
         "expected_failure": true,
         "reason": "extinct"
       },
       "kind": "refused-after-death",
-      "receipt": "CgkoCLmeZMbFyg3m5MidqRAPhRACKoxu7Cauo79FtmjU",
+      "receipt": "2AWc7qMJd5J6yfspSpchnbV4VWB1VbBNi7CNvrBrya6b",
       "seq": 8,
       "state": {
         "creatures": [
@@ -654,8 +654,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -670,8 +670,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -686,8 +686,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "98999079418495152500000000"
           }
         ],
@@ -704,10 +704,10 @@
     },
     {
       "data": {
-        "actor": "dev-20261107083618-18969318176613.test.near",
+        "actor": "dev-20261107084933-85165417172504.test.near",
         "observation": {
           "active": true,
-          "actor": "dev-20261107083618-18969318176613.test.near",
+          "actor": "dev-20261107084933-85165417172504.test.near",
           "balance": 240,
           "can_reproduce": false,
           "goal": 0,
@@ -730,7 +730,7 @@
           },
           "mode": "local-model",
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
-          "seconds": 2.807145884999045
+          "seconds": 2.654128074002074
         }
       },
       "kind": "decision",
@@ -750,8 +750,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -766,8 +766,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -782,8 +782,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -800,10 +800,10 @@
     },
     {
       "data": {
-        "actor": "dev-20261107083619-50282062227949.test.near",
+        "actor": "dev-20261107084933-70580138100138.test.near",
         "observation": {
           "active": true,
-          "actor": "dev-20261107083619-50282062227949.test.near",
+          "actor": "dev-20261107084933-70580138100138.test.near",
           "balance": 135,
           "can_reproduce": false,
           "goal": 0,
@@ -826,7 +826,7 @@
           },
           "mode": "local-model",
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
-          "seconds": 2.5127782999988995
+          "seconds": 2.2799093769972387
         }
       },
       "kind": "decision",
@@ -846,8 +846,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -862,8 +862,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -878,8 +878,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -925,8 +925,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -941,8 +941,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -957,8 +957,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -976,16 +976,16 @@
     {
       "data": {
         "args": {
-          "actor": "dev-20261107083618-18969318176613.test.near",
+          "actor": "dev-20261107084933-85165417172504.test.near",
           "amount": "30",
           "output_hash": "31a7fc823e9f494051540107d59228d426559218d316df47aed3704546297d08",
-          "provider": "dev-20261107083619-50282062227949.test.near",
+          "provider": "dev-20261107084933-70580138100138.test.near",
           "service_id": "translation-v1"
         },
         "method": "pay_creature"
       },
       "kind": "paid-collaboration",
-      "receipt": "Gh2gn7FoDPQokB69x3bWsoRU2phh6aGBXsP3xG4vFAUP",
+      "receipt": "CyozF3kd4Dc3LQCeEUgTWUm4ZUWCPfsMzDcWZd7m2pHV",
       "seq": 12,
       "state": {
         "creatures": [
@@ -1001,8 +1001,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1017,8 +1017,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1033,8 +1033,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1051,10 +1051,10 @@
     },
     {
       "data": {
-        "actor": "dev-20261107083618-18969318176613.test.near",
+        "actor": "dev-20261107084933-85165417172504.test.near",
         "observation": {
           "active": true,
-          "actor": "dev-20261107083618-18969318176613.test.near",
+          "actor": "dev-20261107084933-85165417172504.test.near",
           "balance": 210,
           "can_reproduce": false,
           "goal": 0,
@@ -1077,7 +1077,7 @@
           },
           "mode": "local-model",
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
-          "seconds": 2.674119482999231
+          "seconds": 4.371282718999282
         }
       },
       "kind": "decision",
@@ -1097,8 +1097,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1113,8 +1113,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1129,8 +1129,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1156,7 +1156,7 @@
         "method": "create_job"
       },
       "kind": "work-escrow",
-      "receipt": "HFHKKrTTvjL6HrdEsus74CH6YbBLRsU8H6FXYuC2VCYh",
+      "receipt": "CkEn81YeVLbTV16Z3AedeTDtpaYVwDkvQ8XJJimgaDMD",
       "seq": 14,
       "state": {
         "creatures": [
@@ -1172,8 +1172,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1188,8 +1188,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1204,8 +1204,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1223,14 +1223,14 @@
     {
       "data": {
         "args": {
-          "actor": "dev-20261107083618-18969318176613.test.near",
+          "actor": "dev-20261107084933-85165417172504.test.near",
           "job_id": "bilingual-v1",
           "price": "90"
         },
         "method": "bid_job"
       },
       "kind": "parent-bid",
-      "receipt": "8zXMJVUMYsSwj4jggxPS1xoNNVFmtbUMe7B9GymSuNw9",
+      "receipt": "62aMxrh57qRhD27bbJSKrUtMn42RHTvKGYgjhMV5MXWJ",
       "seq": 15,
       "state": {
         "creatures": [
@@ -1246,8 +1246,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1262,8 +1262,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1278,8 +1278,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1297,13 +1297,13 @@
     {
       "data": {
         "args": {
-          "actor": "dev-20261107083618-18969318176613.test.near",
+          "actor": "dev-20261107084933-85165417172504.test.near",
           "job_id": "bilingual-v1"
         },
         "method": "claim_job"
       },
       "kind": "work-claimed",
-      "receipt": "5JYqLrZPzbLZ6vJJBuJBGZrq1eBZACLoWimhMBKwU12C",
+      "receipt": "4WZQDNCumsr4GevFW8aKD82fWTf5PGn3pQxGLEBgCFmc",
       "seq": 16,
       "state": {
         "creatures": [
@@ -1319,8 +1319,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1335,8 +1335,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1351,8 +1351,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1376,7 +1376,7 @@
         "method": "settle_job"
       },
       "kind": "work-paid",
-      "receipt": "2DX9syjTUrt2qBCs3hADEJdjAEGzALh5ThZfMQSWMkbP",
+      "receipt": "DbCmbydFvp6w3GT8fhRvSqGtW62D4HsvjXoshdeftrwF",
       "seq": 17,
       "state": {
         "creatures": [
@@ -1392,8 +1392,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1408,8 +1408,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1424,8 +1424,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1443,13 +1443,13 @@
     {
       "data": {
         "args": {
-          "actor": "dev-20261107083618-18969318176613.test.near",
+          "actor": "dev-20261107084933-85165417172504.test.near",
           "goal": 2
         },
         "method": "set_goal"
       },
       "kind": "lineage-goal",
-      "receipt": "6qY7V46fNBQUVFZqiMCyqHK3DDvdZzRZ7GPipHqwN3gj",
+      "receipt": "ExjrW1gQdzd2116YKpbnRVm4gC6CAgeYDohniWyv3wXX",
       "seq": 18,
       "state": {
         "creatures": [
@@ -1465,8 +1465,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1481,8 +1481,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1497,8 +1497,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1515,10 +1515,10 @@
     },
     {
       "data": {
-        "actor": "dev-20261107083618-18969318176613.test.near",
+        "actor": "dev-20261107084933-85165417172504.test.near",
         "observation": {
           "active": true,
-          "actor": "dev-20261107083618-18969318176613.test.near",
+          "actor": "dev-20261107084933-85165417172504.test.near",
           "balance": 300,
           "can_reproduce": true,
           "goal": 2,
@@ -1534,7 +1534,7 @@
           },
           "mode": "local-model",
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
-          "seconds": 1.3177193310002622
+          "seconds": 1.4985856269995566
         }
       },
       "kind": "decision",
@@ -1554,8 +1554,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1570,8 +1570,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1586,8 +1586,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           }
         ],
@@ -1605,17 +1605,17 @@
     {
       "data": {
         "args": {
-          "child": "pip.dev-20261107083617-68459143300452.test.near",
+          "child": "pip.dev-20261107084932-22836589159300.test.near",
           "mutation": 1,
           "native": "60000000000000000000000",
           "nonce": 1,
-          "parent": "dev-20261107083618-18969318176613.test.near",
+          "parent": "dev-20261107084933-85165417172504.test.near",
           "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
         },
         "method": "birth"
       },
       "kind": "funded-birth",
-      "receipt": "EnMuRYKzoHzj8dMrkZCxyUMFufhDHJsMCAkwspECTrr7",
+      "receipt": "DrAPNjYwrVHnHAH8eEWRwV36tpb2N6RprmXiFnyvPZco",
       "seq": 20,
       "state": {
         "creatures": [
@@ -1631,8 +1631,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1647,8 +1647,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1663,8 +1663,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           },
           {
@@ -1675,12 +1675,12 @@
               "mutation": 1,
               "native_reserve": "0",
               "nonce": 0,
-              "parent": "dev-20261107083618-18969318176613.test.near",
+              "parent": "dev-20261107084933-85165417172504.test.near",
               "pending": null,
               "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
             },
-            "id": "pip.dev-20261107083617-68459143300452.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "pip.dev-20261107084932-22836589159300.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "60000000000000000000000"
           }
         ],
@@ -1703,7 +1703,7 @@
         "method": "tick"
       },
       "kind": "next-breath",
-      "receipt": "DC9nJvunPHFctXn77voXFGmHHPYracGjRxAytaDijEkK",
+      "receipt": "7WDriBhEBQeH8H7tDuHnuasJk1EvVGXAa2vim6fAJD7H",
       "seq": 21,
       "state": {
         "creatures": [
@@ -1719,8 +1719,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1735,8 +1735,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1751,8 +1751,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           },
           {
@@ -1763,12 +1763,12 @@
               "mutation": 1,
               "native_reserve": "0",
               "nonce": 0,
-              "parent": "dev-20261107083618-18969318176613.test.near",
+              "parent": "dev-20261107084933-85165417172504.test.near",
               "pending": null,
               "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
             },
-            "id": "pip.dev-20261107083617-68459143300452.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "pip.dev-20261107084932-22836589159300.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "60000000000000000000000"
           }
         ],
@@ -1785,10 +1785,10 @@
     },
     {
       "data": {
-        "actor": "pip.dev-20261107083617-68459143300452.test.near",
+        "actor": "pip.dev-20261107084932-22836589159300.test.near",
         "observation": {
           "active": true,
-          "actor": "pip.dev-20261107083617-68459143300452.test.near",
+          "actor": "pip.dev-20261107084932-22836589159300.test.near",
           "balance": 90,
           "can_reproduce": false,
           "goal": 0,
@@ -1811,7 +1811,7 @@
           },
           "mode": "local-model",
           "model": "Qwen/Qwen2.5-1.5B-Instruct",
-          "seconds": 2.7683679439978732
+          "seconds": 2.548649958000169
         }
       },
       "kind": "decision",
@@ -1831,8 +1831,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1847,8 +1847,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1863,8 +1863,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           },
           {
@@ -1875,12 +1875,12 @@
               "mutation": 1,
               "native_reserve": "0",
               "nonce": 0,
-              "parent": "dev-20261107083618-18969318176613.test.near",
+              "parent": "dev-20261107084933-85165417172504.test.near",
               "pending": null,
               "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
             },
-            "id": "pip.dev-20261107083617-68459143300452.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "pip.dev-20261107084932-22836589159300.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "60000000000000000000000"
           }
         ],
@@ -1906,7 +1906,7 @@
         "method": "create_job"
       },
       "kind": "child-work-escrow",
-      "receipt": "HZDomPLJgZjm2Zrzea9vur6M12CNWFzPghCzBJXhh4SY",
+      "receipt": "EJsnxgNYiaCmqEvyut4eypM4XZSFWLv9CCG2wGNLoLf6",
       "seq": 23,
       "state": {
         "creatures": [
@@ -1922,8 +1922,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1938,8 +1938,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -1954,8 +1954,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           },
           {
@@ -1966,12 +1966,12 @@
               "mutation": 1,
               "native_reserve": "0",
               "nonce": 0,
-              "parent": "dev-20261107083618-18969318176613.test.near",
+              "parent": "dev-20261107084933-85165417172504.test.near",
               "pending": null,
               "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
             },
-            "id": "pip.dev-20261107083617-68459143300452.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "pip.dev-20261107084932-22836589159300.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "60000000000000000000000"
           }
         ],
@@ -1989,14 +1989,14 @@
     {
       "data": {
         "args": {
-          "actor": "pip.dev-20261107083617-68459143300452.test.near",
+          "actor": "pip.dev-20261107084932-22836589159300.test.near",
           "job_id": "child-first",
           "price": "80"
         },
         "method": "bid_job"
       },
       "kind": "child-first-bid",
-      "receipt": "9Myav2UfWGKEUjbAhZZ385jqpWEZBSVAHKB6FZgex8vC",
+      "receipt": "GgwW72YPHwP2ZTyKVbucHB53yX9wkPzE4z1kgKZCVXJC",
       "seq": 24,
       "state": {
         "creatures": [
@@ -2012,8 +2012,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -2028,8 +2028,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -2044,8 +2044,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           },
           {
@@ -2056,12 +2056,12 @@
               "mutation": 1,
               "native_reserve": "0",
               "nonce": 0,
-              "parent": "dev-20261107083618-18969318176613.test.near",
+              "parent": "dev-20261107084933-85165417172504.test.near",
               "pending": null,
               "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
             },
-            "id": "pip.dev-20261107083617-68459143300452.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "pip.dev-20261107084932-22836589159300.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "60000000000000000000000"
           }
         ],
@@ -2101,8 +2101,8 @@
               "pending": null,
               "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
             },
-            "id": "dev-20261107083618-18969318176613.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-85165417172504.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -2117,8 +2117,8 @@
               "pending": null,
               "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
             },
-            "id": "dev-20261107083619-50282062227949.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-70580138100138.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "100000000000000000000000000"
           },
           {
@@ -2133,8 +2133,8 @@
               "pending": null,
               "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
             },
-            "id": "dev-20261107083619-92965248827539.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "dev-20261107084933-47244776580396.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "99999813330080045300000000"
           },
           {
@@ -2145,12 +2145,12 @@
               "mutation": 1,
               "native_reserve": "0",
               "nonce": 0,
-              "parent": "dev-20261107083618-18969318176613.test.near",
+              "parent": "dev-20261107084933-85165417172504.test.near",
               "pending": null,
               "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
             },
-            "id": "pip.dev-20261107083617-68459143300452.test.near",
-            "life_owner": "dev-20261107083618-63629215612811.test.near",
+            "id": "pip.dev-20261107084932-22836589159300.test.near",
+            "life_owner": "dev-20261107084932-45153663683483.test.near",
             "native_total": "60000000000000000000000"
           }
         ],

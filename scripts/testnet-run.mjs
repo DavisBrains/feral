@@ -1,5 +1,5 @@
-import {readFileSync,writeFileSync,renameSync,existsSync,mkdirSync,openSync,closeSync,unlinkSync} from 'node:fs';
-import {spawn} from 'node:child_process';
+import {readFileSync,writeFileSync,renameSync,existsSync,mkdirSync,openSync,closeSync,unlinkSync,chmodSync} from 'node:fs';
+import {spawn,spawnSync} from 'node:child_process';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {decide,localModel,validateDecision} from '../agents/brain.mjs';
@@ -14,6 +14,8 @@ const BASE=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const JOURNAL=path.join(BASE,'evidence/testnet-journal.json');
 const TXJSON=path.join(BASE,'evidence/testnet-transactions.json');
 const MD=path.join(BASE,'evidence/testnet-run.md');
+const SIGNED_DIR=path.join(BASE,'.local-transactions');
+const INSPECTOR=path.join(BASE,'target/debug/examples/inspect_signed');
 const WASM=path.join(BASE,'target/near/feral_controller/feral_controller.wasm');
 const INITIAL_HASH='BMudVUSoFqYhvXV7JkAqkyZkAjfGJbS5yTob9hEDohT3';
 const EMPTY_CODE='11111111111111111111111111111111';
@@ -101,8 +103,7 @@ export function extractTxHash(text){
  for(const re of [/https:\/\/(?:explorer\.testnet\.near\.org\/transactions|testnet\.nearblocks\.io\/txns)\/([1-9A-HJ-NP-Za-km-z]{43,44})\b/g,/(?:Transaction\s+(?:ID|hash)|Transaction\s*:)\s*:?\s*([1-9A-HJ-NP-Za-km-z]{43,44})\b/gi]){const m=[...clean.matchAll(re)];if(m.length)return m.at(-1)[1];}
  return null;
 }
-export function verifyTransaction(outcome,op){
- const t=outcome.transaction;if(!t||t.signer_id!==op.signer||t.receiver_id!==op.receiver)throw Error('Transaction does not match signer and receiver');
+export function verifyActions(t,op){if(!t||t.signer_id!==op.signer||t.receiver_id!==op.receiver)throw Error('Transaction does not match signer and receiver');
  if(op.kind==='create'){
   if(t.actions.length!==3||!t.actions.some(x=>x==='CreateAccount'||(x&&typeof x==='object'&&'CreateAccount'in x))||!t.actions.some(x=>x?.Transfer?.deposit===op.amount)||!t.actions.some(x=>x?.AddKey?.access_key?.permission==='FullAccess'))throw Error('Creation action mismatch');
  }else if(op.kind==='deploy'){
@@ -112,15 +113,18 @@ export function verifyTransaction(outcome,op){
   if(t.actions.length!==1)throw Error('Unexpected extra actions');const f=t.actions[0].FunctionCall;
   if(!f||f.method_name!==op.method||f.deposit!==op.deposit||BigInt(f.gas)!==BigInt(op.gas)*10n**12n||!equal(JSON.parse(Buffer.from(f.args,'base64')),op.args))throw Error('Function call mismatch');
  }
+}
+export function verifyTransaction(outcome,op){
+ verifyActions(outcome.transaction,op);
  const failed=outcome.status?.Failure;
  if(op.expectedFailure){if(!failed||!JSON.stringify(failed).includes(op.expectedFailure))throw Error('Expected extinct rejection was not observed');return 'expected-failure';}
  if(failed)throw Error('Transaction failed; inspect recorded explorer link before any retry');
  if(!('SuccessValue'in(outcome.status??{})))throw Error('Transaction final outcome unknown');return 'success';
 }
 const atomic=(filename,value)=>{mkdirSync(path.dirname(filename),{recursive:true});const tmp=filename+'.tmp';writeFileSync(tmp,JSON.stringify(value,null,2)+'\n',{mode:0o600});renameSync(tmp,filename);};
-export function resumePolicy(entry){if(!entry)return 'new';if(['success','expected-failure'].includes(entry.state))return 'verify';if(entry.hash)return 'recover-hash';throw Error('Unresolved submission without a hash. Do not resend. Supply --resolve-hash label=hash after identifying the transaction, or review an unsent intent manually.');}
+export function resumePolicy(entry){if(!entry)return 'new';if(entry.state==='preparing'&&!entry.hash)return 'prepare-again';if(['success','expected-failure'].includes(entry.state))return 'verify';if(entry.hash)return 'recover-hash';throw Error('Unresolved submission without a hash. Do not resend. Supply --resolve-hash label=hash after identifying the transaction, or review an unsent intent manually.');}
 function writeEvidence(j){
- atomic(JOURNAL,j);const rows=Object.values(j.steps).filter(s=>s.hash).map(s=>({label:s.id,hash:s.hash,explorer:`https://testnet.nearblocks.io/txns/${s.hash}`,state:s.state,signer:s.op.signer,receiver:s.op.receiver,receipt_ids:s.receipt_ids??[],failure_expected:!!s.op.expectedFailure}));
+ atomic(JOURNAL,j);const rows=Object.values(j.steps).filter(s=>s.hash).map(s=>({label:s.id,hash:s.hash,explorer:`https://testnet.nearblocks.io/txns/${s.hash}`,state:s.state,signer:s.op.signer,receiver:s.op.receiver,receipt_ids:s.receipt_ids??[],failure_expected:!!s.op.expectedFailure,prepared:s.prepared,cli_diagnostics:s.cli_diagnostics??[]}));
  atomic(TXJSON,{network:'testnet',root:ROOT,controller:IDS.controller,faucet_creation:{hash:INITIAL_HASH,explorer:`https://testnet.nearblocks.io/txns/${INITIAL_HASH}`,source:'parent supplied existing creation'},transactions:rows,decisions:j.decisions,events:j.events,complete:j.complete??false});
  const esc=s=>String(s).replaceAll('|','\\|').replaceAll('\n',' ');
  let md=`# Feral public testnet evidence\n\nThrowaway root ${ROOT}\n\nController ${IDS.controller}\n\nThe parent created the root with the official faucet before this script. Its supplied creation transaction is https://testnet.nearblocks.io/txns/${INITIAL_HASH}\n\nNo MPC, Sepolia, GitHub or posting action is part of this runner.\n\n| Step | Transaction | State |\n| --- | --- | --- |\n`;
@@ -129,20 +133,51 @@ function writeEvidence(j){
  if(j.last_error)md+='\nStopped safely '+esc(j.last_error)+'\n';writeFileSync(MD,md);
 }
 async function finalized(rpc,hash,sender){for(let n=0;n<30;n++){try{return await rpc.tx(hash,sender);}catch(e){if(n===29)throw Error('Could not confirm transaction finality. Submission retained; do not resend.');await wait(2000);}}}
-async function runCli(op,onHash){
- const args=cliArgs(op);
+export function saveSignedArgs(op,filename,recovery){
+ const args=cliArgs(op);args.pop();
+ if(recovery)args.push('--signer-public-key',recovery.public_key,'--nonce',String(recovery.nonce));
+ return [...args,'save-to-file',filename];
+}
+export const broadcastSignedArgs=filename=>['transaction','send-signed-transaction','file-with-base64-signed-transaction',filename,'network-config','testnet','send'];
+export function classifyCliResult(code,signal,timedOut,text){
+ return {exit_code:code,signal:signal??null,timed_out:timedOut,output_bytes:Buffer.byteLength(text),flags:{timeout:/timed?\s*out|timeout/i.test(text),rate_limited:/429|too many requests/i.test(text),connection:/connection|connect error|dns|resolve host/i.test(text),invalid_nonce:/InvalidNonce|invalid nonce/i.test(text)},reported_hash:extractTxHash(text)};
+}
+async function cliProcess(args){
  return new Promise((resolve,reject)=>{
-  const child=spawn('near',args,{cwd:BASE,stdio:['ignore','pipe','pipe'],env:{...process.env,NO_COLOR:'1'}});let buffer='';let seen=null;
-  // No raw CLI output is printed or persisted. Key generation remains inside
-  // near-cli's sanctioned legacy keychain flow, not custom credential reading.
-  const capture=data=>{buffer=(buffer+data.toString()).slice(-256000);const hash=extractTxHash(buffer);if(hash&&hash!==seen){seen=hash;onHash(hash);}};
-  child.stdout.on('data',capture);child.stderr.on('data',capture);
-  const timeout=setTimeout(()=>child.kill('SIGTERM'),240000);
+  const child=spawn('near',args,{cwd:BASE,stdio:['ignore','pipe','pipe'],env:{...process.env,NO_COLOR:'1'}});let buffer='',timedOut=false;
+  const capture=data=>{buffer=(buffer+data.toString()).slice(-256000);};child.stdout.on('data',capture);child.stderr.on('data',capture);
+  const timeout=setTimeout(()=>{timedOut=true;child.kill('SIGTERM');},240000);
   const stop=()=>{stopRequested=true;child.kill('SIGTERM');};process.once('SIGINT',stop);process.once('SIGTERM',stop);
-  child.once('error',e=>{clearTimeout(timeout);process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);reject(Error('near-cli could not start; no raw diagnostic is exposed'));});
-  child.once('close',code=>{clearTimeout(timeout);process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);buffer='';resolve({hash:seen,exit_code:code});});
+  const cleanup=()=>{clearTimeout(timeout);process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);};
+  child.once('error',()=>{cleanup();reject(Error('near-cli could not start'));});
+  child.once('close',(code,signal)=>{cleanup();const result=classifyCliResult(code,signal,timedOut,buffer);buffer='';resolve(result);});
  });
 }
+export function inspectSigned(filename){
+ const r=spawnSync(INSPECTOR,[filename],{encoding:'utf8',maxBuffer:2*1024*1024,timeout:30000});
+ if(r.status!==0)throw Error('Offline signed transaction inspection failed; no raw blob or diagnostic is exposed');
+ return JSON.parse(r.stdout);
+}
+export async function runCli(op,onHash,context={}){
+ const dir=context.directory??SIGNED_DIR;mkdirSync(dir,{recursive:true,mode:0o700});chmodSync(dir,0o700);
+ const filename=path.join(dir,op.id+'.json');const run=context.processRunner??cliProcess;
+ if(!(context.fileExists??existsSync)(filename)){
+  const prepare=await run(saveSignedArgs(op,filename,context.recovery));context.recordDiagnostic?.('prepare',prepare);
+  if(prepare.exit_code!==0)throw Error('near-cli prepare failed or timed out. No broadcast was attempted; retry after inspecting the recorded phase diagnostics.');
+ }
+ const meta=(context.inspect??inspectSigned)(filename);verifyActions(meta.transaction,op);
+ if(!/^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(meta.hash)||meta.hash!==meta.transaction.hash)throw Error('Invalid canonical transaction hash');
+ if(!Number.isSafeInteger(meta.transaction.nonce))throw Error('Unsafe transaction nonce');
+ if(context.recovery&&(String(meta.transaction.nonce)!==String(context.recovery.nonce)||meta.transaction.public_key!==context.recovery.public_key))throw Error('Recovery must use the exact pinned competing nonce and key');
+ const prepared={nonce:String(meta.transaction.nonce),public_key:meta.transaction.public_key,block_hash:meta.block_hash};
+ onHash(meta.hash,prepared); // DURABLE BEFORE ANY BROADCAST, independent of terminal output.
+ if(stopRequested)throw Error('Stopped after preparation without broadcasting');
+ context.onBroadcastStarted?.();
+ const result=await run(broadcastSignedArgs(filename));context.recordDiagnostic?.('broadcast',result);
+ if(result.reported_hash&&result.reported_hash!==meta.hash)throw Error('CLI reported a different transaction hash; inspect before continuing');
+ return {hash:meta.hash,diagnostic:result};
+}
+
 async function assertPost(rpc,op,work){
  if(op.kind==='create'){if(!await rpc.account(op.receiver))throw Error('Created account not visible');return;}
  if(op.kind==='deploy'){const a=await rpc.account(IDS.controller);if(a.code_hash!==base58(Buffer.from(EXPECTED_WASM,'hex')))throw Error('Deployed WASM hash mismatch');await rpc.view('economy');return;}
@@ -212,11 +247,11 @@ export function assertOperationTemplate(template,op,work,j){
 export async function executeStep(j,rpc,template,work,options={}){
  const persist=options.persist??writeEvidence;
  let entry=j.steps[template.id];const action=resumePolicy(entry);
- if(action==='new'){
+ if(action==='new'||action==='prepare-again'){
   const op=await (options.resolveOperation??resolveOperation)(template,j,rpc,work);
   assertOperationTemplate(template,op,work,j);
-  entry={id:op.id,op,state:'submitting',started_at:new Date().toISOString()};j.steps[op.id]=entry;persist(j);
-  const cli=options.runCli??runCli;const result=await cli(op,hash=>{if(entry.hash&&entry.hash!==hash){entry.conflicting_hash=hash;persist(j);return;}entry.hash=hash;persist(j);});
+  entry={id:op.id,op,state:'preparing',started_at:new Date().toISOString(),...(j.tick_recovery&&op.id==='death-tick'?{recovery:j.tick_recovery}:{})};j.steps[op.id]=entry;persist(j);
+  const cli=options.runCli??runCli;const result=await cli(op,(hash,prepared)=>{if(entry.hash&&entry.hash!==hash){entry.conflicting_hash=hash;persist(j);return;}entry.hash=hash;entry.prepared=prepared;entry.state='prepared';persist(j);},{recovery:entry.recovery,recordDiagnostic:(phase,result)=>{(entry.cli_diagnostics??=[]).push({phase,...result});persist(j);},onBroadcastStarted:()=>{entry.state='broadcasting';persist(j);}});
   if(!entry.hash&&result.hash){entry.hash=result.hash;persist(j);}
   if(entry.conflicting_hash)throw Error('Multiple transaction hashes captured. Review both; no automatic continuation.');
   if(!entry.hash)throw Error(`Submission ${op.id} has no captured hash. It is deliberately NOT retried. Use --resolve-hash after review.`);
@@ -229,7 +264,20 @@ export async function executeStep(j,rpc,template,work,options={}){
  if(!j.events.some(e=>e.step===entry.id)){j.events.push({step:entry.id,transaction:entry.hash,explorer:`https://testnet.nearblocks.io/txns/${entry.hash}`,state:entry.state,...(entry.op.kind==='create'?{}:{snapshot:await (options.snapshot??snapshot)(rpc)})});persist(j);}
  console.log(`${entry.id} ${entry.state} https://testnet.nearblocks.io/txns/${entry.hash}`);
 }
-function parseArgs(args){let mode='dry-run',stopAfter=null;const resolutions=[];for(let i=0;i<args.length;i++){const a=args[i];if(a==='--execute')mode='execute';else if(a==='--dry-run')mode='dry-run';else if(a==='--account'){if(args[++i]!==ROOT)throw Error('Only the approved throwaway root is allowed');}else if(a==='--stop-after')stopAfter=args[++i];else if(a==='--resolve-hash')resolutions.push(args[++i]);else if(a==='--help')return {help:true};else throw Error('Unknown option '+a);}if(args.includes('--execute')&&args.includes('--dry-run'))throw Error('Choose dry-run or execute, not both');return {mode,stopAfter,resolutions};}
+function parseArgs(args){let mode='dry-run',stopAfter=null,retryTick=null;const resolutions=[];for(let i=0;i<args.length;i++){const a=args[i];if(a==='--execute')mode='execute';else if(a==='--dry-run')mode='dry-run';else if(a==='--account'){if(args[++i]!==ROOT)throw Error('Only the approved throwaway root is allowed');}else if(a==='--stop-after')stopAfter=args[++i];else if(a==='--retry-unconfirmed-tick')retryTick=args[++i];else if(a==='--resolve-hash')resolutions.push(args[++i]);else if(a==='--help')return {help:true};else throw Error('Unknown option '+a);}if(args.includes('--execute')&&args.includes('--dry-run'))throw Error('Choose dry-run or execute, not both');return {mode,stopAfter,resolutions,retryTick};}
+export async function guardTickRecovery(j,rpc,id){
+ if(id!=='death-tick')throw Error('Recovery exception is only for the monotonic death-tick');
+ const entry=j?.steps?.[id];if(!entry||entry.hash||entry.state!=='submitting')throw Error('Only the legacy hashless tick intent can be recovered this way');
+ const template=makeOperations(0n).find(x=>x.id===id);assertOperationTemplate(template,entry.op,{},j);
+ const previous=j.steps['cancel-old-job'];if(previous?.state!=='success'||!previous.hash)throw Error('Missing verified predecessor');
+ const outcome=await rpc.tx(previous.hash,ROOT);verifyTransaction(outcome,previous.op);
+ const t=outcome.transaction;if(!Number.isSafeInteger(t.nonce))throw Error('Unsafe predecessor nonce');
+ const [keys,economy,ash]=await Promise.all([rpc.request('query',{request_type:'view_access_key_list',finality:'final',account_id:ROOT}),rpc.view('economy'),rpc.view('creature',{id:IDS.ash})]);
+ if(keys.keys.length!==1||keys.keys[0].public_key!==t.public_key||String(keys.keys[0].access_key.nonce)!==String(t.nonce))throw Error('Signer nonce changed. Locate the missing transaction; do not retry.');
+ if(economy.turn!==0||!ash?.active||economy.burned!=='0')throw Error('Tick may already have landed. Locate and resolve its hash; do not retry.');
+ return {public_key:t.public_key,base_nonce:String(t.nonce),nonce:String(BigInt(t.nonce)+1n),previous_hash:previous.hash,reason:'No finalized tick; unchanged signer nonce and turn zero. Exact competing nonce plus tick(1) guard prevents double upkeep.',observed_at_wat:new Date().toLocaleString('sv-SE',{timeZone:'Africa/Lagos'})+' WAT'};
+}
+
 export function acquireRunLock(filename){
  mkdirSync(path.dirname(filename),{recursive:true});let fd;
  try{fd=openSync(filename,'wx',0o600);}catch{throw Error('Execute lock exists. Check the recorded PID; never remove a live runner lock.');}
@@ -237,7 +285,7 @@ export function acquireRunLock(filename){
  return ()=>{closeSync(fd);unlinkSync(filename);};
 }
 export async function main(argv=process.argv.slice(2)){
- const options=parseArgs(argv);if(options.help){console.log('testnet-run.sh [--dry-run | --execute] [--account feral-039832.testnet] [--stop-after STEP] [--resolve-hash STEP=HASH]');return;}
+ const options=parseArgs(argv);if(options.help){console.log('testnet-run.sh [--dry-run | --execute] [--account feral-039832.testnet] [--stop-after STEP] [--resolve-hash STEP=HASH] [--retry-unconfirmed-tick death-tick]');return;}
  if(options.mode==='dry-run')return mainWithOptions(options);
  const release=acquireRunLock(path.join(BASE,'evidence/testnet-run.lock'));
  try{return await mainWithOptions(options);}finally{release();}
@@ -256,14 +304,17 @@ async function mainWithOptions(options){
   console.log('DRY RUN ONLY. Public RPC views; no credential access, signing or sending.');
   console.log(`Account ${ROOT}\nBalance ${near(plan.root_balance)} NEAR\nController funding ${near(plan.controller_funding)} NEAR\nRemaining transfers ${near(plan.remaining_transfers)} NEAR\nConservative fee allowance ${near(plan.fee_allowance)} NEAR\nMaximum outlay estimate ${near(plan.max_outlay_estimate)} NEAR\nRoot remaining estimate ${near(plan.remaining_root_estimate)} NEAR\nRequired retained margin ${near(plan.retained_margin)} NEAR\nAffordable ${plan.affordable}`);
   for(const o of plan.operations)console.log(`${completed.has(o.id)?'DONE':'PLAN'} ${o.id} signer=${o.signer} receiver=${o.receiver} ${o.kind==='call'?o.method+' '+JSON.stringify(o.args):o.kind} attached=${near(o.amount??o.deposit??0)} NEAR`);
+  if(options.retryTick)console.log('READ ONLY tick recovery check '+JSON.stringify(await guardTickRecovery(j,rpc,options.retryTick)));
   return plan;
  }
+ if(!existsSync(INSPECTOR))throw Error('Build offline inspector first with cargo build -p feral-integration --example inspect_signed');
  if(!plan.affordable)throw Error('Insufficient funds for the remaining plan and retained margin; no transaction sent.');
  const health=await fetch('http://127.0.0.1:11435/health',{signal:AbortSignal.timeout(10000)}).then(r=>r.json());if(health.model!=='Qwen/Qwen2.5-1.5B-Instruct'||!health.ready)throw Error('Expected live local model is not ready');
  if(!j){
   for(const id of [IDS.controller,IDS.moss,IDS.echo,IDS.ash,IDS.child])if(await rpc.account(id))throw Error('Run namespace already exists without a journal. Do not overwrite or adopt it blindly.');
   j={version:1,root:ROOT,controller:IDS.controller,wasm_sha256:EXPECTED_WASM,transcript_hash:work.source_hash,plan,steps:{},decisions:{},events:[],complete:false};writeEvidence(j);
  }
+ if(options.retryTick){const recovery=await guardTickRecovery(j,rpc,options.retryTick);(j.recovered_intents??=[]).push(j.steps['death-tick']);delete j.steps['death-tick'];j.tick_recovery=recovery;writeEvidence(j);}
  for(const item of options.resolutions){const at=item.indexOf('=');const id=item.slice(0,at),hash=item.slice(at+1);if(at<1||!j.steps[id]||!/^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(hash))throw Error('Invalid hash resolution');if(j.steps[id].hash&&j.steps[id].hash!==hash)throw Error('Cannot replace an already captured hash');j.steps[id].hash=hash;writeEvidence(j);}
  try{
   for(const template of plan.operations){if(stopRequested){console.log('Stopped safely after signal; no further submission');return;}await executeStep(j,rpc,template,work);if(stopRequested||template.id===options.stopAfter){console.log('Stopped at requested durable checkpoint');return;}}

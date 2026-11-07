@@ -1,0 +1,35 @@
+DRY RUN ONLY. Public RPC views; no credential access, signing or sending.
+Account feral-039832.testnet
+Balance 5.8192921270313919 NEAR
+Controller funding 3.8 NEAR
+Remaining transfers 0.0 NEAR
+Conservative fee allowance 1.0 NEAR
+Maximum outlay estimate 1.0 NEAR
+Root remaining estimate 4.8192921270313919 NEAR
+Required retained margin 1.0 NEAR
+Affordable true
+DONE create-controller signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet create attached=3.8 NEAR
+DONE deploy-controller signer=ctrl.feral-039832.testnet receiver=ctrl.feral-039832.testnet deploy attached=0.0 NEAR
+DONE create-moss-account signer=feral-039832.testnet receiver=moss.feral-039832.testnet create attached=0.01 NEAR
+DONE create-echo-account signer=feral-039832.testnet receiver=echo.feral-039832.testnet create attached=0.01 NEAR
+DONE create-ash-account signer=feral-039832.testnet receiver=ash.feral-039832.testnet create attached=0.01 NEAR
+DONE register-moss signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet register {"id":"moss.feral-039832.testnet","amount":"250","strategy_hash":"8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"} attached=0.2 NEAR
+DONE register-echo signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet register {"id":"echo.feral-039832.testnet","amount":"145","strategy_hash":"3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"} attached=0.1 NEAR
+DONE register-ash signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet register {"id":"ash.feral-039832.testnet","amount":"5","strategy_hash":"f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"} attached=0.02 NEAR
+DONE create-old-job signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet create_job {"job_id":"short-v0","amount":"40","expiry_turn":3,"requirements_hash":"983b8a22da5524ffc5bf6bef7514731d1f2d2005d0fac5a1716d0f75c42408e3"} attached=0.0 NEAR
+DONE old-short-bid signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet bid_job {"actor":"ash.feral-039832.testnet","job_id":"short-v0","price":"$LIVE_ASH_PRICE"} attached=0.0 NEAR
+DONE demand-shock signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet set_demand {"version":1} attached=0.0 NEAR
+DONE cancel-old-job signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet cancel_job {"job_id":"short-v0"} attached=0.0 NEAR
+PLAN death-tick signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet tick {"next_turn":1} attached=0.0 NEAR
+PLAN refused-post-death-spend signer=ash.feral-039832.testnet receiver=ctrl.feral-039832.testnet pay_creature {"actor":"ash.feral-039832.testnet","provider":"moss.feral-039832.testnet","amount":"1","service_id":"after-death","output_hash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"} attached=0.0 NEAR
+PLAN create-card-job signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet create_job {"job_id":"bilingual-v1","amount":"90","expiry_turn":4,"requirements_hash":"$TRANSCRIPT_HASH"} attached=0.0 NEAR
+PLAN paid-collaboration signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet pay_creature {"actor":"moss.feral-039832.testnet","provider":"echo.feral-039832.testnet","amount":"30","service_id":"translation-v1","output_hash":"$TRANSLATION_HASH"} attached=0.0 NEAR
+PLAN parent-bid signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet bid_job {"actor":"moss.feral-039832.testnet","job_id":"bilingual-v1","price":"$LIVE_PARENT_PRICE"} attached=0.0 NEAR
+PLAN claim-card-job signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet claim_job {"actor":"moss.feral-039832.testnet","job_id":"bilingual-v1"} attached=0.0 NEAR
+PLAN paid-job signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet settle_job {"job_id":"bilingual-v1","output_hash":"$CARD_HASH"} attached=0.0 NEAR
+PLAN lineage-goal signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet set_goal {"actor":"moss.feral-039832.testnet","goal":2} attached=0.0 NEAR
+PLAN funded-child-account-creation signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet birth {"parent":"moss.feral-039832.testnet","child":"pip.ctrl.feral-039832.testnet","nonce":1,"native":"60000000000000000000000","strategy_hash":"b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06","mutation":1} attached=0.0 NEAR
+PLAN second-upkeep signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet tick {"next_turn":2} attached=0.0 NEAR
+PLAN create-child-job signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet create_job {"job_id":"child-first","amount":"90","expiry_turn":4,"requirements_hash":"$TRANSCRIPT_HASH"} attached=0.0 NEAR
+PLAN child-first-bid signer=feral-039832.testnet receiver=ctrl.feral-039832.testnet bid_job {"actor":"pip.ctrl.feral-039832.testnet","job_id":"child-first","price":"$LIVE_CHILD_PRICE"} attached=0.0 NEAR
+READ ONLY tick recovery check {"public_key":"ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW","base_nonce":"276606257000011","nonce":"276606257000012","previous_hash":"Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5","reason":"No finalized tick; unchanged signer nonce and turn zero. Exact competing nonce plus tick(1) guard prevents double upkeep.","observed_at_wat":"2026-11-07 09:48:42 WAT"}

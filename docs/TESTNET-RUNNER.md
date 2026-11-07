@@ -1,6 +1,6 @@
 # NEAR testnet runner handoff
 
-This is a code only handoff. The executor sent no public transaction and never opened the credential file. The parent supplied the already created throwaway account feral-039832.testnet. The earlier public status section in PHASE2.md is historical and superseded here.
+This is a code only handoff. The parent subsequently ran the first twelve transactions and stopped before the death tick. Read [TICK-HASH-RECOVERY.md](TICK-HASH-RECOVERY.md) for its diagnosis, fix and exact guarded resume command. The executor sent no public transaction and never opened the credential file. The parent supplied the already created throwaway account feral-039832.testnet. The earlier public status section in PHASE2.md is historical and superseded here.
 
 ## Command for the parent
 
@@ -65,7 +65,7 @@ An intent is saved before invoking near cli. Any captured transaction hash is pe
 bash scripts/testnet-run.sh --execute --resolve-hash create-controller=THE_REAL_HASH
 ```
 
-The script verifies signer, receiver, action types, funding, method arguments, gas, deposit and final outcome before accepting a recovered hash. If an intent is proven never submitted, review it manually before clearing only that intent. There is intentionally no force retry or journal reset option. Public raw CLI output is not saved because key generation stays inside near cli's legacy keychain flow.
+The script verifies signer, receiver, action types, funding, method arguments, gas, deposit and final outcome before accepting a recovered hash. If an intent is proven never submitted, review it manually before clearing only that intent. There is intentionally no force retry or journal reset option. Public raw CLI output is not saved because key generation stays inside near cli's legacy keychain flow. New calls save a protected signed file first and persist its canonical hash before broadcasting, so they no longer depend on CLI output parsing.
 
 A successful account creation with a failed birth callback must remain stopped for explicit reconciliation. Never recreate the child or automatically refund its committed native funding. The public runner does not inject faults or perform recovery mutations.
 
@@ -75,13 +75,13 @@ The authoritative journal is evidence/testnet-journal.json. It contains public o
 
 Deployment is labelled deploy-controller. Registrations are register-moss, register-echo and register-ash. Work and collaboration are paid-job and paid-collaboration. Extinction and rejection are death-tick and refused-post-death-spend. The birth and first bid are funded-child-account-creation and child-first-bid. The child creation is a receipt under the birth transaction, not a fabricated separate transaction hash.
 
-The runner has been tested locally, not against public execution. No live loop success or public loop explorer link is claimed in this handoff. No MPC call, Sepolia, wallet belonging to David, GitHub, push or posting is part of the script. Those actions still need their own separate approval if later desired.
+The runner has local verification and twelve parent executed public successes. The full live loop is not yet complete. No MPC call, Sepolia, wallet belonging to David, GitHub, push or posting is part of the script. Those actions still need their own separate approval if later desired.
 
 ## Real local verification
 
-The full local test pipeline and the runner safety tests were run, not just written. There are 92 unique passing tests and no failures or skips. This comprises 27 Rust unit tests, four sandbox integration tests, 10 agent and tool tests, 29 runner tests, seven app and voucher tests and 15 Forge tests. The pipeline also rebuilds the normal and fault WASM artifacts separately, runs the live sandbox economy, type checks and builds the UI, and reports zero known npm vulnerabilities.
+The full local test pipeline and the runner safety tests were run, not just written. There are 103 unique passing tests and no failures or skips. This comprises 27 Rust unit tests, four sandbox integration tests, 10 agent and tool tests, 37 runner tests and three offline decoder tests, seven app and voucher tests and 15 Forge tests. The pipeline also rebuilds the normal and fault WASM artifacts separately, runs the live sandbox economy, type checks and builds the UI, and reports zero known npm vulnerabilities.
 
-The 29 runner tests include budget math, read only RPC enforcement, signer and receiver scope, all 24 CLI command grammars using local help only, exact transaction matching, expected failure handling, live decision validation, operation tamper checks, an exclusive lock, durable hash recovery, no hash refusal and no duplicate submissions. They use injected local mocks and do not execute public signing. The public runner itself has not been tested live.
+The 37 runner tests and three offline decoder tests include budget math, read only RPC enforcement, signer and receiver scope, all 24 CLI command grammars using local help only, exact transaction matching, expected failure handling, live decision validation, operation tamper checks, an exclusive lock, durable hash recovery, no hash refusal and no duplicate submissions. They use injected local mocks and do not execute public signing. The public runner itself has not been tested live.
 
 ```sh
 bash scripts/test-local.sh

@@ -10,3 +10,5 @@ __pycache__/
 
 /evidence/testnet-run.lock
 /evidence/testnet-*.tmp
+
+/.local-transactions/
