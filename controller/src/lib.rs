@@ -1,8 +1,16 @@
+pub mod voucher;
 use near_contract_standards::fungible_token::{
     FungibleToken,
     core::FungibleTokenCore,
     metadata::{FT_METADATA_SPEC, FungibleTokenMetadata, FungibleTokenMetadataProvider},
     resolver::FungibleTokenResolver,
+};
+use near_contract_standards::non_fungible_token::{
+    NonFungibleToken, NonFungibleTokenResolver, Token, TokenId,
+    core::NonFungibleTokenCore,
+    metadata::{
+        NFT_METADATA_SPEC, NFTContractMetadata, NonFungibleTokenMetadataProvider, TokenMetadata,
+    },
 };
 use near_contract_standards::storage_management::{
     StorageBalance, StorageBalanceBounds, StorageManagement,
@@ -13,6 +21,8 @@ use near_sdk::{
     AccountId, Gas, NearToken, PanicOnDefault, Promise, PromiseError, PromiseOrValue,
     assert_one_yocto, env, near, require,
 };
+use std::collections::HashMap;
+use voucher::{Liability, Payload, SignRequest, ToolConfig, Voucher};
 
 const UPKEEP: u128 = 10;
 const CHILD_MUNCH: u128 = 100;
@@ -53,15 +63,27 @@ pub struct Job {
     pub claimant: Option<AccountId>,
     pub output_hash: Option<String>,
     pub paid: bool,
+    pub agreed_price: Option<U128>,
 }
 #[near(contract_state)]
 #[derive(PanicOnDefault)]
 pub struct Controller {
     owner: AccountId,
+    tool_config: Option<ToolConfig>,
+    tool_liabilities: LookupMap<u64, Liability>,
+    tool_jobs: UnorderedSet<String>,
+    tool_committed: u128,
+    next_tool_nonce: u64,
     token: FungibleToken,
+    lives: NonFungibleToken,
+    goals: LookupMap<AccountId, u8>,
+    nft_in_flight: UnorderedSet<TokenId>,
+    #[cfg(feature = "fault-injection")]
+    fault_child: Option<AccountId>,
     creatures: UnorderedMap<AccountId, Creature>,
     births: LookupMap<AccountId, Birth>,
     jobs: LookupMap<String, Job>,
+    bids: LookupMap<String, U128>,
     services: UnorderedSet<String>,
     turn: u64,
     demand: u64,
@@ -79,12 +101,30 @@ impl Controller {
         let mut token = FungibleToken::new(b"t".to_vec());
         token.internal_register_account(&env::current_account_id());
         token.internal_deposit(&env::current_account_id(), 1000);
+        let lives = NonFungibleToken::new(
+            b"n".to_vec(),
+            owner.clone(),
+            Some(b"nm".to_vec()),
+            None::<Vec<u8>>,
+            None::<Vec<u8>>,
+        );
         Self {
+            lives,
+            goals: LookupMap::new(b"go".to_vec()),
+            nft_in_flight: UnorderedSet::new(b"nf".to_vec()),
+            #[cfg(feature = "fault-injection")]
+            fault_child: None,
+            tool_config: None,
+            tool_liabilities: LookupMap::new(b"tl".to_vec()),
+            tool_jobs: UnorderedSet::new(b"tj".to_vec()),
+            tool_committed: 0,
+            next_tool_nonce: 0,
             owner,
             token,
             creatures: UnorderedMap::new(b"c"),
             births: LookupMap::new(b"b"),
             jobs: LookupMap::new(b"j"),
+            bids: LookupMap::new(b"bd".to_vec()),
             services: UnorderedSet::new(b"s"),
             turn: 0,
             demand: 0,
@@ -130,6 +170,7 @@ impl Controller {
                 native_reserve: U128(env::attached_deposit().as_yoctonear()),
             },
         );
+        self.mint_life(&id, self.owner.clone());
         self.solvent_native();
     }
     pub fn tick(&mut self, next_turn: u64) {
@@ -196,14 +237,37 @@ impl Controller {
                 claimant: None,
                 output_hash: None,
                 paid: false,
+                agreed_price: None,
             },
         );
+    }
+    pub fn bid_job(&mut self, actor: AccountId, job_id: String, price: U128) {
+        self.actor(&actor);
+        let job = self.jobs.get(&job_id).expect("unknown job");
+        self.live_job(&job);
+        require!(job.claimant.is_none(), "claimed");
+        let c = self.creatures.get(&actor).unwrap();
+        let floor = match c.mutation {
+            0 => 90,
+            1 => 80,
+            2 => 30,
+            3 => 40,
+            _ => env::panic_str("policy"),
+        };
+        require!(price.0 >= floor && price.0 <= job.amount.0, "bid bounds");
+        let key = format!("{job_id}/{actor}");
+        require!(self.bids.get(&key).is_none(), "bid exists");
+        self.bids.insert(&key, &price);
+    }
+    pub fn bid(&self, actor: AccountId, job_id: String) -> Option<U128> {
+        self.bids.get(&format!("{job_id}/{actor}"))
     }
     pub fn claim_job(&mut self, actor: AccountId, job_id: String) {
         self.actor(&actor);
         let mut job = self.jobs.get(&job_id).expect("unknown job");
         self.live_job(&job);
         require!(job.claimant.is_none(), "claimed");
+        job.agreed_price = self.bids.get(&format!("{job_id}/{actor}"));
         job.claimant = Some(actor);
         self.jobs.insert(&job_id, &job);
     }
@@ -214,7 +278,9 @@ impl Controller {
         self.live_job(&job);
         let actor = job.claimant.clone().expect("unclaimed");
         self.active(&actor);
-        self.move_token(&env::current_account_id(), &actor, job.amount.0);
+        let price = job.agreed_price.unwrap_or(job.amount).0;
+        self.move_token(&env::current_account_id(), &actor, price);
+        self.market += job.amount.0 - price;
         self.job_escrow -= job.amount.0;
         job.paid = true;
         job.output_hash = Some(output_hash);
@@ -354,6 +420,11 @@ impl Controller {
     }
     #[private]
     pub fn on_birth(&mut self, child: AccountId, nonce: u64) -> bool {
+        #[cfg(feature = "fault-injection")]
+        require!(
+            self.fault_child.as_ref() != Some(&child),
+            "injected callback failure after creation"
+        );
         require!(env::promise_results_count() == 1, "one result required");
         let success = match env::promise_result_checked(0, 64) {
             Ok(_) => true,
@@ -377,6 +448,161 @@ impl Controller {
         self.complete_birth(child, nonce, success);
         env::log_str(&format!("trusted birth reconciliation {evidence_hash}"));
     }
+    #[cfg(feature = "fault-injection")]
+    pub fn inject_callback_failure(&mut self, child: AccountId) {
+        self.only_owner();
+        self.fault_child = Some(child);
+    }
+    pub fn list_creatures(&self) -> Vec<(AccountId, Creature)> {
+        self.creatures.iter().collect()
+    }
+    pub fn goal(&self, actor: AccountId) -> u8 {
+        self.goals.get(&actor).unwrap_or(0)
+    }
+    pub fn set_goal(&mut self, actor: AccountId, goal: u8) {
+        self.life_owner(&actor);
+        self.active(&actor);
+        require!(goal <= 2, "goal bounds");
+        self.goals.insert(&actor, &goal);
+    }
+    pub fn sponsor(&mut self, actor: AccountId, amount: U128) {
+        self.life_owner(&actor);
+        self.active(&actor);
+        require!(amount.0 > 0, "positive sponsorship");
+        let source = env::predecessor_account_id();
+        self.ft_sender_guard(&source);
+        self.move_token(&source, &actor, amount.0);
+    }
+    pub fn configure_tools(&mut self, config: ToolConfig) {
+        self.only_owner();
+        require!(self.tool_config.is_none(), "tools already configured");
+        require!(
+            config.domain.chain_id == 11155111
+                && config.per_voucher.0 > 0
+                && config.total_cap.0 >= config.per_voucher.0,
+            "tool config bounds"
+        );
+        voucher::bytes(&config.domain.treasury, 20);
+        voucher::bytes(&config.recipient, 20);
+        voucher::bytes(&config.token, 20);
+        voucher::bytes(&config.campaign, 32);
+        self.tool_config = Some(config);
+    }
+    pub fn preview_tool_digest(&self, voucher: Voucher) -> String {
+        voucher::digest(
+            &self
+                .tool_config
+                .as_ref()
+                .expect("tools not configured")
+                .domain,
+            &voucher,
+        )
+    }
+    pub fn request_tool_payment(
+        &mut self,
+        actor: AccountId,
+        job_id: String,
+        voucher: Voucher,
+    ) -> Promise {
+        self.actor(&actor);
+        let config = self.tool_config.clone().expect("tools not configured");
+        let job = self.jobs.get(&job_id).expect("unknown job");
+        require!(
+            job.paid
+                && job.claimant.as_ref() == Some(&actor)
+                && job.output_hash.as_ref() == Some(&voucher.output_hash),
+            "accepted work required"
+        );
+        require!(
+            voucher.campaign == config.campaign
+                && voucher.recipient == config.recipient
+                && voucher.token == config.token,
+            "fixed destination"
+        );
+        require!(
+            voucher.creature == voucher::hex(&env::sha256(actor.as_bytes()))
+                && voucher.job == voucher::hex(&env::sha256(job_id.as_bytes())),
+            "actor and job binding"
+        );
+        require!(
+            voucher.nonce == self.next_tool_nonce && !self.tool_jobs.contains(&job_id),
+            "tool replay"
+        );
+        let now = env::block_timestamp() / 1_000_000_000;
+        require!(
+            voucher.expiry > now && voucher.expiry <= now + 3600,
+            "voucher expiry bounds"
+        );
+        require!(
+            voucher.amount.0 > 0
+                && voucher.amount.0 <= config.per_voucher.0
+                && self.tool_committed.checked_add(voucher.amount.0).unwrap() <= config.total_cap.0,
+            "tool cap"
+        );
+        let digest = voucher::digest(&config.domain, &voucher);
+        let nonce = voucher.nonce;
+        self.tool_committed += voucher.amount.0;
+        self.next_tool_nonce = self.next_tool_nonce.checked_add(1).unwrap();
+        self.tool_jobs.insert(&job_id);
+        self.tool_liabilities.insert(
+            &nonce,
+            &Liability {
+                actor: actor.clone(),
+                voucher,
+                digest: digest.clone(),
+                state: "reserved".into(),
+                signature: None,
+            },
+        );
+        let request = SignRequest {
+            path: format!("feral-sepolia-v1/{actor}"),
+            payload_v2: Payload::Ecdsa(digest),
+            domain_id: 0,
+        };
+        Promise::new(config.signer)
+            .function_call(
+                "sign",
+                near_sdk::serde_json::to_vec(&near_sdk::serde_json::json!({"request":request}))
+                    .unwrap(),
+                NearToken::from_yoctonear(1),
+                Gas::from_tgas(60),
+            )
+            .then(
+                Promise::new(env::current_account_id()).function_call(
+                    "on_tool_signature",
+                    near_sdk::serde_json::to_vec(&near_sdk::serde_json::json!({"nonce":nonce}))
+                        .unwrap(),
+                    NearToken::from_yoctonear(0),
+                    Gas::from_tgas(15),
+                ),
+            )
+    }
+    #[private]
+    pub fn on_tool_signature(&mut self, nonce: u64) -> bool {
+        require!(env::promise_results_count() == 1, "one signature result");
+        let mut l = self
+            .tool_liabilities
+            .get(&nonce)
+            .expect("unknown liability");
+        require!(l.state == "reserved", "signature already resolved");
+        let ok = match env::promise_result_checked(0, 4096) {
+            Ok(result) => {
+                l.signature = Some(String::from_utf8(result).expect("UTF8 signature"));
+                l.state = "signature-returned".into();
+                true
+            }
+            Err(_) => {
+                l.state = "sign-failed-reserved".into();
+                false
+            }
+        };
+        // No paid state and no automatic release on a failed or missing broadcast.
+        self.tool_liabilities.insert(&nonce, &l);
+        ok
+    }
+    pub fn tool_liability(&self, nonce: u64) -> Option<Liability> {
+        self.tool_liabilities.get(&nonce)
+    }
     pub fn strategy_manifest(&self, mutation: u8) -> String {
         Self::policy(mutation).into()
     }
@@ -394,6 +620,28 @@ impl Controller {
     }
 }
 impl Controller {
+    fn mint_life(&mut self, actor: &AccountId, holder: AccountId) {
+        let c = self.creatures.get(actor).unwrap();
+        let token_id = actor.to_string();
+        self.lives.internal_mint_with_refund(token_id.clone(), holder.clone(), Some(TokenMetadata { title:Some(format!("Feral life {actor}")), description:Some("Goal and sponsorship permission. No right to drain creature funds.".into()), extra:Some(near_sdk::serde_json::json!({"actor":actor,"parent":c.parent,"strategy_hash":c.strategy_hash}).to_string()), ..Default::default() }),None);
+        near_contract_standards::non_fungible_token::events::NftMint {
+            owner_id: &holder,
+            token_ids: &[&token_id],
+            memo: Some("funded life"),
+        }
+        .emit();
+    }
+    fn life_owner(&self, actor: &AccountId) {
+        require!(
+            !self.nft_in_flight.contains(&actor.to_string()),
+            "life transfer pending"
+        );
+        require!(
+            self.lives.owner_by_id.get(&actor.to_string()).as_ref()
+                == Some(&env::predecessor_account_id()),
+            "life owner only"
+        );
+    }
     fn policy(mutation: u8) -> &'static str {
         match mutation {
             0 => "job=bilingual;min_price=90;birth_floor=120",
@@ -495,6 +743,12 @@ impl Controller {
                     native_reserve: U128(0),
                 },
             );
+            let nft_owner = self
+                .lives
+                .owner_by_id
+                .get(&b.parent.to_string())
+                .expect("parent life missing");
+            self.mint_life(&child, nft_owner);
             b.state = "complete".into();
         } else {
             self.move_token(&env::current_account_id(), &b.parent, CHILD_MUNCH);
@@ -610,3 +864,78 @@ impl FungibleTokenMetadataProvider for Controller {
 
 #[cfg(test)]
 mod tests;
+
+#[near]
+impl NonFungibleTokenCore for Controller {
+    #[payable]
+    fn nft_transfer(
+        &mut self,
+        receiver_id: AccountId,
+        token_id: TokenId,
+        approval_id: Option<u64>,
+        memo: Option<String>,
+    ) {
+        require!(
+            !self.nft_in_flight.contains(&token_id),
+            "life transfer pending"
+        );
+        self.lives
+            .nft_transfer(receiver_id, token_id, approval_id, memo);
+    }
+    #[payable]
+    fn nft_transfer_call(
+        &mut self,
+        receiver_id: AccountId,
+        token_id: TokenId,
+        approval_id: Option<u64>,
+        memo: Option<String>,
+        msg: String,
+    ) -> PromiseOrValue<bool> {
+        require!(
+            !self.nft_in_flight.contains(&token_id),
+            "life transfer pending"
+        );
+        let result =
+            self.lives
+                .nft_transfer_call(receiver_id, token_id.clone(), approval_id, memo, msg);
+        self.nft_in_flight.insert(&token_id);
+        result
+    }
+    fn nft_token(&self, token_id: TokenId) -> Option<Token> {
+        self.lives.nft_token(token_id)
+    }
+}
+#[near]
+impl NonFungibleTokenResolver for Controller {
+    #[private]
+    fn nft_resolve_transfer(
+        &mut self,
+        previous_owner_id: AccountId,
+        receiver_id: AccountId,
+        token_id: TokenId,
+        approved_account_ids: Option<HashMap<AccountId, u64>>,
+    ) -> bool {
+        let result = self.lives.nft_resolve_transfer(
+            previous_owner_id,
+            receiver_id,
+            token_id.clone(),
+            approved_account_ids,
+        );
+        self.nft_in_flight.remove(&token_id);
+        result
+    }
+}
+#[near]
+impl NonFungibleTokenMetadataProvider for Controller {
+    fn nft_metadata(&self) -> NFTContractMetadata {
+        NFTContractMetadata {
+            spec: NFT_METADATA_SPEC.into(),
+            name: "Feral Lives".into(),
+            symbol: "LIFE".into(),
+            icon: None,
+            base_uri: None,
+            reference: None,
+            reference_hash: None,
+        }
+    }
+}

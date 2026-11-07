@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {scene,verifyScene} from './playback.mjs';
+const run=JSON.parse(readFileSync(new URL('../evidence/terrarium-run.json',import.meta.url)));
+test('every playback frame conserves MUNCH',()=>{for(const e of run.events)assert.ok(verifyScene(e),e.kind)});
+test('playback includes real death birth and child bid',()=>{for(const kind of ['extinction','funded-birth','child-first-bid','work-paid','paid-collaboration'])assert.ok(run.events.some(e=>e.kind===kind));const last=scene(run,999);assert.equal(last.state.creatures.length,4);assert.equal(last.state.creatures.filter(c=>!c.creature.active).length,1);assert.equal(last.state.creatures[3].creature.parent,last.state.creatures[0].id)});
+test('receipts are local and never pretend to be public explorers',()=>{assert.equal(run.network,'local NEAR sandbox');assert.ok(run.events.some(e=>e.receipt));assert.ok(!JSON.stringify(run).includes('nearblocks.io'))});

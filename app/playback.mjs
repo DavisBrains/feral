@@ -1,0 +1,2 @@
+export function scene(run,index){if(!run||!Array.isArray(run.events)||!run.events.length)throw Error('event log required');const i=Math.max(0,Math.min(run.events.length-1,index));return run.events[i];}
+export function verifyScene(event){const e=event.state.economy;const creatureTotal=event.state.creatures.reduce((sum,c)=>sum+BigInt(c.balance),0n);return creatureTotal+BigInt(e.market)+BigInt(e.pending)+BigInt(e.job_escrow)===BigInt(e.supply)&&BigInt(e.supply)+BigInt(e.burned)===1000n;}

@@ -1,0 +1,11 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {fallback,validateDecision,decide} from './brain.mjs';import {renderTranscript,sha} from './tools.mjs';
+const s={policy:0,balance:240,active:true,jobs:[{kind:'bilingual',reward:90}],needs_translation:true,provider_active:true,has_translation:false,can_reproduce:false};
+test('policy chooses paid collaboration',()=>assert.equal(fallback(s).action,'collaborate'));
+test('child has different valid bid',()=>{assert.equal(fallback({...s,has_translation:true}).price,90);assert.equal(fallback({...s,policy:1,has_translation:true}).price,80)});
+test('dead creature only waits',()=>{assert.deepEqual(fallback({...s,active:false}),{action:'wait'});assert.throws(()=>validateDecision({action:'reproduce'},{...s,active:false}))});
+test('prompt injection cannot redirect payment',()=>assert.throws(()=>validateDecision({action:'bid',job:'bilingual',price:90,recipient:'attacker'},s)));
+test('bounded integer and policy enforced',()=>{for(const price of [-1,1.5,999])assert.throws(()=>validateDecision({action:'bid',job:'bilingual',price},{...s,has_translation:true}));assert.throws(()=>validateDecision({action:'bid',job:'short',price:90},s))});
+test('reproduction respects budget',()=>{assert.throws(()=>validateDecision({action:'reproduce'},{...s,balance:100,can_reproduce:true}));assert.equal(fallback({...s,balance:300,can_reproduce:true}).action,'reproduce')});
+test('model adapter validates and records fallback',async()=>{assert.equal((await decide(s,async()=>'{"action":"wait"}')).mode,'local-model');const d=await decide(s,async()=>'{"action":"pay", "price":999}');assert.equal(d.mode,'deterministic-policy');assert.ok(d.rejected)});
+test('two supplied transcripts produce different real cards',()=>{const a={title:'A',segments:[{start_ms:0,en:'Hello world',es:'Hola mundo'}]};const b={...a,segments:[{start_ms:0,en:'Useful work',es:'Trabajo útil'}]};assert.notEqual(sha(renderTranscript(a).svg),sha(renderTranscript(b).svg));assert.ok(renderTranscript(b).svg.includes('Trabajo útil'))});
+test('SVG content is escaped and input bounded',()=>{assert.ok(renderTranscript({title:'<script>',segments:[{start_ms:0,en:'<x>',es:'&'}]}).svg.includes('&lt;script&gt;'));assert.throws(()=>renderTranscript({title:'A',segments:[]}))});

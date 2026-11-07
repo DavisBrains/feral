@@ -1,0 +1,8 @@
+[package]
+name="feral-mock-signer"
+version="0.1.0"
+edition="2024"
+[lib]
+crate-type=["cdylib","rlib"]
+[dependencies]
+near-sdk={workspace=true,features=["legacy"]}

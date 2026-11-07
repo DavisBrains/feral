@@ -366,3 +366,48 @@ fn callback_without_result_refused() {
     let mut c = setup();
     c.on_birth(id("kid.feral.test"), 1);
 }
+
+#[test]
+fn life_owner_can_set_goal_and_sponsor() {
+    let mut c = setup();
+    c.set_goal(id("a.test"), 2);
+    assert_eq!(c.goal(id("a.test")), 2);
+    c.ensure_token_account(&id("owner.test"));
+    c.move_token(&id("b.test"), &id("owner.test"), 20);
+    c.sponsor(id("a.test"), U128(20));
+    assert_eq!(c.balance(&id("a.test")), 270);
+    assert_eq!(c.balance(&id("owner.test")), 0);
+}
+#[test]
+#[should_panic(expected = "life owner only")]
+fn nonholder_goal_refused() {
+    let mut c = setup();
+    ctx("attacker.test", 0);
+    c.set_goal(id("a.test"), 1);
+}
+#[test]
+#[should_panic(expected = "extinct")]
+fn life_cannot_revive_extinction() {
+    let mut c = setup();
+    c.tick(1);
+    c.set_goal(id("c.test"), 1);
+}
+#[test]
+fn transferred_life_changes_permissions() {
+    let mut c = setup();
+    ctx("owner.test", 1);
+    c.nft_transfer(id("holder.test"), "a.test".into(), None, None);
+    ctx("holder.test", 0);
+    c.set_goal(id("a.test"), 2);
+    assert_eq!(c.goal(id("a.test")), 2);
+    assert_eq!(c.balance(&id("a.test")), 250);
+}
+#[test]
+#[should_panic(expected = "life owner only")]
+fn former_holder_cannot_sponsor() {
+    let mut c = setup();
+    ctx("owner.test", 1);
+    c.nft_transfer(id("holder.test"), "a.test".into(), None, None);
+    ctx("owner.test", 0);
+    c.sponsor(id("a.test"), U128(1));
+}

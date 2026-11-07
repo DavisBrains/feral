@@ -1,0 +1,1 @@
+import {copyFileSync,mkdirSync,cpSync} from 'node:fs';mkdirSync('public',{recursive:true});copyFileSync('../evidence/terrarium-run.json','public/run.json');cpSync('../evidence/live-work','public/live-work',{recursive:true});
