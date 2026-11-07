@@ -1,0 +1,34 @@
+{
+  "recorded_wat": "2026-11-07 09:20 WAT",
+  "final_pipeline_exit": 0,
+  "tests": {
+    "rust_unit": 27,
+    "sandbox_integration": 4,
+    "agent_node": 10,
+    "app_node": 7,
+    "forge": 15,
+    "total": 63,
+    "failed": 0,
+    "skipped": 0
+  },
+  "model": {
+    "name": "Qwen/Qwen2.5-1.5B-Instruct",
+    "benchmark_valid": 21,
+    "benchmark_correct": 21,
+    "benchmark_min_seconds": 1.1706329890002962,
+    "benchmark_median_seconds": 2.506218449001608,
+    "benchmark_max_seconds": 3.593140543998743,
+    "live_decisions": 7,
+    "fallback_count": 0,
+    "live_min_seconds": 1.275082239000767,
+    "live_median_seconds": 2.6592155849975825,
+    "live_max_seconds": 2.740536704000988
+  },
+  "runner": {
+    "events": 26,
+    "completed": true
+  },
+  "screenshot": null,
+  "public_testnet_transactions": 0,
+  "github_remotes": 0
+}

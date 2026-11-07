@@ -1,0 +1,263 @@
+{"source": {"en": "Build beyond boundaries", "es": "Construye sin límites"}, "file": "caption-card.svg", "sha256": "2a32dc82114ae7df45bf72d8590d92cb4ca615b132d4832a6076de5e3f5c74de", "width": 1080, "height": 1080, "mode": "deterministic controlled fixture", "verifier": "trusted local exact text and dimensions"}
+   Compiling aws-lc-sys v0.47.0
+   Compiling aws-lc-rs v1.19.0
+   Compiling near-crypto v0.38.0
+   Compiling near-sdk-core v4.4.2
+   Compiling near-vm-runner v0.38.0
+   Compiling near-primitives v0.38.0
+   Compiling near-global-contracts v0.3.3
+   Compiling near-sdk v5.30.1
+   Compiling near-contract-standards v5.30.1
+   Compiling feral-controller v0.1.0 (/workspace/near/feral/controller)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.98s
+     Running unittests src/lib.rs (target/debug/deps/feral_controller-cbaf7d21fbb5230e)
+
+running 27 tests
+test tests::arbitrary_strategy_hash_refused - should panic ... ok
+test tests::below_strategy_price_refused - should panic ... ok
+test tests::callback_without_result_refused - should panic ... ok
+test tests::deposit_does_not_revive ... ok
+test tests::discounted_bid_settles_exact_price_and_releases_surplus ... ok
+test tests::dead_cannot_pay - should panic ... ok
+test tests::callback_duplicate_refused - should panic ... ok
+test tests::duplicate_birth_refused - should panic ... ok
+test tests::job_replay_refused - should panic ... ok
+test tests::exactly_ten_survives_once_then_dies ... ok
+test tests::failed_birth_refunds_even_if_parent_dies ... ok
+test tests::life_cannot_revive_extinction - should panic ... ok
+test tests::life_goal_can_block_reproduction_without_draining_funds - should panic ... ok
+test tests::life_owner_can_set_goal_and_sponsor ... ok
+test tests::former_holder_cannot_sponsor - should panic ... ok
+test tests::paper_playthrough ... ok
+test tests::checked_promise_callbacks ... ok
+test tests::repeated_tick_refused - should panic ... ok
+test tests::nonholder_goal_refused - should panic ... ok
+test tests::native_overflow_refused - should panic ... ok
+test tests::service_replay_refused - should panic ... ok
+test tests::reserved_money_cannot_fund_second_birth - should panic ... ok
+test tests::stale_demand_cannot_pay - should panic ... ok
+test tests::successful_cleanup_after_parent_death ... ok
+test tests::underflow_refused - should panic ... ok
+test tests::unauthorized_tick_refused - should panic ... ok
+test tests::transferred_life_changes_permissions ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+• Collecting cargo project metadata...
+• done
+
+• Checking rustc version...
+INFO: contract's near-sdk targets protocol version 85; rustc 1.95.0 accepted (bulk-memory opcodes supported by nearcore VM)
+• done
+
+• Checking the host environment...
+• done
+
+• Building contract
+ │    Compiling feral-controller v0.1.0 (/workspace/near/feral/controller)
+ │     Finished `release` profile [optimized] target(s) in 2.65s
+
+Modification timestamps of:
+ |    "/workspace/near/feral/target/wasm32-unknown-unknown/release/feral_controller.wasm" = SystemTime { tv_sec: 1794039490, tv_nsec: 320794224 }
+ |    "/workspace/near/feral/target/fault/feral_controller.wasm" = SystemTime { tv_sec: 1794039072, tv_nsec: 464038586 }
+
+• Running an optimize for size post-step with wasm-opt --enable-nontrapping-float-to-int --enable-bulk-memory...
+    Finished wasm-opt -O in 1s 71ms
+• done
+
+✓ Contract successfully built! (in CARGO_NEAR_BUILD_ENVIRONMENT=host)
+     -                Binary: /workspace/near/feral/target/fault/feral_controller.wasm
+     -                  Size: 339.4 KB (339438 bytes)
+     - SHA-256 checksum hex : e76709dc8c72bdae309a47f13ba1dcaa755a909efdd5df2791fbac002fe8362f
+     - SHA-256 checksum bs58: GaJJkJ8cwvpR1pW4aw9oYsnSee8sCLakcBJUwm7QJvJA
+    Finished cargo near build in 4s
+Here is the console command if you ever need to re-run it again:
+cargo near build non-reproducible-wasm --no-abi --out-dir target/fault --manifest-path controller/Cargo.toml --features fault-injection
+• Collecting cargo project metadata...
+• done
+
+• Checking rustc version...
+INFO: contract's near-sdk targets protocol version 85; rustc 1.95.0 accepted (bulk-memory opcodes supported by nearcore VM)
+• done
+
+• Checking the host environment...
+• done
+
+• Building contract
+ │    Compiling feral-controller v0.1.0 (/workspace/near/feral/controller)
+ │     Finished `release` profile [optimized] target(s) in 2.61s
+
+Modification timestamps of:
+ |    "/workspace/near/feral/target/wasm32-unknown-unknown/release/feral_controller.wasm" = SystemTime { tv_sec: 1794039494, tv_nsec: 344606792 }
+ |    "/workspace/near/feral/target/near/feral_controller/feral_controller.wasm" = SystemTime { tv_sec: 1794039076, tv_nsec: 428182485 }
+
+• Running an optimize for size post-step with wasm-opt --enable-nontrapping-float-to-int --enable-bulk-memory...
+    Finished wasm-opt -O in 1s 50ms
+• done
+
+✓ Contract successfully built! (in CARGO_NEAR_BUILD_ENVIRONMENT=host)
+     -                Binary: /workspace/near/feral/target/near/feral_controller/feral_controller.wasm
+     -                  Size: 337.7 KB (337694 bytes)
+     - SHA-256 checksum hex : 1745c9d85d48f112e0e8d4f358f12c8a62a4f028058e219e8b84a084476b27bb
+     - SHA-256 checksum bs58: 2Zr6hjJGvd7BbJZBAPCwzJLdU4tjcvPhMoNECx6Q5nNv
+    Finished cargo near build in 3s
+Here is the console command if you ever need to re-run it again:
+cargo near build non-reproducible-wasm --no-abi --manifest-path controller/Cargo.toml
+• Collecting cargo project metadata...
+• done
+
+• Checking rustc version...
+INFO: contract's near-sdk targets protocol version 85; rustc 1.95.0 accepted (bulk-memory opcodes supported by nearcore VM)
+• done
+
+• Checking the host environment...
+• done
+
+• Building contract
+ │     Finished `release` profile [optimized] target(s) in 0.09s
+
+Modification timestamps of:
+ |    "/workspace/near/feral/target/wasm32-unknown-unknown/release/feral_mock_signer.wasm" = SystemTime { tv_sec: 1794039019, tv_nsec: 750674229 }
+ |    "/workspace/near/feral/target/near/feral_mock_signer/feral_mock_signer.wasm" = SystemTime { tv_sec: 1794039020, tv_nsec: 102679392 }
+
+• Skipped running wasm-opt as final target exists and is newer than wasm produced by cargo
+
+✓ Contract successfully built! (in CARGO_NEAR_BUILD_ENVIRONMENT=host)
+     -                Binary: /workspace/near/feral/target/near/feral_mock_signer/feral_mock_signer.wasm
+     -                  Size: 125.6 KB (125613 bytes)
+     - SHA-256 checksum hex : 61e66ef71dbe900b4e13485fcb83adc8c3cd67f2f673dc0727cb328af0367a31
+     - SHA-256 checksum bs58: 7bALuXiXPVqLxYiVAphhsLM6BZw3noJNiiQazAqiax5N
+    Finished cargo near build in 0s
+Here is the console command if you ever need to re-run it again:
+cargo near build non-reproducible-wasm --no-abi --manifest-path mock-signer/Cargo.toml
+   Compiling feral-integration v0.1.0 (/workspace/near/feral/integration-tests)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.62s
+     Running unittests src/lib.rs (target/debug/deps/feral_integration-6ff1942d76e7d348)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/fault_and_nft.rs (target/debug/deps/fault_and_nft-567f030094b6da3f)
+
+running 2 tests
+native raw owner 99799132387664767500000000 -> 99791500550987908100000000; controller 100200000000000000000000000 -> 100140000000000000000000000; child 60000000000000000000000; gross 7631836676859400000000
+native reconciliation {"child_storage_backing":"1000000000000000000000","child_storage_bytes":100,"child_total":"60000000000000000000000","contract_reward":"0","controller_after":"100140000000000000000000000","controller_before":"100200000000000000000000000","gross_gas_charge":"7631836676859400000000","identity":"before total = after total + gross gas charges - contract rewards; storage backing is included in total","net_protocol_debit":"7631836676859400000000","network":"sandbox","owner_after":"99791500550987908100000000","owner_before":"99799132387664767500000000","transaction":"7uwaanL8YPkH7oojJyo1KVi2MbwjhyXLrmewHzD32vF8"}
+test created_account_failed_callback_recovers_without_refund_and_native_reconciles ... ok
+test nft_permissions_follow_owner_and_do_not_drain_or_revive ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.40s
+
+     Running tests/mock_mpc.rs (target/debug/deps/mock_mpc-9e8ee2190cb5d963)
+
+running 1 test
+test controller_scoped_current_mpc_request_matches_ethers_and_mock_signature ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.12s
+
+     Running tests/playthrough.rs (target/debug/deps/playthrough-a5d1e62984fa11f5)
+
+running 1 test
+birth receipt ExecutionFinalResult { total_gas_burnt: NearGas { inner: 17564436322748 }, transaction: ExecutionOutcome { transaction_hash: 9SiPrhKEizUzzzeWuZxBNgmpqhRVA9kpYS65mSZYFVY1, block_hash: HXyohNbPLwtYsHeVC82zq9S2egWpwtP8AUgdq9PTH8Qf, logs: [], receipt_ids: [PgqkCEH5MyDFNDxh1MTHJzJFiugjvi9rLtkBsCTEFS8], gas_burnt: NearGas { inner: 320457265900 }, tokens_burnt: NearToken { inner: 32045726590000000000 }, executor_id: AccountId("dev-20261107081844-17091064136393.test.near"), status: SuccessReceiptId(PgqkCEH5MyDFNDxh1MTHJzJFiugjvi9rLtkBsCTEFS8) }, receipts: [ExecutionOutcome { transaction_hash: PgqkCEH5MyDFNDxh1MTHJzJFiugjvi9rLtkBsCTEFS8, block_hash: B7bS4XCyy5fadtUogvXKXopuLu8VWssJGkX86hCwTqT1, logs: ["EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"dev-20261107081845-29944740637705.test.near\",\"new_owner_id\":\"dev-20261107081844-35717631030070.test.near\",\"amount\":\"100\"}]}"], receipt_ids: [7vexV4NHvsU5DVuHpw9y8kwadgmXV7hmuJmmwfTwDN1R, DpKUoc38fiqsb7zQ1JyPdqBJL1FfurfpkMSUHSWqE6h1, 8KXaMjnzpEXcWPiPFm3kJ5F6KmfKMw62N7bzXnJpKD9d], gas_burnt: NearGas { inner: 4636094929635 }, tokens_burnt: NearToken { inner: 463609492963500000000 }, executor_id: AccountId("dev-20261107081844-35717631030070.test.near"), status: SuccessReceiptId(DpKUoc38fiqsb7zQ1JyPdqBJL1FfurfpkMSUHSWqE6h1) }, ExecutionOutcome { transaction_hash: 7vexV4NHvsU5DVuHpw9y8kwadgmXV7hmuJmmwfTwDN1R, block_hash: 3thBkqxgMkXU7LrgekGzcDA2ogmo3KvBwck6MnXGhhre, logs: [], receipt_ids: [8Djhq73Xv7erD241SBrytj4au8NiLufYMHMdQshnxd3c], gas_burnt: NearGas { inner: 7423182562500 }, tokens_burnt: NearToken { inner: 7022318256250000000000 }, executor_id: AccountId("kid.dev-20261107081844-35717631030070.test.near"), status: SuccessValue('') }, ExecutionOutcome { transaction_hash: 8Djhq73Xv7erD241SBrytj4au8NiLufYMHMdQshnxd3c, block_hash: EwJXLsDVfvqGzdSx1MES9vXF1ijq3UdrA5dna6UfussE, logs: [], receipt_ids: [], gas_burnt: NearGas { inner: 223182562500 }, tokens_burnt: NearToken { inner: 0 }, executor_id: AccountId("dev-20261107081844-17091064136393.test.near"), status: SuccessValue('') }, ExecutionOutcome { transaction_hash: DpKUoc38fiqsb7zQ1JyPdqBJL1FfurfpkMSUHSWqE6h1, block_hash: EwJXLsDVfvqGzdSx1MES9vXF1ijq3UdrA5dna6UfussE, logs: ["EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"dev-20261107081844-35717631030070.test.near\",\"new_owner_id\":\"kid.dev-20261107081844-35717631030070.test.near\",\"amount\":\"100\"}]}", "EVENT_JSON:{\"standard\":\"nep171\",\"version\":\"1.0.0\",\"event\":\"nft_mint\",\"data\":[{\"owner_id\":\"dev-20261107081844-17091064136393.test.near\",\"token_ids\":[\"kid.dev-20261107081844-35717631030070.test.near\"],\"memo\":\"funded life\"}]}"], receipt_ids: [4QduhnScPkUnWZi9ub9mds3wrcJPtDbMdrDrjejqUMo4], gas_burnt: NearGas { inner: 4738336439713 }, tokens_burnt: NearToken { inner: 473833643971300000000 }, executor_id: AccountId("dev-20261107081844-35717631030070.test.near"), status: SuccessValue('true') }, ExecutionOutcome { transaction_hash: 8KXaMjnzpEXcWPiPFm3kJ5F6KmfKMw62N7bzXnJpKD9d, block_hash: 3thBkqxgMkXU7LrgekGzcDA2ogmo3KvBwck6MnXGhhre, logs: [], receipt_ids: [], gas_burnt: NearGas { inner: 223182562500 }, tokens_burnt: NearToken { inner: 0 }, executor_id: AccountId("dev-20261107081844-17091064136393.test.near"), status: SuccessValue('') }], status: SuccessValue('true') }
+real child native balance 60000000000000000000000 storage bytes 100
+failed-account receipt ExecutionFinalResult { total_gas_burnt: NearGas { inner: 15758666614738 }, transaction: ExecutionOutcome { transaction_hash: Eo1UBCM1tgj9rZAcgtXyr6AVQSENAEQrsezNaV6a9qXp, block_hash: 8WcYXkrDQtzZ1kFsXf1m5jkoTjybfPRaG4NXWX6JP98P, logs: [], receipt_ids: [BGs2nWwttZGJmbg7ArPucMtPbN6fPDThPzxA3hyZ5qPu], gas_burnt: NearGas { inner: 320695684475 }, tokens_burnt: NearToken { inner: 32069568447500000000 }, executor_id: AccountId("dev-20261107081844-17091064136393.test.near"), status: SuccessReceiptId(BGs2nWwttZGJmbg7ArPucMtPbN6fPDThPzxA3hyZ5qPu) }, receipts: [ExecutionOutcome { transaction_hash: BGs2nWwttZGJmbg7ArPucMtPbN6fPDThPzxA3hyZ5qPu, block_hash: C1bKb1izKXsC81CsyEJdntEH9uxwWq9fV9rqA7G4Y5Ck, logs: ["EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"dev-20261107081845-29944740637705.test.near\",\"new_owner_id\":\"dev-20261107081844-35717631030070.test.near\",\"amount\":\"100\"}]}"], receipt_ids: [EtNUZrMCSeVK3aD5gDFcFm53odw1ZZidreTcZHghQEPx, 51hPoQrWXQEE3FPbGsfrVY8yB5FTRo94habRShpUtLfE, 7jSzwvnvmQACQriUuk4Yg4ekqcthZAe6W9mgtLfPc4uA], gas_burnt: NearGas { inner: 4808193154786 }, tokens_burnt: NearToken { inner: 480819315478600000000 }, executor_id: AccountId("dev-20261107081844-35717631030070.test.near"), status: SuccessReceiptId(51hPoQrWXQEE3FPbGsfrVY8yB5FTRo94habRShpUtLfE) }, ExecutionOutcome { transaction_hash: EtNUZrMCSeVK3aD5gDFcFm53odw1ZZidreTcZHghQEPx, block_hash: 4Ahy7dAPKHY5FtNTTetrgp94YQkWAfsdaHu2uALLe3sd, logs: [], receipt_ids: [4cLqv5kVpP3C4JzMo6nt4vYNarZQRQSagVnhACJ5XrKA, 91KLeL7w9zQ8ibF7uv88mvUD71df6oCaVjThPCv8vszm], gas_burnt: NearGas { inner: 7308059500000 }, tokens_burnt: NearToken { inner: 730805950000000000000 }, executor_id: AccountId("existing.dev-20261107081844-35717631030070.test.near"), status: Failure(ActionError(ActionError { index: Some(0), kind: AccountAlreadyExists { account_id: AccountId("existing.dev-20261107081844-35717631030070.test.near") } })) }, ExecutionOutcome { transaction_hash: 4cLqv5kVpP3C4JzMo6nt4vYNarZQRQSagVnhACJ5XrKA, block_hash: J4fqa363ESm7TcqqR1922AudeSNydmh9XpbkLX4TMRoA, logs: [], receipt_ids: [], gas_burnt: NearGas { inner: 223182562500 }, tokens_burnt: NearToken { inner: 0 }, executor_id: AccountId("dev-20261107081844-35717631030070.test.near"), status: SuccessValue('') }, ExecutionOutcome { transaction_hash: 91KLeL7w9zQ8ibF7uv88mvUD71df6oCaVjThPCv8vszm, block_hash: J4fqa363ESm7TcqqR1922AudeSNydmh9XpbkLX4TMRoA, logs: [], receipt_ids: [], gas_burnt: NearGas { inner: 223182562500 }, tokens_burnt: NearToken { inner: 0 }, executor_id: AccountId("dev-20261107081844-17091064136393.test.near"), status: SuccessValue('') }, ExecutionOutcome { transaction_hash: 51hPoQrWXQEE3FPbGsfrVY8yB5FTRo94habRShpUtLfE, block_hash: J4fqa363ESm7TcqqR1922AudeSNydmh9XpbkLX4TMRoA, logs: ["EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"dev-20261107081844-35717631030070.test.near\",\"new_owner_id\":\"dev-20261107081845-29944740637705.test.near\",\"amount\":\"100\"}]}"], receipt_ids: [Gr6UcCaL5kXe1QZrPViF2c4siyAZZdg9ApykahTs3tYU], gas_burnt: NearGas { inner: 2652170587977 }, tokens_burnt: NearToken { inner: 265217058797700000000 }, executor_id: AccountId("dev-20261107081844-35717631030070.test.near"), status: SuccessValue('false') }, ExecutionOutcome { transaction_hash: 7jSzwvnvmQACQriUuk4Yg4ekqcthZAe6W9mgtLfPc4uA, block_hash: 4Ahy7dAPKHY5FtNTTetrgp94YQkWAfsdaHu2uALLe3sd, logs: [], receipt_ids: [], gas_burnt: NearGas { inner: 223182562500 }, tokens_burnt: NearToken { inner: 0 }, executor_id: AccountId("dev-20261107081844-17091064136393.test.near"), status: SuccessValue('') }], status: SuccessValue('false') }
+paper playthrough: 1000 initial, 50 burned, 950 supply; child funded; dead spend, duplicate birth, callback forgery and failed birth verified
+test sandbox_paper_playthrough_and_failure_paths ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.52s
+
+✔ policy chooses paid collaboration (0.813745ms)
+✔ child has different valid bid (0.121905ms)
+✔ dead creature only waits (1.595273ms)
+✔ prompt injection cannot redirect payment (0.11503ms)
+✔ bounded integer and policy enforced (0.257439ms)
+✔ reproduction respects budget (0.1007ms)
+✔ model adapter validates and records fallback (0.290713ms)
+✔ two supplied transcripts produce different real cards (0.774609ms)
+✔ SVG content is escaped and input bounded (0.221465ms)
+✔ NFT preserve goal blocks reproduction (0.229115ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.371166
+   Compiling feral-integration v0.1.0 (/workspace/near/feral/integration-tests)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.61s
+     Running `target/debug/examples/terrarium`
+Completed local terrarium with 26 structured events
+
+added 23 packages, and audited 24 packages in 834ms
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+
+> app@1.0.0 sync
+> node sync-evidence.mjs
+
+
+> app@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 4 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                 0.37 kB │ gzip: 0.27 kB
+dist/assets/index-Cc-oVUt_.css  3.68 kB │ gzip: 1.32 kB
+dist/assets/index-CgGGJ7a7.js   6.87 kB │ gzip: 3.30 kB
+✓ built in 96ms
+
+> app@1.0.0 test
+> node --test *.test.mjs
+
+✔ every playback frame conserves MUNCH (0.626077ms)
+✔ playback includes real death birth and child bid (0.439638ms)
+✔ receipts are local and never pretend to be public explorers (0.217781ms)
+✔ MPC fixture roundtrip recovers fixture signer (28.950642ms)
+✔ MPC schema uses current payload v2 (0.708077ms)
+✔ signature parser rejects changed digest and recovery (5.422004ms)
+✔ domain binds chain and treasury (3.147274ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 188.305047
+found 0 vulnerabilities
+
+added 1 package, and audited 2 packages in 286ms
+
+found 0 vulnerabilities
+No files changed, compilation skipped
+
+Ran 15 tests for test/FeralTreasury.t.sol:FeralTreasuryTest
+[PASS] testBadSignatureRefused() (gas: 63770)
+[PASS] testCampaignCap() (gas: 354876)
+[PASS] testChangedAmountRefused() (gas: 63777)
+[PASS] testChangedRecipientRefused() (gas: 63763)
+[PASS] testExpiredRefused() (gas: 49049)
+[PASS] testJobReplayWithFreshNonceRefused() (gas: 225000)
+[PASS] testPerVoucherCap() (gas: 53933)
+[PASS] testReentrancyBlocked() (gas: 2538401)
+[PASS] testReplayRefused() (gas: 212545)
+[PASS] testTotalCap() (gas: 509654)
+[PASS] testTransferFailureRollsBackNonce() (gas: 1200112)
+[PASS] testValidVoucherPays() (gas: 188931)
+[PASS] testWrongChainRefused() (gas: 64405)
+[PASS] testWrongTokenRefused() (gas: 48955)
+[PASS] testWrongTreasuryRefused() (gas: 1106871)
+Suite result: ok. 15 passed; 0 failed; 0 skipped; finished in 8.82ms (32.54ms CPU time)
+
+Ran 1 test suite in 9.43ms (8.82ms CPU time): 15 tests passed, 0 failed, 0 skipped (15 total tests)

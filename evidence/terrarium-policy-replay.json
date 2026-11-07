@@ -1,0 +1,2084 @@
+{
+  "controlled_participants": true,
+  "controller": "dev-20261107081057-57769544588795.test.near",
+  "events": [
+    {
+      "data": {
+        "labels": {
+          "dev-20261107081058-19542293112001.test.near": "Echo",
+          "dev-20261107081058-45330597669063.test.near": "Moss",
+          "dev-20261107081058-63959502003485.test.near": "Ash",
+          "pip.dev-20261107081057-57769544588795.test.near": "Pip"
+        }
+      },
+      "kind": "seeded",
+      "receipt": null,
+      "seq": 0,
+      "state": {
+        "creatures": [
+          {
+            "balance": 250,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 145,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "0",
+          "demand": 0,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "1000",
+          "turn": 0
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "amount": "40",
+          "expiry_turn": 3,
+          "job_id": "short-v0",
+          "requirements_hash": "983b8a22da5524ffc5bf6bef7514731d1f2d2005d0fac5a1716d0f75c42408e3"
+        },
+        "method": "create_job"
+      },
+      "kind": "old-demand",
+      "receipt": "GUVo9ZyYZvBqCqey5WjPyk1Zcs1xA4FDhA8AvSgyXPNV",
+      "seq": 1,
+      "state": {
+        "creatures": [
+          {
+            "balance": 250,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 145,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "0",
+          "demand": 0,
+          "job_escrow": "40",
+          "market": "560",
+          "pending": "0",
+          "supply": "1000",
+          "turn": 0
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "dev-20261107081058-63959502003485.test.near",
+        "observation": {
+          "active": true,
+          "actor": "dev-20261107081058-63959502003485.test.near",
+          "balance": 5,
+          "can_reproduce": false,
+          "has_translation": true,
+          "jobs": [
+            {
+              "kind": "short",
+              "reward": 40
+            }
+          ],
+          "needs_translation": true,
+          "policy": 3,
+          "provider_active": true
+        },
+        "result": {
+          "decision": {
+            "action": "bid",
+            "job": "short",
+            "price": 40
+          },
+          "mode": "deterministic-policy",
+          "rejected": null
+        }
+      },
+      "kind": "decision",
+      "receipt": null,
+      "seq": 2,
+      "state": {
+        "creatures": [
+          {
+            "balance": 250,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 145,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "0",
+          "demand": 0,
+          "job_escrow": "40",
+          "market": "560",
+          "pending": "0",
+          "supply": "1000",
+          "turn": 0
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "actor": "dev-20261107081058-63959502003485.test.near",
+          "job_id": "short-v0",
+          "price": "40"
+        },
+        "method": "bid_job"
+      },
+      "kind": "old-bid",
+      "receipt": "5LVtP4Ci1mMfxsgW4RmtrsYpYEKaae5wjFcFoQdYVbuN",
+      "seq": 3,
+      "state": {
+        "creatures": [
+          {
+            "balance": 250,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 145,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "0",
+          "demand": 0,
+          "job_escrow": "40",
+          "market": "560",
+          "pending": "0",
+          "supply": "1000",
+          "turn": 0
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "version": 1
+        },
+        "method": "set_demand"
+      },
+      "kind": "demand-shock",
+      "receipt": "Dki3jenLiQeQiTt71ticjbi5iogDVeXoKQYCLLRcjEK",
+      "seq": 4,
+      "state": {
+        "creatures": [
+          {
+            "balance": 250,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 145,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "0",
+          "demand": 1,
+          "job_escrow": "40",
+          "market": "560",
+          "pending": "0",
+          "supply": "1000",
+          "turn": 0
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "job_id": "short-v0"
+        },
+        "method": "cancel_job"
+      },
+      "kind": "old-work-cancelled",
+      "receipt": "2eHyDpyR7TsWz868ZCPszhvJe9zHoej1sfw6N5i7kc1J",
+      "seq": 5,
+      "state": {
+        "creatures": [
+          {
+            "balance": 250,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 145,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "0",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "1000",
+          "turn": 0
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "next_turn": 1
+        },
+        "method": "tick"
+      },
+      "kind": "extinction",
+      "receipt": "8YkmVRc7Y4e1UXbKjQSN59SoqBrhiS42GaVHLiStCrQ3",
+      "seq": 6,
+      "state": {
+        "creatures": [
+          {
+            "balance": 240,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 135,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "dev-20261107081058-63959502003485.test.near",
+        "observation": {
+          "active": false,
+          "actor": "dev-20261107081058-63959502003485.test.near",
+          "balance": 5,
+          "can_reproduce": false,
+          "has_translation": false,
+          "jobs": [
+            {
+              "kind": "bilingual",
+              "reward": 90
+            }
+          ],
+          "needs_translation": true,
+          "policy": 3,
+          "provider_active": true
+        },
+        "result": {
+          "decision": {
+            "action": "wait"
+          },
+          "mode": "deterministic-policy",
+          "rejected": null
+        }
+      },
+      "kind": "decision",
+      "receipt": null,
+      "seq": 7,
+      "state": {
+        "creatures": [
+          {
+            "balance": 240,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 135,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "dev-20261107081058-63959502003485.test.near",
+        "expected_failure": true,
+        "reason": "extinct"
+      },
+      "kind": "refused-after-death",
+      "receipt": "DHtyaDDnKSsGpuqtxqKFgtJW6MURNv8W8GcqpdUQY6jC",
+      "seq": 8,
+      "state": {
+        "creatures": [
+          {
+            "balance": 240,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 135,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "98999079418495152500000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "dev-20261107081058-45330597669063.test.near",
+        "observation": {
+          "active": true,
+          "actor": "dev-20261107081058-45330597669063.test.near",
+          "balance": 240,
+          "can_reproduce": false,
+          "has_translation": false,
+          "jobs": [
+            {
+              "kind": "bilingual",
+              "reward": 90
+            }
+          ],
+          "needs_translation": true,
+          "policy": 0,
+          "provider_active": true
+        },
+        "result": {
+          "decision": {
+            "action": "collaborate",
+            "job": "translation",
+            "price": 30
+          },
+          "mode": "deterministic-policy",
+          "rejected": null
+        }
+      },
+      "kind": "decision",
+      "receipt": null,
+      "seq": 9,
+      "state": {
+        "creatures": [
+          {
+            "balance": 240,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 135,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "98999079418495152500000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "dev-20261107081058-19542293112001.test.near",
+        "observation": {
+          "active": true,
+          "actor": "dev-20261107081058-19542293112001.test.near",
+          "balance": 135,
+          "can_reproduce": false,
+          "has_translation": true,
+          "jobs": [
+            {
+              "kind": "translation",
+              "reward": 30
+            }
+          ],
+          "needs_translation": true,
+          "policy": 2,
+          "provider_active": true
+        },
+        "result": {
+          "decision": {
+            "action": "bid",
+            "job": "translation",
+            "price": 30
+          },
+          "mode": "deterministic-policy",
+          "rejected": null
+        }
+      },
+      "kind": "decision",
+      "receipt": null,
+      "seq": 10,
+      "state": {
+        "creatures": [
+          {
+            "balance": 240,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 135,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "artifact": "live-work/card.svg",
+        "input": "demo-transcript.json",
+        "manifest": {
+          "file": "card.svg",
+          "mode": "real deterministic transcript rendering; supplied translations",
+          "output_sha256": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5",
+          "segments": 3,
+          "source_sha256": "51513d6f780e21d9db90b9a64b749bfe0e3f0e3c5e96ef53477f5ffd82f7da23",
+          "translation_sha256": "31a7fc823e9f494051540107d59228d426559218d316df47aed3704546297d08"
+        },
+        "translation_source": "supplied bilingual transcript"
+      },
+      "kind": "work-generated",
+      "receipt": null,
+      "seq": 11,
+      "state": {
+        "creatures": [
+          {
+            "balance": 240,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 135,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "actor": "dev-20261107081058-45330597669063.test.near",
+          "amount": "30",
+          "output_hash": "31a7fc823e9f494051540107d59228d426559218d316df47aed3704546297d08",
+          "provider": "dev-20261107081058-19542293112001.test.near",
+          "service_id": "translation-v1"
+        },
+        "method": "pay_creature"
+      },
+      "kind": "paid-collaboration",
+      "receipt": "7iqhWkiwyUpTFkZyMc2tGeeA4fdsrfjZH4wXLt5aYTro",
+      "seq": 12,
+      "state": {
+        "creatures": [
+          {
+            "balance": 210,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "dev-20261107081058-45330597669063.test.near",
+        "observation": {
+          "active": true,
+          "actor": "dev-20261107081058-45330597669063.test.near",
+          "balance": 210,
+          "can_reproduce": false,
+          "has_translation": true,
+          "jobs": [
+            {
+              "kind": "bilingual",
+              "reward": 90
+            }
+          ],
+          "needs_translation": true,
+          "policy": 0,
+          "provider_active": true
+        },
+        "result": {
+          "decision": {
+            "action": "bid",
+            "job": "bilingual",
+            "price": 90
+          },
+          "mode": "deterministic-policy",
+          "rejected": null
+        }
+      },
+      "kind": "decision",
+      "receipt": null,
+      "seq": 13,
+      "state": {
+        "creatures": [
+          {
+            "balance": 210,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "600",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "amount": "90",
+          "expiry_turn": 4,
+          "job_id": "bilingual-v1",
+          "requirements_hash": "51513d6f780e21d9db90b9a64b749bfe0e3f0e3c5e96ef53477f5ffd82f7da23"
+        },
+        "method": "create_job"
+      },
+      "kind": "work-escrow",
+      "receipt": "G9nNsvyjk8FbJKkTJwDsMSs5CuNFVpAstJkpxbaPEbRA",
+      "seq": 14,
+      "state": {
+        "creatures": [
+          {
+            "balance": 210,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "90",
+          "market": "510",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "actor": "dev-20261107081058-45330597669063.test.near",
+          "job_id": "bilingual-v1",
+          "price": "90"
+        },
+        "method": "bid_job"
+      },
+      "kind": "parent-bid",
+      "receipt": "BeFuVvramhev47wozSnqEiUbWqgPjZjk62ku3PVHneNY",
+      "seq": 15,
+      "state": {
+        "creatures": [
+          {
+            "balance": 210,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "90",
+          "market": "510",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "actor": "dev-20261107081058-45330597669063.test.near",
+          "job_id": "bilingual-v1"
+        },
+        "method": "claim_job"
+      },
+      "kind": "work-claimed",
+      "receipt": "Fanpm9FP2MPvVLNPWjt7h8dXAGmmyDxtGvZg2mfKTJse",
+      "seq": 16,
+      "state": {
+        "creatures": [
+          {
+            "balance": 210,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "90",
+          "market": "510",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "job_id": "bilingual-v1",
+          "output_hash": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5"
+        },
+        "method": "settle_job"
+      },
+      "kind": "work-paid",
+      "receipt": "GcUNweahM99HuFCfVBJg83t5P8pCxT6WbfgZ9DHrQ7ZG",
+      "seq": 17,
+      "state": {
+        "creatures": [
+          {
+            "balance": 300,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "510",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "dev-20261107081058-45330597669063.test.near",
+        "observation": {
+          "active": true,
+          "actor": "dev-20261107081058-45330597669063.test.near",
+          "balance": 300,
+          "can_reproduce": true,
+          "has_translation": true,
+          "jobs": [],
+          "needs_translation": true,
+          "policy": 0,
+          "provider_active": true
+        },
+        "result": {
+          "decision": {
+            "action": "reproduce"
+          },
+          "mode": "deterministic-policy",
+          "rejected": null
+        }
+      },
+      "kind": "decision",
+      "receipt": null,
+      "seq": 18,
+      "state": {
+        "creatures": [
+          {
+            "balance": 300,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "510",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "child": "pip.dev-20261107081057-57769544588795.test.near",
+          "mutation": 1,
+          "native": "60000000000000000000000",
+          "nonce": 1,
+          "parent": "dev-20261107081058-45330597669063.test.near",
+          "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
+        },
+        "method": "birth"
+      },
+      "kind": "funded-birth",
+      "receipt": "F91BjRGGL2ux6wykumN1AJP9RqLELGgBmhr5RjkJdco7",
+      "seq": 19,
+      "state": {
+        "creatures": [
+          {
+            "balance": 200,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "140000000000000000000000",
+              "nonce": 1,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 165,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          },
+          {
+            "balance": 100,
+            "creature": {
+              "active": true,
+              "born_turn": 1,
+              "mutation": 1,
+              "native_reserve": "0",
+              "nonce": 0,
+              "parent": "dev-20261107081058-45330597669063.test.near",
+              "pending": null,
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
+            },
+            "id": "pip.dev-20261107081057-57769544588795.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "60000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "20",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "510",
+          "pending": "0",
+          "supply": "980",
+          "turn": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "next_turn": 2
+        },
+        "method": "tick"
+      },
+      "kind": "next-breath",
+      "receipt": "4cRjkynZgxPpiLg4jme2TZAiFAam1wr8kwQTXEPAAgVN",
+      "seq": 20,
+      "state": {
+        "creatures": [
+          {
+            "balance": 190,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "140000000000000000000000",
+              "nonce": 1,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 155,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          },
+          {
+            "balance": 90,
+            "creature": {
+              "active": true,
+              "born_turn": 1,
+              "mutation": 1,
+              "native_reserve": "0",
+              "nonce": 0,
+              "parent": "dev-20261107081058-45330597669063.test.near",
+              "pending": null,
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
+            },
+            "id": "pip.dev-20261107081057-57769544588795.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "60000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "50",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "510",
+          "pending": "0",
+          "supply": "950",
+          "turn": 2
+        }
+      }
+    },
+    {
+      "data": {
+        "actor": "pip.dev-20261107081057-57769544588795.test.near",
+        "observation": {
+          "active": true,
+          "actor": "pip.dev-20261107081057-57769544588795.test.near",
+          "balance": 90,
+          "can_reproduce": false,
+          "has_translation": true,
+          "jobs": [
+            {
+              "kind": "bilingual",
+              "reward": 90
+            }
+          ],
+          "needs_translation": true,
+          "policy": 1,
+          "provider_active": true
+        },
+        "result": {
+          "decision": {
+            "action": "bid",
+            "job": "bilingual",
+            "price": 80
+          },
+          "mode": "deterministic-policy",
+          "rejected": null
+        }
+      },
+      "kind": "decision",
+      "receipt": null,
+      "seq": 21,
+      "state": {
+        "creatures": [
+          {
+            "balance": 190,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "140000000000000000000000",
+              "nonce": 1,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 155,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          },
+          {
+            "balance": 90,
+            "creature": {
+              "active": true,
+              "born_turn": 1,
+              "mutation": 1,
+              "native_reserve": "0",
+              "nonce": 0,
+              "parent": "dev-20261107081058-45330597669063.test.near",
+              "pending": null,
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
+            },
+            "id": "pip.dev-20261107081057-57769544588795.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "60000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "50",
+          "demand": 1,
+          "job_escrow": "0",
+          "market": "510",
+          "pending": "0",
+          "supply": "950",
+          "turn": 2
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "amount": "90",
+          "expiry_turn": 4,
+          "job_id": "child-first",
+          "requirements_hash": "51513d6f780e21d9db90b9a64b749bfe0e3f0e3c5e96ef53477f5ffd82f7da23"
+        },
+        "method": "create_job"
+      },
+      "kind": "child-work-escrow",
+      "receipt": "VhJJr8NuhdPEgLiyAdTNGVUhAFVj4sLNU1Wusgwpwbv",
+      "seq": 22,
+      "state": {
+        "creatures": [
+          {
+            "balance": 190,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "140000000000000000000000",
+              "nonce": 1,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 155,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          },
+          {
+            "balance": 90,
+            "creature": {
+              "active": true,
+              "born_turn": 1,
+              "mutation": 1,
+              "native_reserve": "0",
+              "nonce": 0,
+              "parent": "dev-20261107081058-45330597669063.test.near",
+              "pending": null,
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
+            },
+            "id": "pip.dev-20261107081057-57769544588795.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "60000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "50",
+          "demand": 1,
+          "job_escrow": "90",
+          "market": "420",
+          "pending": "0",
+          "supply": "950",
+          "turn": 2
+        }
+      }
+    },
+    {
+      "data": {
+        "args": {
+          "actor": "pip.dev-20261107081057-57769544588795.test.near",
+          "job_id": "child-first",
+          "price": "80"
+        },
+        "method": "bid_job"
+      },
+      "kind": "child-first-bid",
+      "receipt": "DU4sN459jJ3AMCE9xnD6z3VuFC6S5iG23MS7SdkUotfj",
+      "seq": 23,
+      "state": {
+        "creatures": [
+          {
+            "balance": 190,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "140000000000000000000000",
+              "nonce": 1,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 155,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          },
+          {
+            "balance": 90,
+            "creature": {
+              "active": true,
+              "born_turn": 1,
+              "mutation": 1,
+              "native_reserve": "0",
+              "nonce": 0,
+              "parent": "dev-20261107081058-45330597669063.test.near",
+              "pending": null,
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
+            },
+            "id": "pip.dev-20261107081057-57769544588795.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "60000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "50",
+          "demand": 1,
+          "job_escrow": "90",
+          "market": "420",
+          "pending": "0",
+          "supply": "950",
+          "turn": 2
+        }
+      }
+    },
+    {
+      "data": {
+        "burned": 50,
+        "child_bid": 80,
+        "no_public_chain_actions": true,
+        "parent_bid": 90,
+        "supply": 950
+      },
+      "kind": "complete",
+      "receipt": null,
+      "seq": 24,
+      "state": {
+        "creatures": [
+          {
+            "balance": 190,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 0,
+              "native_reserve": "140000000000000000000000",
+              "nonce": 1,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf"
+            },
+            "id": "dev-20261107081058-45330597669063.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 155,
+            "creature": {
+              "active": true,
+              "born_turn": 0,
+              "mutation": 2,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5"
+            },
+            "id": "dev-20261107081058-19542293112001.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "100000000000000000000000000"
+          },
+          {
+            "balance": 5,
+            "creature": {
+              "active": false,
+              "born_turn": 0,
+              "mutation": 3,
+              "native_reserve": "200000000000000000000000",
+              "nonce": 0,
+              "parent": null,
+              "pending": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+            },
+            "id": "dev-20261107081058-63959502003485.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "99999817829289193300000000"
+          },
+          {
+            "balance": 90,
+            "creature": {
+              "active": true,
+              "born_turn": 1,
+              "mutation": 1,
+              "native_reserve": "0",
+              "nonce": 0,
+              "parent": "dev-20261107081058-45330597669063.test.near",
+              "pending": null,
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06"
+            },
+            "id": "pip.dev-20261107081057-57769544588795.test.near",
+            "life_owner": "dev-20261107081057-89235692354805.test.near",
+            "native_total": "60000000000000000000000"
+          }
+        ],
+        "economy": {
+          "burned": "50",
+          "demand": 1,
+          "job_escrow": "90",
+          "market": "420",
+          "pending": "0",
+          "supply": "950",
+          "turn": 2
+        }
+      }
+    }
+  ],
+  "network": "local NEAR sandbox",
+  "opening": "The era of programmable money starts here."
+}

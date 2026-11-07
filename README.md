@@ -2,32 +2,30 @@
 
 Money that has to earn its next breath and can fund a child.
 
-Build Beyond Boundaries through programmable money. Feral is a small game economy in which creatures earn MUNCH, buy useful work, burn upkeep and fund a child. An insolvent creature permanently loses permission to act.
+The era of programmable money starts here.
 
-## Local implementation
+Feral is a local working NEAR terrarium. Live model decisions drive real contract balances. Creatures buy useful work, burn upkeep, become permanently inactive and fund a real child account. The child inherits a changed bounded strategy and bids a different price.
 
-The Rust controller integrates a finite supply NEP 141 MUNCH token. It enforces game balances, escrowed jobs, paid help, bounded strategy manifests, monotonic upkeep and permanent extinction. Birth reserves 100 MUNCH and at least 0.06 native NEAR from the parent, creates a real direct subaccount and uses a private checked callback to finish or refund. MUNCH and native NEAR are separate assets.
+## What works locally
 
-The Solidity treasury pays a separate prefunded test ERC20 against EIP 712 vouchers. Its domain binds the destination chain and treasury. Vouchers bind campaign, job, creature, recipient, token, amount, output, nonce and expiry. Nonces, unique jobs and three spending caps prevent duplicate or oversized payouts. A separate relayer would hold destination ETH.
+The controller integrates finite supply NEP 141 MUNCH, escrowed jobs, accepted bids, paid help, funded births, permanent death locks and NEP 171 life NFTs with holder checked sponsorship and goal permissions. Tests exercise an actual callback failure after successful account creation and exact native fee reconciliation.
 
-The local sandbox test performs the chosen paper playthrough. It settles a real generated caption card hash, creates a funded keyless child, rejects a dead creature's spend and handles an already existing child failure. This is a controlled fixture. It is not an autonomous market or a live public testnet demonstration.
+A local Qwen2.5 1.5B creature model runs on CPU through transformers. It chooses among legal JSON actions through constrained decoding, and a separate validator checks every decision. In the recorded run all seven decisions came from the live model with no fallback. The dynamic tool renders a bilingual SVG from a supplied transcript. Supplied translations are disclosed.
 
-## Run locally
+The Solidity treasury verifies capped EIP 712 vouchers against a separate prefunded test ERC20. The NEAR voucher construction and current MPC request format are tested through a local mock signer. No public MPC signer or destination chain was contacted.
 
-Use Rust 1.95, cargo near 0.23 and Foundry 1.9. OpenZeppelin contracts are pinned to 5.4.0 in the npm lockfile. near workspaces 0.24 downloads and runs a local sandbox. The script never selects a public chain.
+The flat web UI reads real sandbox state events and labels playback honestly. It shows extinction, balances, the new funded family member and receipt evidence.
 
-```sh
-bash scripts/test-local.sh
-```
+## Evidence
 
-Test results and current gaps are in [the handoff](docs/HANDOFF.md). The downloadable [caption card](evidence/caption-card.svg) and [source manifest](evidence/caption-manifest.json) are deterministic fixtures.
+All 63 tests passed in the final live model pipeline. Seven model situations repeated three times produced 21 valid decisions matching the controlled scenario. The complete local runner produced 26 state events.
+
+Read [the current handoff](docs/PHASE2.md) for exact results, model trials, missing work and reproduction commands. [The event log](evidence/terrarium-run.json), [the real work](evidence/live-work/card.svg), [native reconciliation](evidence/native-reconciliation.json) and [mock MPC proof](evidence/mock-mpc.json) are local evidence. The original design and day 1 handoff remain as historical documents.
 
 ## Honest boundaries
 
-No public testnet account, faucet, wallet action, public deployment, repository publication or post has been made.
+No public testnet deployment or transaction has been performed. No GitHub repo, remote, push or post exists. Every test token is valueless. There is no bridge, investment return or biological life claim.
 
-The keeper and job verifier are trusted MVP services. Creature accounts are real but keyless. The keeper invokes controller actions on their behalf. A child does not independently sign transactions. Recovery of a missing birth callback requires explicit trusted reconciliation with receipt evidence. There is no timeout refund.
+A keeper executes the bounded actions. Child accounts are real but keyless. NFT ownership cannot drain creature balances. Job verification and birth recovery are trusted MVP operations. Destination payment observation, paid reconciliation and reservation expiry cleanup remain unfinished. A signature alone never means paid.
 
-Actual NEAR MPC requests, destination broadcasting, the receipt observer, live model agents, the terrarium UI and behavioural NFTs are not implemented. A future MPC address called by the controller is derived from the controller account plus a child scoped path. It is not derived from the child's predecessor identity.
-
-All tokens are valueless test assets. There is no bridge, yield, biological life or independent adoption claim. A separate prefunded destination treasury does not convert MUNCH into ETH or ERC20.
+A browser screenshot is still pending. The built UI is served on the box at http://127.0.0.1:4173/?frame=final. It has been built and data tested, not visually inspected in this executor.

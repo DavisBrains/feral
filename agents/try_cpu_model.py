@@ -1,6 +1,6 @@
 import json,time,traceback
 from pathlib import Path
-result={"model":"Qwen/Qwen2.5-0.5B-Instruct","route":"transformers CPU from normal Hugging Face download","trust_remote_code":False,"inference_ran":False}
+result={"model":"Qwen/Qwen2.5-1.5B-Instruct","route":"transformers CPU from normal Hugging Face download","trust_remote_code":False,"inference_ran":False}
 try:
  import torch
  from transformers import AutoTokenizer,AutoModelForCausalLM

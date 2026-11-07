@@ -1,0 +1,43 @@
+{
+  "cases": [
+    {
+      "child_storage_backing": "1000000000000000000000",
+      "child_storage_bytes": 100,
+      "child_total": "60000000000000000000000",
+      "contract_reward": "0",
+      "controller_after": "100140000000000000000000000",
+      "controller_before": "100200000000000000000000000",
+      "gross_gas_charge": "7631836676859400000000",
+      "identity": "before total = after total + gross gas charges - contract rewards; storage backing is included in total",
+      "net_protocol_debit": "7631836676859400000000",
+      "network": "sandbox",
+      "owner_after": "99791500550987908100000000",
+      "owner_before": "99799132387664767500000000",
+      "transaction": "7uwaanL8YPkH7oojJyo1KVi2MbwjhyXLrmewHzD32vF8"
+    },
+    {
+      "after_total": "199922019907856356100000000",
+      "before_total": "199923500428459723700000000",
+      "case": "failed batch and refunded funding",
+      "child_storage_backing": "1820000000000000000000",
+      "child_total": "100000000000000000000000",
+      "contract_reward": "0",
+      "gross_gas_charge": "1480520603367600000000",
+      "net_protocol_debit": "1480520603367600000000",
+      "transaction": "5cxNLbNRcyYdPuGq6deAReegJRboT6Y3zL1x6WCMVtwy"
+    },
+    {
+      "after_total": "199813996383672904600000000",
+      "before_total": "199822019907856356100000000",
+      "case": "successful creation and callback",
+      "child_storage_backing": "1000000000000000000000",
+      "child_total": "60000000000000000000000",
+      "contract_reward": "0",
+      "gross_gas_charge": "8023524183451500000000",
+      "net_protocol_debit": "8023524183451500000000",
+      "transaction": "FLybLo6aNdafWjjfCZwHnXRhRgDLLF2K1WGLGoagwUKR"
+    }
+  ],
+  "network": "sandbox",
+  "storage_is_part_of_total_not_an_extra_charge": true
+}

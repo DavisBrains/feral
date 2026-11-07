@@ -350,6 +350,10 @@ impl Controller {
         mutation: u8,
     ) -> Promise {
         self.actor(&parent);
+        require!(
+            self.goals.get(&parent).unwrap_or(0) != 1,
+            "goal forbids birth"
+        );
         Self::hash(&strategy_hash);
         require!(
             self.creatures.len() + self.pending_births < MAX_CREATURES,

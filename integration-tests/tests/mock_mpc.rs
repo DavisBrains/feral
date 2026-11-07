@@ -94,6 +94,24 @@ async fn controller_scoped_current_mpc_request_matches_ethers_and_mock_signature
         json!({"expected":d,"response":signed["response"].to_string()}),
     )
     .await?;
+    for (field, bad) in [
+        ("amount", json!("11")),
+        ("nonce", json!(9)),
+        ("expiry", json!(1)),
+        ("recipient", json!(format!("0x{}", "44".repeat(20)))),
+        ("output_hash", json!("c".repeat(64))),
+    ] {
+        let mut altered = v.clone();
+        altered[field] = bad;
+        assert!(
+            o.call(c.id(), "request_tool_payment")
+                .args_json(json!({"actor":a.id(),"job_id":"tool-job","voucher":altered}))
+                .max_gas()
+                .transact()
+                .await?
+                .is_failure()
+        );
+    }
     call(
         &o,
         &c,

@@ -192,6 +192,21 @@ async fn nft_permissions_follow_owner_and_do_not_drain_or_revive() -> Result<()>
     )
     .await?;
     call(&o, &c, "set_goal", json!({"actor":a.id(),"goal":2})).await?;
+    // An account without nft_on_transfer triggers the standard rollback resolver.
+    o.call(c.id(), "nft_transfer_call")
+        .args_json(json!({"receiver_id":holder.id(),"token_id":a.id(),"msg":"rollback probe"}))
+        .deposit(NearToken::from_yoctonear(1))
+        .max_gas()
+        .transact()
+        .await?
+        .into_result()?;
+    let rolled_back: Value = c
+        .view("nft_token")
+        .args_json(json!({"token_id":a.id()}))
+        .await?
+        .json()?;
+    assert_eq!(rolled_back["owner_id"], o.id().as_str());
+    call(&o, &c, "set_goal", json!({"actor":a.id(),"goal":2})).await?;
     o.call(c.id(), "nft_transfer")
         .args_json(json!({"receiver_id":holder.id(),"token_id":a.id()}))
         .deposit(NearToken::from_yoctonear(1))

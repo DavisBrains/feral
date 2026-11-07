@@ -119,7 +119,13 @@ impl Session {
             .await?
             .json()?;
         let balance = self.balance(id).await?;
-        let obs = json!({"actor":id,"policy":c["mutation"],"active":c["active"],"balance":balance,"jobs":jobs,"has_translation":has_translation,"needs_translation":true,"provider_active":true,"can_reproduce":can_reproduce});
+        let goal: u8 = self
+            .c
+            .view("goal")
+            .args_json(json!({"actor":id}))
+            .await?
+            .json()?;
+        let obs = json!({"actor":id,"goal":goal,"policy":c["mutation"],"active":c["active"],"balance":balance,"jobs":jobs,"has_translation":has_translation,"needs_translation":true,"provider_active":true,"can_reproduce":can_reproduce});
         let mut child = Command::new("node")
             .arg(root().join("agents/brain.mjs"))
             .stdin(Stdio::piped())
@@ -275,6 +281,13 @@ async fn main() -> Result<()> {
         "work-paid",
         "settle_job",
         json!({"job_id":"bilingual-v1","output_hash":manifest["output_sha256"]}),
+        zero,
+    )
+    .await?;
+    s.tx(
+        "lineage-goal",
+        "set_goal",
+        json!({"actor":a.id(),"goal":2}),
         zero,
     )
     .await?;

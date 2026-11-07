@@ -1,0 +1,300 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "route": "Hugging Face safetensors via transformers CPU, offline local server",
+  "grammar": "finite legal JSON actions, model selects among them",
+  "cases": [
+    {
+      "name": "old-demand",
+      "repetition": 0,
+      "expected": "bid",
+      "correct": false,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.6781428739996045,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "collaborate",
+      "repetition": 0,
+      "expected": "collaborate",
+      "correct": false,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.49942932599878986,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "translator",
+      "repetition": 0,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "translation",
+        "price": 30
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 1.0126314400004048,
+      "tokens": 15,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "deliver",
+      "repetition": 0,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "bilingual",
+        "price": 90
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 1.0282778519977,
+      "tokens": 16,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "birth",
+      "repetition": 0,
+      "expected": "reproduce",
+      "correct": true,
+      "decision": {
+        "action": "reproduce"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.5204384440003196,
+      "tokens": 7,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "child",
+      "repetition": 0,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "bilingual",
+        "price": 80
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.9981015430021216,
+      "tokens": 16,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "extinct",
+      "repetition": 0,
+      "expected": "wait",
+      "correct": true,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.42204230800052756,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "old-demand",
+      "repetition": 1,
+      "expected": "bid",
+      "correct": false,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.41769222900256864,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "collaborate",
+      "repetition": 1,
+      "expected": "collaborate",
+      "correct": false,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.4543393380008638,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "translator",
+      "repetition": 1,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "translation",
+        "price": 30
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.8763566679990618,
+      "tokens": 15,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "deliver",
+      "repetition": 1,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "bilingual",
+        "price": 90
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.9793011439978727,
+      "tokens": 16,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "birth",
+      "repetition": 1,
+      "expected": "reproduce",
+      "correct": true,
+      "decision": {
+        "action": "reproduce"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.48452388800069457,
+      "tokens": 7,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "child",
+      "repetition": 1,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "bilingual",
+        "price": 80
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.9314577469995129,
+      "tokens": 16,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "extinct",
+      "repetition": 1,
+      "expected": "wait",
+      "correct": true,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.42754781499752426,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "old-demand",
+      "repetition": 2,
+      "expected": "bid",
+      "correct": false,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.42604836099781096,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "collaborate",
+      "repetition": 2,
+      "expected": "collaborate",
+      "correct": false,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.4382714790008322,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "translator",
+      "repetition": 2,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "translation",
+        "price": 30
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.9266515870003786,
+      "tokens": 15,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "deliver",
+      "repetition": 2,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "bilingual",
+        "price": 90
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.9927203750012268,
+      "tokens": 16,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "birth",
+      "repetition": 2,
+      "expected": "reproduce",
+      "correct": true,
+      "decision": {
+        "action": "reproduce"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.48583738999877824,
+      "tokens": 7,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "child",
+      "repetition": 2,
+      "expected": "bid",
+      "correct": true,
+      "decision": {
+        "action": "bid",
+        "job": "bilingual",
+        "price": 80
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 1.0054670889985573,
+      "tokens": 16,
+      "constraint": "token trie of legal actions; independent JS validation"
+    },
+    {
+      "name": "extinct",
+      "repetition": 2,
+      "expected": "wait",
+      "correct": true,
+      "decision": {
+        "action": "wait"
+      },
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "seconds": 0.4655414440021559,
+      "tokens": 6,
+      "constraint": "token trie of legal actions; independent JS validation"
+    }
+  ],
+  "valid": 21,
+  "correct": 15
+}

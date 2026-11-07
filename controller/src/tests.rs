@@ -411,3 +411,50 @@ fn former_holder_cannot_sponsor() {
     ctx("owner.test", 0);
     c.sponsor(id("a.test"), U128(1));
 }
+
+#[test]
+#[should_panic(expected = "goal forbids birth")]
+fn life_goal_can_block_reproduction_without_draining_funds() {
+    let mut c = setup();
+    c.set_goal(id("a.test"), 1);
+    let _promise = c.birth(
+        id("a.test"),
+        id("kid.feral.test"),
+        1,
+        U128(MIN_CHILD_NEAR),
+        strategy(1),
+        1,
+    );
+}
+
+#[test]
+fn discounted_bid_settles_exact_price_and_releases_surplus() {
+    let mut c = setup();
+    let mut a = c.creatures.get(&id("a.test")).unwrap();
+    a.native_reserve = U128(MIN_CHILD_NEAR);
+    c.creatures.insert(&id("a.test"), &a);
+    let _p = c.birth(
+        id("a.test"),
+        id("kid.feral.test"),
+        1,
+        U128(MIN_CHILD_NEAR),
+        strategy(1),
+        1,
+    );
+    c.complete_birth(id("kid.feral.test"), 1, true);
+    c.create_job("discount".into(), U128(90), 3, hash(1));
+    c.bid_job(id("kid.feral.test"), "discount".into(), U128(80));
+    c.claim_job(id("kid.feral.test"), "discount".into());
+    c.settle_job("discount".into(), hash(2));
+    assert_eq!(c.balance(&id("kid.feral.test")), 180);
+    assert_eq!(c.market, 520);
+    assert_eq!(c.job_escrow, 0);
+    conserved(&c);
+}
+#[test]
+#[should_panic(expected = "bid bounds")]
+fn below_strategy_price_refused() {
+    let mut c = setup();
+    c.create_job("low".into(), U128(90), 3, hash(1));
+    c.bid_job(id("a.test"), "low".into(), U128(80));
+}

@@ -5,16 +5,17 @@ import json,time,threading,os
 from http.server import BaseHTTPRequestHandler,HTTPServer
 import torch
 from transformers import AutoTokenizer,AutoModelForCausalLM
-MODEL=os.environ.get("FERAL_MODEL","Qwen/Qwen2.5-0.5B-Instruct")
+MODEL=os.environ.get("FERAL_MODEL","Qwen/Qwen2.5-1.5B-Instruct")
+REVISION=os.environ.get("FERAL_MODEL_REVISION", "989aa7980e4cf806f80c7fef2b1adb7bc71aa306" if MODEL=="Qwen/Qwen2.5-1.5B-Instruct" else None)
 torch.set_num_threads(2)
-tok=AutoTokenizer.from_pretrained(MODEL,trust_remote_code=False,local_files_only=True)
-model=AutoModelForCausalLM.from_pretrained(MODEL,trust_remote_code=False,local_files_only=True,use_safetensors=True)
+tok=AutoTokenizer.from_pretrained(MODEL,trust_remote_code=False,local_files_only=True,revision=REVISION)
+model=AutoModelForCausalLM.from_pretrained(MODEL,trust_remote_code=False,local_files_only=True,revision=REVISION,use_safetensors=True)
 POLICIES=[("bilingual",90,120),("bilingual",80,140),("translation",30,180),("short",40,120)]
 def options(s):
  job,floor,birth=POLICIES[s['policy']]
  out=[{"action":"wait"}]
  if not s['active']:return out
- if s.get('can_reproduce') and s['balance']>=max(120,birth):out.append({"action":"reproduce"})
+ if s.get('goal')!=1 and s.get('can_reproduce') and s['balance']>=max(120,birth):out.append({"action":"reproduce"})
  for j in s['jobs']:
   if j['kind']==job and j['reward']>=floor:
    if job=='bilingual' and s.get('needs_translation') and not s.get('has_translation'):
@@ -48,5 +49,6 @@ class Handler(BaseHTTPRequestHandler):
    self.send_response(200);self.end_headers();self.wfile.write(data)
   except Exception as e:
    self.send_response(422);self.end_headers();self.wfile.write(json.dumps({"error":str(e)}).encode())
+server=HTTPServer(('127.0.0.1',11435),Handler)
 print('ready '+MODEL,flush=True)
-HTTPServer(('127.0.0.1',11435),Handler).serve_forever()
+server.serve_forever()

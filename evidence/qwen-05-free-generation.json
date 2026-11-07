@@ -1,0 +1,19 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "route": "transformers CPU from normal Hugging Face download",
+  "trust_remote_code": false,
+  "inference_ran": true,
+  "load_seconds": 4.52967279600125,
+  "runs": [
+    {
+      "seconds": 2.4187827440000547,
+      "tokens": 38,
+      "text": "```json\n{\n    \"action\": \"short\",\n    \"wait\": \"wait\",\n    \"bilingual\": \"translation\",\n    \"price\": 240\n}\n```"
+    },
+    {
+      "seconds": 2.401651206000679,
+      "tokens": 38,
+      "text": "```json\n{\n    \"action\": \"short\",\n    \"wait\": \"wait\",\n    \"bilingual\": \"translation\",\n    \"price\": 240\n}\n```"
+    }
+  ]
+}

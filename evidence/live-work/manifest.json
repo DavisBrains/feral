@@ -1,0 +1,8 @@
+{
+  "source_sha256": "51513d6f780e21d9db90b9a64b749bfe0e3f0e3c5e96ef53477f5ffd82f7da23",
+  "output_sha256": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5",
+  "translation_sha256": "31a7fc823e9f494051540107d59228d426559218d316df47aed3704546297d08",
+  "segments": 3,
+  "mode": "real deterministic transcript rendering; supplied translations",
+  "file": "card.svg"
+}
