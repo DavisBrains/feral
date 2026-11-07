@@ -6,7 +6,9 @@ Recorded 7 November 2026 at 9.20 AM WAT.
 
 FERAL_USE_MODEL=1 FERAL_REQUIRE_MODEL=1 bash scripts/test-local.sh exited 0. The raw evidence is evidence/phase2-final-run.log. All 63 tests passed with no final failures or skips.
 
-There are 27 Rust unit tests, four sandbox integration tests, ten Node agent and tool tests, seven app and voucher tests, and fifteen Forge tests. The three contract WASM builds passed. The TypeScript check, production Vite build and npm audit passed. The final app dependency audit reports zero known vulnerabilities after upgrading Vite to 7.3.7 and ethers to 6.17.0.
+There are 27 Rust unit tests, four sandbox integration tests, ten Node agent and tool tests, seven app and voucher tests, and fifteen Forge tests. A trailing pip version probe after the standalone model benchmark failed because this uv managed environment has no pip module. The Node benchmark itself completed its 21 matches. Package installation and freezing used uv. The final complete pipeline independently exited 0.
+
+The three contract WASM builds passed. The TypeScript check, production Vite build and npm audit passed. The final app dependency audit reports zero known vulnerabilities after upgrading Vite to 7.3.7 and ethers to 6.17.0.
 
 The normal controller artifact is target/near/feral_controller/feral_controller.wasm. Its SHA256 is 1745c9d85d48f112e0e8d4f358f12c8a62a4f028058e219e8b84a084476b27bb and its size is 337694 bytes. The fault artifact in target/fault is a separate build and must never be deployed publicly.
 
