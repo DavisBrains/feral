@@ -1,5 +1,8 @@
 use anyhow::Result;
-use near_workspaces::{Account, Contract, types::NearToken};
+use near_workspaces::{
+    Account, Contract,
+    types::{Gas, NearToken},
+};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 fn strategy(m: u8) -> String {
@@ -88,7 +91,7 @@ async fn sandbox_paper_playthrough_and_failure_paths() -> Result<()> {
         .await?
         .json()?;
     assert_eq!(dead["active"], false);
-    let refusal=extinct.call(c.id(),"pay_creature").args_json(json!({"actor":extinct.id(),"provider":a.id(),"amount":"1","service_id":"dead-spend","output_hash":h(4)})).max_gas().transact().await?;
+    let refusal=extinct.call(c.id(),"pay_creature").args_json(json!({"actor":extinct.id(),"provider":a.id(),"amount":"1","service_id":"dead-spend","output_hash":h(4)})).gas(Gas::from_tgas(5)).transact().await?;
     assert!(refusal.is_failure());
     assert!(format!("{:?}", refusal).contains("extinct"));
     // Direct NEP-141 transfer also cannot escape the death lock.

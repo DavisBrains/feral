@@ -5,7 +5,7 @@ import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
-import {ROOT,IDS,NEAR,ReadOnlyRpc,estimatePlan,makeOperations,near,base58,cliArgs,extractTxHash,verifyTransaction,resumePolicy,executeStep,assertOperationTemplate,acquireRunLock,checkedLiveDecision,publicPlan,saveSignedArgs,broadcastSignedArgs,classifyCliResult,runCli,guardTickRecovery,guardRejectionRecovery,rebroadcastRejection,cliProcess,finalized} from './testnet-run.mjs';
+import {ROOT,IDS,NEAR,ReadOnlyRpc,estimatePlan,makeOperations,near,base58,cliArgs,extractTxHash,verifyTransaction,resumePolicy,executeStep,assertOperationTemplate,acquireRunLock,checkedLiveDecision,publicPlan,saveSignedArgs,broadcastSignedArgs,classifyCliResult,runCli,guardTickRecovery,guardRejectionRecovery,rebroadcastRejection,cliProcess,finalized,functionCallCost,prepareRejectedSpendRepair,redactCliOutput} from './testnet-run.mjs';
 const HASH='BMudVUSoFqYhvXV7JkAqkyZkAjfGJbS5yTob9hEDohT3';
 const root={amount:String(10n*NEAR),storage_usage:182};
 const protocol={protocol_version:88,runtime_config:{storage_amount_per_byte:'10000000000000000000'}};
@@ -55,7 +55,7 @@ test('save-before-send and broadcast command grammars parse without signing',()=
 test('canonical hash is recorded before broadcasting even when CLI prints no hash',async()=>{const dir=mkdtempSync(path.join(os.tmpdir(),'feral-prepare-'));try{const o=op('death-tick'),events=[];const tx=outcome(o).transaction;Object.assign(tx,{hash:HASH,nonce:42,public_key:'public-test-key'});const result=await runCli(o,(h,meta)=>{events.push('durable-hash');assert.equal(h,HASH);assert.equal(meta.nonce,'42');},{directory:dir,fileExists:()=>false,inspect:()=>({hash:HASH,transaction:tx,block_hash:'public-block'}),processRunner:async args=>{const preparing=args.includes('save-to-file');events.push(preparing?'prepare':'broadcast');if(!preparing)assert.ok(events.includes('durable-hash'));return {exit_code:0,reported_hash:null};}});assert.equal(result.hash,HASH);assert.deepEqual(events,['prepare','durable-hash','broadcast']);}finally{rmSync(dir,{recursive:true,force:true});}});
 test('prepare failure is diagnosed and never broadcasts',async()=>{const dir=mkdtempSync(path.join(os.tmpdir(),'feral-prepare-'));try{let calls=0;const diagnostics=[];await assert.rejects(runCli(op('death-tick'),()=>assert.fail('no hash before signing'),{directory:dir,fileExists:()=>false,processRunner:async()=>{calls++;return {exit_code:null,timed_out:true};},recordDiagnostic:(p,r)=>diagnostics.push({p,r})}),/No broadcast/);assert.equal(calls,1);assert.equal(diagnostics[0].p,'prepare');assert.equal(resumePolicy({state:'preparing'}),'prepare-again');}finally{rmSync(dir,{recursive:true,force:true});}});
 test('broadcast timeout retains a precomputed hash and phase diagnostic',async()=>{const dir=mkdtempSync(path.join(os.tmpdir(),'feral-prepare-'));try{const o=op('death-tick'),tx={...outcome(o).transaction,hash:HASH,nonce:42,public_key:'fixture'};let saved=null;const r=await runCli(o,h=>saved=h,{directory:dir,fileExists:()=>true,inspect:()=>({hash:HASH,transaction:tx}),processRunner:async()=>({exit_code:null,timed_out:true,signal:'SIGTERM',reported_hash:null})});assert.equal(saved,HASH);assert.equal(r.hash,HASH);assert.equal(r.diagnostic.timed_out,true);}finally{rmSync(dir,{recursive:true,force:true});}});
-test('diagnostic classifier never includes raw potentially sensitive CLI output',()=>{const r=classifyCliResult(null,'SIGTERM',true,'timeout 429 connection secret-do-not-store');assert.equal(r.flags.rate_limited,true);assert.equal(r.timed_out,true);assert.equal(JSON.stringify(r).includes('secret-do-not-store'),false);});
+test('diagnostic classifier never includes raw potentially sensitive CLI output',()=>{const r=classifyCliResult(null,'SIGTERM',true,'timeout 429 connection private key: never-store-this');assert.equal(r.flags.rate_limited,true);assert.equal(r.timed_out,true);assert.equal(JSON.stringify(r).includes('never-store-this'),false);});
 function tickGuardFixture(){const j=journal(),o=op('cancel-old-job');j.steps['cancel-old-job']={id:o.id,op:o,hash:HASH,state:'success'};j.steps['death-tick']={id:'death-tick',op:op('death-tick'),state:'submitting'};const x=outcome(o);Object.assign(x.transaction,{nonce:41,public_key:'public-fixture'});const keys={keys:[{public_key:'public-fixture',access_key:{nonce:41,permission:'FullAccess'}}]};const economy={turn:0,burned:'0'};return {j,keys,economy,rpc:{tx:async()=>x,request:async()=>keys,view:async m=>m==='economy'?economy:{active:true}}};}
 test('legacy tick recovery pins exactly the unchanged signer next nonce',async()=>{const {j,rpc}=tickGuardFixture();const r=await guardTickRecovery(j,rpc,'death-tick');assert.equal(r.nonce,'42');assert.equal(r.base_nonce,'41');assert.equal(j.steps['death-tick'].state,'submitting');await assert.rejects(guardTickRecovery(j,rpc,'paid-job'),/only/);});
 test('tick recovery refuses any nonce change, applied tick, known hash or other key',async()=>{for(const mutate of [f=>f.keys.keys[0].access_key.nonce++,f=>f.economy.turn++,f=>f.j.steps['death-tick'].hash=HASH,f=>f.keys.keys.push({...f.keys.keys[0]})]){const f=tickGuardFixture();mutate(f);await assert.rejects(guardTickRecovery(f.j,f.rpc,'death-tick'));}});
@@ -68,12 +68,12 @@ function rejectionFixture(){
  const keys={block_height:100,keys:[{public_key:'fixture',access_key:{nonce:41,permission:'FullAccess'}}]};
  const account={amount:String(NEAR/100n),storage_usage:182};
  const rpc={tx:async()=>{const e=Error('unknown');e.rpcError={cause:{name:'UNKNOWN_TRANSACTION'}};throw e;},account:async()=>account,
- view:async m=>m==='creature'?{active:false}:'5',request:async(m)=>m==='query'?keys:m==='gas_price'?gas:m==='block'?{header:{height:99}}:{...protocol,transaction_validity_period:86400}};
+ view:async m=>m==='creature'?{active:false}:'5',request:async(m)=>m==='query'?keys:m==='gas_price'?gas:m==='block'?{header:{height:99}}:{...protocol,transaction_validity_period:86400,runtime_config:{...protocol.runtime_config,min_gas_purchase_price:'1000000000',transaction_costs:{action_receipt_creation_config:{send_sir:100,send_not_sir:100,execution:100},action_creation_config:{function_call_cost:{send_sir:100,send_not_sir:100,execution:100},function_call_cost_per_byte:{send_sir:1,send_not_sir:1,execution:1}}}}}};
  return {j,o,rpc,meta,keys,account,inspect:()=>meta};
 }
 test('identical rejection recovery only uses existing hash bytes and nonce',async()=>{
  const f=rejectionFixture();let sends=0,persists=0;
- await rebroadcastRejection(f.j,f.rpc,f.o.id,{inspect:f.inspect,persist:()=>persists++,processRunner:async args=>{sends++;assert.deepEqual(args,broadcastSignedArgs(path.resolve('.local-transactions/refused-post-death-spend.json')));assert.equal(f.j.steps[f.o.id].hash,HASH);return {exit_code:1,reported_hash:null};}});
+ await rebroadcastRejection(f.j,f.rpc,f.o.id,{inspect:f.inspect,persist:()=>persists++,processRunner:async args=>{sends++;assert.deepEqual(args,broadcastSignedArgs(path.resolve('.local-transactions/refused-post-death-spend.json')));assert.equal(f.j.steps[f.o.id].hash,HASH);return {exit_code:0,reported_hash:null};}});
  assert.equal(sends,1);assert.equal(persists,2);assert.equal(f.j.steps[f.o.id].cli_diagnostics[0].phase,'rebroadcast-identical');
 });
 test('rejection retry refuses known tx, RPC outage, changed bytes, nonce, live ash, low gas or expiry',async()=>{
@@ -110,12 +110,56 @@ test('expected failure requires a contract panic rather than arbitrary extinct t
  x.status={Failure:{ActionError:{kind:{FunctionCallError:{ExecutionError:'unextinct'}}}}};assert.throws(()=>verifyTransaction(x,o));
 });
 test('classifier stores safe cause flags without raw CLI text',()=>{
- const r=classifyCliResult(1,null,false,'RPC Expired InvalidNonce NotEnoughBalance Smart contract panicked: extinct secret-do-not-store');
+ const r=classifyCliResult(1,null,false,'RPC Expired InvalidNonce NotEnoughBalance Smart contract panicked: extinct private key: never-store-this');
  for(const flag of ['rpc_error','expired','invalid_nonce','insufficient_balance','contract_panic'])assert.equal(r.flags[flag],true);
- assert.equal(JSON.stringify(r).includes('secret-do-not-store'),false);
+ assert.equal(JSON.stringify(r).includes('never-store-this'),false);
 });
 
 test('confirmation polls without server-side waiting and requires FINAL',async()=>{
  let calls=0;const o=op('refused-post-death-spend');const result=await finalized({tx:async(h,s,w)=>{assert.equal(w,'NONE');calls++;return {...outcome(o),final_execution_status:calls===1?'EXECUTED_OPTIMISTIC':'FINAL'};}},HASH,IDS.ash,{pause:async()=>{}});
  assert.equal(calls,2);assert.equal(result.final_execution_status,'FINAL');
+});
+
+test('gas purchase floor makes the original 30 Tgas unaffordable even at low current price',async()=>{
+ const f=rejectionFixture();const p=await f.rpc.request('EXPERIMENTAL_protocol_config');const old={...f.o,gas:30};
+ const cost=functionCallCost(old,p,gas);assert.equal(cost.purchase_gas_price,'1000000000');assert.ok(BigInt(cost.total_cost)>BigInt(f.account.amount));
+ assert.ok(BigInt(functionCallCost(f.o,p,gas).total_cost)<BigInt(f.account.amount)-182n*10n**19n);
+});
+test('explicit rejected spend repair archives original and pins same nonce before fresh signing',async()=>{
+ const f=rejectionFixture();f.j.steps[f.o.id].op.gas=30;f.meta.transaction.actions[0].FunctionCall.gas=String(30n*10n**12n);
+ const order=[];const proof=await prepareRejectedSpendRepair(f.j,f.rpc,{inspect:f.inspect,persist:()=>order.push(f.j.steps[f.o.id].state),move:(a,b)=>{assert.match(b,/rejected-/);order.push('archive');}});
+ assert.deepEqual(order,['repair-archiving','archive','preparing']);assert.equal(f.j.rejected_attempts[0].hash,HASH);assert.equal(f.j.steps[f.o.id].recovery.nonce,'42');assert.equal(f.j.steps[f.o.id].op.gas,5);assert.ok(BigInt(proof.old_cost.total_cost)>BigInt(proof.balance));
+});
+test('repair refuses a potentially affordable original or changed nonce',async()=>{
+ for(const change of [f=>f.account.amount=String(NEAR),f=>f.keys.keys[0].access_key.nonce++]){const f=rejectionFixture();f.j.steps[f.o.id].op.gas=30;f.meta.transaction.actions[0].FunctionCall.gas=String(30n*10n**12n);change(f);await assert.rejects(prepareRejectedSpendRepair(f.j,f.rpc,{inspect:f.inspect,persist:()=>assert.fail('no write'),move:()=>assert.fail('no archive')}));}
+});
+test('rejection recovery preserves exact redacted CLI error and immediately surfaces nonzero exit',async()=>{
+ const f=rejectionFixture();const diagnostic=classifyCliResult(1,null,false,'Sender ash does not have enough balance. Required 30000000000000000000000');
+ await assert.rejects(rebroadcastRejection(f.j,f.rpc,f.o.id,{inspect:f.inspect,persist:()=>{},processRunner:async()=>diagnostic}),/Exact redacted output/);
+ assert.match(f.j.steps[f.o.id].cli_diagnostics[0].output,/Required 30000000000000000000000/);
+});
+test('diagnostics retain public RPC errors but strip keys and encoded signed blobs',()=>{
+ const input='NotEnoughBalance '+ 'ed25519:'+ 'A'.repeat(88)+' '+ 'B'.repeat(300)+' private key: never-store-this';
+ const output=redactCliOutput(input);assert.match(output,/NotEnoughBalance/);assert.ok(!output.includes('A'.repeat(88)));assert.ok(!output.includes('B'.repeat(300)));assert.ok(!output.includes('never-store-this'));
+});
+test('replacement preparation retains pinned nonce and predecessor hash across executeStep',async()=>{
+ const f=rejectionFixture();f.j.steps[f.o.id]={id:f.o.id,op:f.o,state:'preparing',recovery:{nonce:'42',public_key:'fixture'},replaces_hash:HASH};
+ const x=outcome(f.o);x.status={Failure:{ActionError:{kind:{FunctionCallError:{ExecutionError:'Smart contract panicked: extinct'}}}}};
+ await quiet(()=>executeStep(f.j,{tx:async()=>x},f.o,work,{persist:()=>{},resolveOperation:async()=>f.o,runCli:async(o,onHash,ctx)=>{assert.equal(ctx.recovery.nonce,'42');onHash(HASH);return {hash:HASH};},assertPost:async()=>{},snapshot:async()=>({})}));
+ assert.equal(f.j.steps[f.o.id].replaces_hash,HASH);assert.equal(f.j.steps[f.o.id].state,'expected-failure');
+});
+
+test('real protocol purchase floor reproduces precise old and replacement upfront costs',()=>{
+ const t={...protocol,runtime_config:{...protocol.runtime_config,min_gas_purchase_price:'1000000000',transaction_costs:{pessimistic_gas_price_inflation_ratio:[1,1],action_receipt_creation_config:{send_sir:108059500000,send_not_sir:108059500000,execution:108059500000},action_creation_config:{function_call_cost:{send_sir:200000000000,send_not_sir:200000000000,execution:780000000000},function_call_cost_per_byte:{send_sir:2000000,send_not_sir:47683715,execution:2235934}}}}};
+ const o=op('refused-post-death-spend');assert.equal(functionCallCost({...o,gas:30},t,gas).total_cost,'30920322345544000000000');assert.equal(functionCallCost(o,t,gas).total_cost,'5920322345544000000000');
+});
+test('remaining plan budgeting uses purchase price rather than burn price',()=>{
+ const p=estimatePlan(root,{...protocol,runtime_config:{...protocol.runtime_config,min_gas_purchase_price:'1000000000'}},gas,337694);
+ assert.ok(BigInt(p.fee_allowance)>BigInt(plan().fee_allowance));
+});
+
+test('timeout kills the entire CLI launcher group including native grandchildren',async()=>{
+ const child=new EventEmitter();child.pid=12345;child.stdout=new EventEmitter();child.stderr=new EventEmitter();const signals=[];
+ const result=await cliProcess([],{spawnProcess:(cmd,args,options)=>{assert.equal(options.detached,true);return child;},timeoutMs:5,killGraceMs:5,killProcess:(pid,s)=>{assert.equal(pid,-12345);signals.push(s);if(s==='SIGKILL')setImmediate(()=>child.emit('close',null,s));}});
+ assert.deepEqual(signals,['SIGTERM','SIGKILL']);assert.equal(result.timed_out,true);
 });

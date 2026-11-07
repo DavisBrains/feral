@@ -49,7 +49,7 @@ export function makeOperations(controllerFunding){
   call('old-short-bid','bid_job',{actor:IDS.ash,job_id:'short-v0',price:'$LIVE_ASH_PRICE'}),
   call('demand-shock','set_demand',{version:1}),call('cancel-old-job','cancel_job',{job_id:'short-v0'}),
   call('death-tick','tick',{next_turn:1}),
-  call('refused-post-death-spend','pay_creature',{actor:IDS.ash,provider:IDS.moss,amount:'1',service_id:'after-death',output_hash:'a'.repeat(64)},{signer:IDS.ash,gas:30,expectedFailure:'extinct'}),
+  call('refused-post-death-spend','pay_creature',{actor:IDS.ash,provider:IDS.moss,amount:'1',service_id:'after-death',output_hash:'a'.repeat(64)},{signer:IDS.ash,gas:5,expectedFailure:'extinct'}),
   call('create-card-job','create_job',{job_id:'bilingual-v1',amount:'90',expiry_turn:4,requirements_hash:'$TRANSCRIPT_HASH'}),
   call('paid-collaboration','pay_creature',{actor:IDS.moss,provider:IDS.echo,amount:'30',service_id:'translation-v1',output_hash:'$TRANSLATION_HASH'}),
   call('parent-bid','bid_job',{actor:IDS.moss,job_id:'bilingual-v1',price:'$LIVE_PARENT_PRICE'}),
@@ -77,7 +77,8 @@ export function estimatePlan(rootAccount,protocol,gasInfo,wasmBytes,completed=ne
  // plus creation and deploy bandwidth allowance. All attached child funding is
  // already in the parent's 0.20 reserve and is NOT counted a second time.
  const gas=remaining.reduce((sum,o)=>sum+BigInt(o.gas??100)*10n**12n,0n);
- const projectedGas=gas*BigInt(gasInfo.gas_price)*3n+13n*NEAR/100n;
+ const purchasePrice=BigInt(protocol.runtime_config.min_gas_purchase_price??gasInfo.gas_price)>BigInt(gasInfo.gas_price)?BigInt(protocol.runtime_config.min_gas_purchase_price):BigInt(gasInfo.gas_price);
+ const projectedGas=gas*purchasePrice*3n+13n*NEAR/100n;
  const feeAllowance=remaining.length?(projectedGas>NEAR?projectedGas:NEAR):0n;
  const rootStorage=BigInt(rootAccount.storage_usage)*perByte;
  const balance=BigInt(rootAccount.amount);const retainedMargin=NEAR;
@@ -145,19 +146,27 @@ export function saveSignedArgs(op,filename,recovery){
  return [...args,'save-to-file',filename];
 }
 export const broadcastSignedArgs=filename=>['transaction','send-signed-transaction','file-with-base64-signed-transaction',filename,'network-config','testnet','send'];
-export function classifyCliResult(code,signal,timedOut,text){
- return {exit_code:code,signal:signal??null,timed_out:timedOut,output_bytes:Buffer.byteLength(text),flags:{timeout:/timed?\s*out|timeout/i.test(text),rate_limited:/429|too many requests/i.test(text),connection:/connection|connect error|dns|resolve host/i.test(text),invalid_nonce:/InvalidNonce|invalid nonce/i.test(text),expired:/Expired|expired transaction/i.test(text),insufficient_balance:/NotEnoughBalance|insufficient balance|not enough balance/i.test(text),contract_panic:/Smart contract panicked|FunctionCallError|ExecutionError/i.test(text),rpc_error:/RPC|JSON.RPC|TransportError|Server error/i.test(text)},reported_hash:extractTxHash(text)};
+export function redactCliOutput(text){
+ return text.replace(/\x1b\[[0-?]*[ -/]*[@-~]/g,'')
+ .replace(/ed25519:[1-9A-HJ-NP-Za-km-z]{80,100}/g,'[secret key redacted]')
+ .replace(/[A-Za-z0-9+/]{160,}={0,2}/g,'[encoded blob redacted]')
+ .replace(/(?:seed phrase|mnemonic|private key|secret key)\s*[:=]\s*[^\n]+/gi,'[private value redacted]')
+ .slice(-16000);
 }
-export async function cliProcess(args,{spawnProcess=spawn,timeoutMs=90000,killGraceMs=2000}={}){
+export function classifyCliResult(code,signal,timedOut,text){
+ return {output:redactCliOutput(text),exit_code:code,signal:signal??null,timed_out:timedOut,output_bytes:Buffer.byteLength(text),flags:{timeout:/timed?\s*out|timeout/i.test(text),rate_limited:/429|too many requests/i.test(text),connection:/connection|connect error|dns|resolve host/i.test(text),invalid_nonce:/InvalidNonce|invalid nonce/i.test(text),expired:/Expired|expired transaction/i.test(text),insufficient_balance:/NotEnoughBalance|insufficient balance|not enough balance|does not have enough balance/i.test(text),contract_panic:/Smart contract panicked|FunctionCallError|ExecutionError/i.test(text),rpc_error:/RPC|JSON.RPC|TransportError|Server error/i.test(text)},reported_hash:extractTxHash(text)};
+}
+export async function cliProcess(args,{spawnProcess=spawn,timeoutMs=90000,killGraceMs=2000,killProcess=process.kill.bind(process)}={}){
  return new Promise((resolve,reject)=>{
-  const child=spawnProcess('near',args,{cwd:BASE,stdio:['ignore','pipe','pipe'],env:{...process.env,NO_COLOR:'1'}});let buffer='',timedOut=false;
+  const child=spawnProcess('near',args,{cwd:BASE,detached:true,stdio:['ignore','pipe','pipe'],env:{...process.env,NO_COLOR:'1'}});let buffer='',timedOut=false;
   const capture=data=>{buffer=(buffer+data.toString()).slice(-256000);};child.stdout.on('data',capture);child.stderr.on('data',capture);
-  let force;const terminate=()=>{child.kill('SIGTERM');force??=setTimeout(()=>child.kill('SIGKILL'),killGraceMs);};
+  const signalGroup=signal=>{if(Number.isSafeInteger(child.pid)){try{killProcess(-child.pid,signal);}catch(e){if(e.code!=='ESRCH')throw e;}}else child.kill(signal);};
+  let force;const terminate=()=>{signalGroup('SIGTERM');force??=setTimeout(()=>signalGroup('SIGKILL'),killGraceMs);};
   const timeout=setTimeout(()=>{timedOut=true;terminate();},timeoutMs);
   const stop=()=>{stopRequested=true;terminate();};process.once('SIGINT',stop);process.once('SIGTERM',stop);
   const cleanup=()=>{clearTimeout(timeout);clearTimeout(force);process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);};
   child.once('error',()=>{cleanup();reject(Error('near-cli could not start'));});
-  child.once('close',(code,signal)=>{cleanup();const result=classifyCliResult(code,signal,timedOut,buffer);buffer='';resolve(result);});
+  child.once('close',(code,signal)=>{cleanup();const result=classifyCliResult(code,signal,timedOut,buffer);if(!args.includes('send-signed-transaction'))delete result.output;buffer='';resolve(result);});
  });
 }
 export function inspectSigned(filename){
@@ -165,10 +174,23 @@ export function inspectSigned(filename){
  if(r.status!==0)throw Error('Offline signed transaction inspection failed; no raw blob or diagnostic is exposed');
  return JSON.parse(r.stdout);
 }
-export async function guardRejectionRecovery(j,rpc,id,inspect=inspectSigned){
+export function functionCallCost(op,protocol,gasInfo){
+ if(op.kind!=='call'||!op.signer||!op.receiver)throw Error('Cost helper only supports one ordinary function call');
+ const r=protocol.runtime_config,f=r.transaction_costs,a=f.action_creation_config,receipt=f.action_receipt_creation_config;
+ if(f.pessimistic_gas_price_inflation_ratio&&!equal(f.pessimistic_gas_price_inflation_ratio,[1,1]))throw Error('Unsupported gas inflation pricing; manual review required');
+ const bytes=BigInt(Buffer.byteLength(op.method)+Buffer.byteLength(JSON.stringify(op.args)));
+ const send=op.signer===op.receiver?'send_sir':'send_not_sir';
+ const current=BigInt(gasInfo.gas_price),minimum=BigInt(r.min_gas_purchase_price);
+ const purchase=current>minimum?current:minimum;
+ const burnt=BigInt(receipt[send])+BigInt(a.function_call_cost[send])+bytes*BigInt(a.function_call_cost_per_byte[send]);
+ const remaining=BigInt(op.gas)*10n**12n+BigInt(receipt.execution)+BigInt(a.function_call_cost.execution)+bytes*BigInt(a.function_call_cost_per_byte.execution);
+ return {current_gas_price:String(current),purchase_gas_price:String(purchase),gas_burnt:String(burnt),gas_remaining:String(remaining),total_cost:String(burnt*current+remaining*purchase+BigInt(op.deposit))};
+}
+function rejectionTemplate(entry){const t=makeOperations(0n).find(x=>x.id==='refused-post-death-spend');return entry.op.gas===30?{...t,gas:30}:t;}
+export async function guardRejectionRecovery(j,rpc,id,inspect=inspectSigned,{repair=false}={}){
  if(id!=='refused-post-death-spend')throw Error('Recovery exception is only for the extinct rejection');
  const entry=j?.steps?.[id];if(!entry?.hash||!entry.prepared||['success','expected-failure'].includes(entry.state))throw Error('Missing unresolved prepared rejection');
- const template=makeOperations(0n).find(x=>x.id===id);assertOperationTemplate(template,entry.op,{},j);
+ const template=rejectionTemplate(entry);assertOperationTemplate(template,entry.op,{},j);
  // A known outcome must go through ordinary verification, never rebroadcast.
  try{await rpc.tx(entry.hash,IDS.ash,'NONE');throw Error('Transaction is known. Resume normally without the retry option.');}
  catch(e){if(e.rpcError?.cause?.name!=='UNKNOWN_TRANSACTION')throw e;}
@@ -178,12 +200,21 @@ export async function guardRejectionRecovery(j,rpc,id,inspect=inspectSigned){
   rpc.request('query',{request_type:'view_access_key_list',finality:'final',account_id:IDS.ash}),
   rpc.view('creature',{id:IDS.ash}),rpc.view('ft_balance_of',{account_id:IDS.ash}),rpc.account(IDS.ash),
   rpc.request('EXPERIMENTAL_protocol_config',{finality:'final'}),rpc.request('gas_price',[null]),rpc.request('block',{block_id:entry.prepared.block_hash})]);
- if(!Number.isSafeInteger(block.header?.height)||!Number.isSafeInteger(keys.block_height)||!Number.isSafeInteger(protocol.transaction_validity_period)||keys.block_height-block.header.height>=protocol.transaction_validity_period)throw Error('Signed transaction expired or validity unknown; no retry');
+ if(!Number.isSafeInteger(block.header?.height)||!Number.isSafeInteger(keys.block_height)||!Number.isSafeInteger(protocol.transaction_validity_period)||(!repair&&keys.block_height-block.header.height>=protocol.transaction_validity_period))throw Error('Signed transaction expired or validity unknown; no retry');
  const key=keys.keys.find(k=>k.public_key===entry.prepared.public_key);
  if(!key||key.access_key.permission!=='FullAccess'||BigInt(key.access_key.nonce)+1n!==BigInt(entry.prepared.nonce))throw Error('Ash nonce changed; locate transaction before retry');
  if(ash?.active!==false||balance!=='5')throw Error('Death lock or frozen balance mismatch');
  const spendable=BigInt(account.amount)-BigInt(account.storage_usage)*BigInt(protocol.runtime_config.storage_amount_per_byte);
- if(spendable<BigInt(entry.op.gas)*10n**12n*BigInt(gas.gas_price)*2n)throw Error('Ash lacks conservative gas balance');
+ const cost=functionCallCost(entry.op,protocol,gas);
+ if(repair){
+  // A replacement competes at the identical nonce, so at most one can ever execute.
+  // Require a concrete current-state rejection proof, not UNKNOWN_TRANSACTION alone.
+  if(entry.op.gas!==30||BigInt(cost.total_cost)<=BigInt(account.amount))throw Error('Old transaction is not provably balance-rejected in current state');
+  const replacement={...entry.op,gas:5};const replacementCost=functionCallCost(replacement,protocol,gas);
+  if(BigInt(replacementCost.total_cost)>spendable)throw Error('Replacement lacks gas reserve');
+  return {entry,proof:{balance:account.amount,storage_backing:String(BigInt(account.storage_usage)*BigInt(protocol.runtime_config.storage_amount_per_byte)),old_cost:cost,replacement_cost:replacementCost,observed_block:keys.block_height}};
+ }
+ if(spendable<BigInt(cost.total_cost))throw Error(`Ash cannot fund prepaid gas purchase at ${cost.purchase_gas_price}. Required ${cost.total_cost}; available after storage ${spendable}. Use explicit rejected-spend repair after review.`);
  return entry;
 }
 export async function rebroadcastRejection(j,rpc,id,{inspect=inspectSigned,processRunner=cliProcess,persist=writeEvidence}={}){
@@ -193,6 +224,26 @@ export async function rebroadcastRejection(j,rpc,id,{inspect=inspectSigned,proce
  const result=await processRunner(broadcastSignedArgs(path.join(SIGNED_DIR,id+'.json')));
  (entry.cli_diagnostics??=[]).push({phase:'rebroadcast-identical',...result});persist(j);
  if(result.reported_hash&&result.reported_hash!==entry.hash)throw Error('CLI reported a different transaction hash');
+ await checkBroadcastResult(rpc,entry,result,persist,j);
+}
+export async function checkBroadcastResult(rpc,entry,result,persist,j){
+ if(result.exit_code===0)return;
+ try{await rpc.tx(entry.hash,entry.op.signer,'NONE');}catch(e){
+  entry.state='submission-error';persist(j);
+  throw Error('Broadcast CLI failed and public status is unconfirmed. Exact redacted output is in journal cli_diagnostics. No automatic resend; this is not proof of a contract panic.');
+ }
+ // A CLI nonzero exit can be a real contract panic. Only the public outcome decides.
+}
+export async function prepareRejectedSpendRepair(j,rpc,{inspect=inspectSigned,persist=writeEvidence,move=renameSync}={}){
+ const id='refused-post-death-spend';const {entry,proof}=await guardRejectionRecovery(j,rpc,id,inspect,{repair:true});
+ const archive=path.join(SIGNED_DIR,`${id}.rejected-${entry.hash}.json`);
+ if(existsSync(archive))throw Error('Original signed archive already exists; review instead of overwriting');
+ // Preserve the signed original and its whole journal entry before replacement preparation.
+ (j.rejected_attempts??=[]).push({...structuredClone(entry),repair_proof:proof,archive});
+ j.steps[id]={id,op:{...entry.op,gas:5},state:'repair-archiving',recovery:{nonce:entry.prepared.nonce,public_key:entry.prepared.public_key},replaces_hash:entry.hash};persist(j);
+ move(path.join(SIGNED_DIR,id+'.json'),archive);
+ j.steps[id].state='preparing';persist(j);
+ return proof;
 }
 export async function runCli(op,onHash,context={}){
  const dir=context.directory??SIGNED_DIR;mkdirSync(dir,{recursive:true,mode:0o700});chmodSync(dir,0o700);
@@ -286,13 +337,14 @@ export async function executeStep(j,rpc,template,work,options={}){
  if(action==='new'||action==='prepare-again'){
   const op=await (options.resolveOperation??resolveOperation)(template,j,rpc,work);
   assertOperationTemplate(template,op,work,j);
-  entry={id:op.id,op,state:'preparing',started_at:new Date().toISOString(),...(j.tick_recovery&&op.id==='death-tick'?{recovery:j.tick_recovery}:{})};j.steps[op.id]=entry;persist(j);
+  entry={id:op.id,op,state:'preparing',started_at:new Date().toISOString(),...(entry?.recovery?{recovery:entry.recovery,replaces_hash:entry.replaces_hash}:j.tick_recovery&&op.id==='death-tick'?{recovery:j.tick_recovery}:{})};j.steps[op.id]=entry;persist(j);
   const cli=options.runCli??runCli;const result=await cli(op,(hash,prepared)=>{if(entry.hash&&entry.hash!==hash){entry.conflicting_hash=hash;persist(j);return;}entry.hash=hash;entry.prepared=prepared;entry.state='prepared';persist(j);},{recovery:entry.recovery,recordDiagnostic:(phase,result)=>{(entry.cli_diagnostics??=[]).push({phase,...result});persist(j);},onBroadcastStarted:()=>{entry.state='broadcasting';persist(j);}});
   if(!entry.hash&&result.hash){entry.hash=result.hash;persist(j);}
   if(entry.conflicting_hash)throw Error('Multiple transaction hashes captured. Review both; no automatic continuation.');
+  if(result.diagnostic)await checkBroadcastResult(rpc,entry,result.diagnostic,persist,j);
   if(!entry.hash)throw Error(`Submission ${op.id} has no captured hash. It is deliberately NOT retried. Use --resolve-hash after review.`);
  }
- assertOperationTemplate(template,entry.op,work,j);
+ assertOperationTemplate(template.id==='refused-post-death-spend'?rejectionTemplate(entry):template,entry.op,work,j);
  entry.state='confirming';persist(j);
  const result=await finalized(rpc,entry.hash,entry.op.signer);
  entry.receipt_ids=result.receipts_outcome?.map(x=>({id:x.id,executor:x.outcome.executor_id,status:x.outcome.status}))??[];
@@ -301,7 +353,7 @@ export async function executeStep(j,rpc,template,work,options={}){
  if(!j.events.some(e=>e.step===entry.id)){j.events.push({step:entry.id,transaction:entry.hash,explorer:`https://testnet.nearblocks.io/txns/${entry.hash}`,state:entry.state,...(entry.op.kind==='create'?{}:{snapshot:await (options.snapshot??snapshot)(rpc)})});persist(j);}
  console.log(`${entry.id} ${entry.state} https://testnet.nearblocks.io/txns/${entry.hash}`);
 }
-function parseArgs(args){let mode='dry-run',stopAfter=null,retryTick=null,retryRejection=null;const resolutions=[];for(let i=0;i<args.length;i++){const a=args[i];if(a==='--execute')mode='execute';else if(a==='--dry-run')mode='dry-run';else if(a==='--account'){if(args[++i]!==ROOT)throw Error('Only the approved throwaway root is allowed');}else if(a==='--stop-after')stopAfter=args[++i];else if(a==='--retry-unconfirmed-rejection')retryRejection=args[++i];else if(a==='--retry-unconfirmed-tick')retryTick=args[++i];else if(a==='--resolve-hash')resolutions.push(args[++i]);else if(a==='--help')return {help:true};else throw Error('Unknown option '+a);}if(args.includes('--execute')&&args.includes('--dry-run'))throw Error('Choose dry-run or execute, not both');return {mode,stopAfter,resolutions,retryTick,retryRejection};}
+function parseArgs(args){let mode='dry-run',stopAfter=null,retryTick=null,retryRejection=null,repairRejectedSpend=false;const resolutions=[];for(let i=0;i<args.length;i++){const a=args[i];if(a==='--execute')mode='execute';else if(a==='--dry-run')mode='dry-run';else if(a==='--account'){if(args[++i]!==ROOT)throw Error('Only the approved throwaway root is allowed');}else if(a==='--stop-after')stopAfter=args[++i];else if(a==='--repair-rejected-spend')repairRejectedSpend=true;else if(a==='--retry-unconfirmed-rejection')retryRejection=args[++i];else if(a==='--retry-unconfirmed-tick')retryTick=args[++i];else if(a==='--resolve-hash')resolutions.push(args[++i]);else if(a==='--help')return {help:true};else throw Error('Unknown option '+a);}if(args.includes('--execute')&&args.includes('--dry-run'))throw Error('Choose dry-run or execute, not both');return {mode,stopAfter,resolutions,retryTick,retryRejection,repairRejectedSpend};}
 export async function guardTickRecovery(j,rpc,id){
  if(id!=='death-tick')throw Error('Recovery exception is only for the monotonic death-tick');
  const entry=j?.steps?.[id];if(!entry||entry.hash||entry.state!=='submitting')throw Error('Only the legacy hashless tick intent can be recovered this way');
@@ -322,7 +374,7 @@ export function acquireRunLock(filename){
  return ()=>{closeSync(fd);unlinkSync(filename);};
 }
 export async function main(argv=process.argv.slice(2)){
- const options=parseArgs(argv);if(options.help){console.log('testnet-run.sh [--dry-run | --execute] [--account feral-039832.testnet] [--stop-after STEP] [--resolve-hash STEP=HASH] [--retry-unconfirmed-tick death-tick] [--retry-unconfirmed-rejection refused-post-death-spend]');return;}
+ const options=parseArgs(argv);if(options.help){console.log('testnet-run.sh [--dry-run | --execute] [--account feral-039832.testnet] [--stop-after STEP] [--resolve-hash STEP=HASH] [--retry-unconfirmed-tick death-tick] [--retry-unconfirmed-rejection refused-post-death-spend] [--repair-rejected-spend]');return;}
  if(options.mode==='dry-run')return mainWithOptions(options);
  const release=acquireRunLock(path.join(BASE,'evidence/testnet-run.lock'));
  try{return await mainWithOptions(options);}finally{release();}
@@ -333,9 +385,10 @@ async function mainWithOptions(options){
  if(j&&(j.root!==ROOT||j.wasm_sha256!==EXPECTED_WASM||j.transcript_hash!==work.source_hash))throw Error('Journal identity, WASM or transcript mismatch');
  const completed=new Set(j?Object.values(j.steps).filter(s=>['success','expected-failure'].includes(s.state)).map(s=>s.id):[]);
  const plan=await publicPlan(rpc,wasm.length,completed);
+ if(options.repairRejectedSpend&&(options.retryRejection||options.retryTick))throw Error('Choose one recovery option');
  if(options.retryRejection&&options.retryRejection!=='refused-post-death-spend')throw Error('Only the extinct rejection supports identical retry');
  if(options.stopAfter&&!plan.operations.some(o=>o.id===options.stopAfter))throw Error('Unknown stop-after step');
- if(options.mode==='dry-run'&&(options.resolutions.length||options.retryRejection))throw Error('Hash resolution requires execute mode; dry-run never changes the journal');
+ if(options.mode==='dry-run'&&(options.resolutions.length||options.retryRejection||options.repairRejectedSpend))throw Error('Hash resolution requires execute mode; dry-run never changes the journal');
  if(options.mode==='dry-run'){
   // This branch NEVER starts near-cli, opens credentials, signs or broadcasts.
   atomic(path.join(BASE,'evidence/testnet-plan.json'),plan);
@@ -355,6 +408,7 @@ async function mainWithOptions(options){
  if(options.retryTick){const recovery=await guardTickRecovery(j,rpc,options.retryTick);(j.recovered_intents??=[]).push(j.steps['death-tick']);delete j.steps['death-tick'];j.tick_recovery=recovery;writeEvidence(j);}
  for(const item of options.resolutions){const at=item.indexOf('=');const id=item.slice(0,at),hash=item.slice(at+1);if(at<1||!j.steps[id]||!/^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(hash))throw Error('Invalid hash resolution');if(j.steps[id].hash&&j.steps[id].hash!==hash)throw Error('Cannot replace an already captured hash');j.steps[id].hash=hash;writeEvidence(j);}
  try{
+  if(options.repairRejectedSpend)await prepareRejectedSpendRepair(j,rpc);
   for(const template of plan.operations){if(stopRequested){console.log('Stopped safely after signal; no further submission');return;}if(options.retryRejection===template.id){await rebroadcastRejection(j,rpc,options.retryRejection);options.retryRejection=null;}await executeStep(j,rpc,template,work);if(stopRequested||template.id===options.stopAfter){console.log('Stopped at requested durable checkpoint');return;}}
   const final=await snapshot(rpc);const balances=final.creatures.map(c=>BigInt(c.balance));if(!equal(balances.map(String),['190','155','5','90'])||final.economy.supply!=='950'||final.economy.burned!=='50'||final.creatures[2].creature.active)throw Error('Final fixture invariants differ. Evidence retained for review.');
   if((await rpc.view('bid',{actor:IDS.child,job_id:'child-first'}))!=='80')throw Error('Child first bid mismatch');
