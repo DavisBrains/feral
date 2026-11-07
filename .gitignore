@@ -3,3 +3,4 @@
 /evm/cache/
 *.log
 .env*
+/evm/node_modules/
