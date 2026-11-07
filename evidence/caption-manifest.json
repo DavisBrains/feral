@@ -1,0 +1,12 @@
+{
+  "source": {
+    "en": "Build beyond boundaries",
+    "es": "Construye sin límites"
+  },
+  "file": "caption-card.svg",
+  "sha256": "2a32dc82114ae7df45bf72d8590d92cb4ca615b132d4832a6076de5e3f5c74de",
+  "width": 1080,
+  "height": 1080,
+  "mode": "deterministic controlled fixture",
+  "verifier": "trusted local exact text and dimensions"
+}

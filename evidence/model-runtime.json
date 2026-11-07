@@ -1,0 +1,11 @@
+{
+  "runtime": "Ollama 0.40.15",
+  "runtime_started": true,
+  "compute": "CPU",
+  "model": "qwen2.5:3b",
+  "model_download": "failed",
+  "reason": "Ollama refused registry blob redirect because storage hostname resolved to non-public 198.18.0.1. No bypass attempted.",
+  "inference_ran": false,
+  "latency_seconds": null,
+  "tokens_per_second": null
+}

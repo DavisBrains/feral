@@ -3,6 +3,9 @@ use near_sdk::{test_utils::VMContextBuilder, testing_env};
 fn id(s: &str) -> AccountId {
     s.parse().unwrap()
 }
+fn strategy(n: u8) -> String {
+    Controller::policy_hash(n)
+}
 fn hash(n: u8) -> String {
     format!("{n:064x}")
 }
@@ -17,9 +20,9 @@ fn ctx(predecessor: &str, deposit: u128) {
 fn setup() -> Controller {
     ctx("owner.test", 0);
     let mut c = Controller::new(id("owner.test"));
-    c.register(id("a.test"), U128(250), hash(1));
-    c.register(id("b.test"), U128(145), hash(2));
-    c.register(id("c.test"), U128(5), hash(3));
+    c.register(id("a.test"), U128(250), strategy(0));
+    c.register(id("b.test"), U128(145), strategy(2));
+    c.register(id("c.test"), U128(5), strategy(3));
     c
 }
 fn conserved(c: &Controller) {
@@ -62,7 +65,7 @@ fn paper_playthrough() {
         id("kid.feral.test"),
         1,
         U128(MIN_CHILD_NEAR),
-        hash(7),
+        strategy(1),
         1,
     );
     assert_eq!(c.balance(&id("a.test")), 200);
@@ -89,7 +92,7 @@ fn failed_birth_refunds_even_if_parent_dies() {
         id("kid.feral.test"),
         1,
         U128(MIN_CHILD_NEAR),
-        hash(7),
+        strategy(1),
         1,
     );
     for t in 1..=16 {
@@ -116,7 +119,7 @@ fn successful_cleanup_after_parent_death() {
         id("kid.feral.test"),
         1,
         U128(MIN_CHILD_NEAR),
-        hash(7),
+        strategy(1),
         1,
     );
     for t in 1..=16 {
@@ -137,7 +140,7 @@ fn dead_cannot_pay() {
         id("a.test"),
         U128(1),
         "attack".into(),
-        hash(8),
+        strategy(2),
     );
 }
 #[test]
@@ -161,7 +164,13 @@ fn repeated_tick_refused() {
 fn service_replay_refused() {
     let mut c = setup();
     for _ in 0..2 {
-        c.pay_creature(id("a.test"), id("b.test"), U128(30), "same".into(), hash(8));
+        c.pay_creature(
+            id("a.test"),
+            id("b.test"),
+            U128(30),
+            "same".into(),
+            strategy(2),
+        );
     }
 }
 #[test]
@@ -192,7 +201,7 @@ fn callback_duplicate_refused() {
         id("kid.feral.test"),
         1,
         U128(MIN_CHILD_NEAR),
-        hash(7),
+        strategy(1),
         1,
     );
     c.complete_birth(id("kid.feral.test"), 1, true);
@@ -210,7 +219,7 @@ fn duplicate_birth_refused() {
         id("kid.feral.test"),
         1,
         U128(MIN_CHILD_NEAR),
-        hash(7),
+        strategy(1),
         1,
     );
     let _p = c.birth(
@@ -218,7 +227,7 @@ fn duplicate_birth_refused() {
         id("kid.feral.test"),
         2,
         U128(MIN_CHILD_NEAR),
-        hash(8),
+        strategy(2),
         2,
     );
 }
@@ -231,7 +240,7 @@ fn underflow_refused() {
         id("b.test"),
         U128(u128::MAX),
         "huge".into(),
-        hash(8),
+        strategy(2),
     );
 }
 
@@ -258,17 +267,23 @@ fn reserved_money_cannot_fund_second_birth() {
         id("kid.feral.test"),
         1,
         U128(MIN_CHILD_NEAR),
-        hash(7),
+        strategy(1),
         1,
     );
     c.complete_birth(id("kid.feral.test"), 1, true);
-    c.pay_creature(id("a.test"), id("b.test"), U128(40), "help".into(), hash(8));
+    c.pay_creature(
+        id("a.test"),
+        id("b.test"),
+        U128(40),
+        "help".into(),
+        strategy(2),
+    );
     let _p = c.birth(
         id("a.test"),
         id("kid2.feral.test"),
         2,
         U128(MIN_CHILD_NEAR),
-        hash(9),
+        strategy(3),
         2,
     );
 }
@@ -290,4 +305,64 @@ fn native_overflow_refused() {
     c.creatures.insert(&id("a.test"), &a);
     ctx("owner.test", 1);
     c.deposit_native(id("a.test"));
+}
+
+#[test]
+#[should_panic(expected = "mutation bounds")]
+fn arbitrary_strategy_hash_refused() {
+    let mut c = setup();
+    c.set_strategy(id("a.test"), hash(99), 1);
+}
+#[test]
+fn checked_promise_callbacks() {
+    let mut c = setup();
+    let mut a = c.creatures.get(&id("a.test")).unwrap();
+    a.native_reserve = U128(MIN_CHILD_NEAR * 2);
+    c.creatures.insert(&id("a.test"), &a);
+    let _p = c.birth(
+        id("a.test"),
+        id("kid.feral.test"),
+        1,
+        U128(MIN_CHILD_NEAR),
+        strategy(1),
+        1,
+    );
+    let mut b = VMContextBuilder::new();
+    b.current_account_id(id("feral.test"))
+        .predecessor_account_id(id("feral.test"))
+        .account_balance(NearToken::from_near(100));
+    testing_env!(
+        b.build(),
+        near_sdk::test_vm_config(),
+        near_sdk::RuntimeFeesConfig::test(),
+        Default::default(),
+        vec![near_sdk::PromiseResult::Successful(vec![])]
+    );
+    assert!(c.on_birth(id("kid.feral.test"), 1));
+    conserved(&c);
+    ctx("owner.test", 0);
+    let _p = c.birth(
+        id("a.test"),
+        id("kid2.feral.test"),
+        2,
+        U128(MIN_CHILD_NEAR),
+        strategy(2),
+        2,
+    );
+    testing_env!(
+        b.build(),
+        near_sdk::test_vm_config(),
+        near_sdk::RuntimeFeesConfig::test(),
+        Default::default(),
+        vec![near_sdk::PromiseResult::Failed]
+    );
+    assert!(!c.on_birth(id("kid2.feral.test"), 2));
+    assert_eq!(c.balance(&id("a.test")), 150);
+    conserved(&c);
+}
+#[test]
+#[should_panic(expected = "one result required")]
+fn callback_without_result_refused() {
+    let mut c = setup();
+    c.on_birth(id("kid.feral.test"), 1);
 }

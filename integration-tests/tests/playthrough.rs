@@ -1,6 +1,17 @@
 use anyhow::Result;
 use near_workspaces::{Account, Contract, types::NearToken};
 use serde_json::{Value, json};
+use sha2::{Digest, Sha256};
+fn strategy(m: u8) -> String {
+    let s = match m {
+        0 => "job=bilingual;min_price=90;birth_floor=120",
+        1 => "job=bilingual;min_price=80;birth_floor=140",
+        2 => "job=translation;min_price=30;birth_floor=180",
+        3 => "job=short;min_price=40;birth_floor=120",
+        _ => panic!(),
+    };
+    format!("{:x}", Sha256::digest(s.as_bytes()))
+}
 fn h(n: u8) -> String {
     format!("{n:064x}")
 }
@@ -39,6 +50,12 @@ async fn conservation(c: &Contract, ids: &[&str]) -> Result<()> {
 }
 #[tokio::test]
 async fn sandbox_paper_playthrough_and_failure_paths() -> Result<()> {
+    let actual_card = std::fs::read("../evidence/caption-card.svg")?;
+    let output_hash = format!("{:x}", Sha256::digest(&actual_card));
+    let translation_hash = format!(
+        "{:x}",
+        Sha256::digest(std::fs::read("../evidence/translation.txt")?)
+    );
     let worker = near_workspaces::sandbox().await?;
     let wasm = std::fs::read("../target/near/feral_controller/feral_controller.wasm")?;
     let c = worker.dev_deploy(&wasm).await?;
@@ -47,10 +64,12 @@ async fn sandbox_paper_playthrough_and_failure_paths() -> Result<()> {
     let a = worker.dev_create_account().await?;
     let b = worker.dev_create_account().await?;
     let extinct = worker.dev_create_account().await?;
-    for (actor, amount, hash) in [(&a, 250, 1), (&b, 145, 2), (&extinct, 5, 3)] {
+    for (actor, amount, hash) in [(&a, 250, 0), (&b, 145, 2), (&extinct, 5, 3)] {
         owner
             .call(c.id(), "register")
-            .args_json(json!({"id":actor.id(),"amount":amount.to_string(),"strategy_hash":h(hash)}))
+            .args_json(
+                json!({"id":actor.id(),"amount":amount.to_string(),"strategy_hash":strategy(hash)}),
+            )
             .deposit(NearToken::from_millinear(200))
             .max_gas()
             .transact()
@@ -83,7 +102,7 @@ async fn sandbox_paper_playthrough_and_failure_paths() -> Result<()> {
             .await?
             .is_failure()
     );
-    call(&owner,&c,"pay_creature",json!({"actor":a.id(),"provider":b.id(),"amount":"30","service_id":"translation-1","output_hash":h(4)})).await?;
+    call(&owner,&c,"pay_creature",json!({"actor":a.id(),"provider":b.id(),"amount":"30","service_id":"translation-1","output_hash":translation_hash})).await?;
     conservation(&c, &ids).await?;
     call(
         &owner,
@@ -103,14 +122,20 @@ async fn sandbox_paper_playthrough_and_failure_paths() -> Result<()> {
         &owner,
         &c,
         "settle_job",
-        json!({"job_id":"card-1","output_hash":h(6)}),
+        json!({"job_id":"card-1","output_hash":output_hash}),
     )
     .await?;
     assert_eq!(bal(&c, a.id().as_str()).await?, 300);
+    let paid_job: Value = c
+        .view("job")
+        .args_json(json!({"job_id":"card-1"}))
+        .await?
+        .json()?;
+    assert_eq!(paid_job["output_hash"], output_hash);
     conservation(&c, &ids).await?;
     let kid = format!("kid.{}", c.id());
     let funding = NearToken::from_millinear(60);
-    let args = json!({"parent":a.id(),"child":kid,"nonce":1,"native":funding.as_yoctonear().to_string(),"strategy_hash":h(7),"mutation":1});
+    let args = json!({"parent":a.id(),"child":kid,"nonce":1,"native":funding.as_yoctonear().to_string(),"strategy_hash":strategy(1),"mutation":1});
     let birth = owner
         .call(c.id(), "birth")
         .args_json(args.clone())
@@ -135,7 +160,7 @@ async fn sandbox_paper_playthrough_and_failure_paths() -> Result<()> {
         .args_json(json!({"id":kid}))
         .await?
         .json()?;
-    assert_eq!(born["strategy_hash"], h(7));
+    assert_eq!(born["strategy_hash"], strategy(1));
     assert_eq!(born["parent"], a.id().as_str());
     let ids = [
         a.id().as_str(),
@@ -190,7 +215,7 @@ async fn sandbox_paper_playthrough_and_failure_paths() -> Result<()> {
         .args_json(json!({"id":a.id()}))
         .await?
         .json()?;
-    let failed_args = json!({"parent":a.id(),"child":existing.id(),"nonce":2,"native":funding.as_yoctonear().to_string(),"strategy_hash":h(8),"mutation":2});
+    let failed_args = json!({"parent":a.id(),"child":existing.id(),"nonce":2,"native":funding.as_yoctonear().to_string(),"strategy_hash":strategy(2),"mutation":2});
     let failed = owner
         .call(c.id(), "birth")
         .args_json(failed_args)

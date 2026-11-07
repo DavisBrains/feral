@@ -99,6 +99,9 @@ impl Controller {
     pub fn register(&mut self, id: AccountId, amount: U128, strategy_hash: String) {
         self.only_owner();
         Self::hash(&strategy_hash);
+        let initial_policy = (0..=3)
+            .find(|&m| Self::policy_hash(m) == strategy_hash)
+            .expect("unknown strategy manifest");
         require!(!self.creatures.get(&id).is_some(), "creature exists");
         require!(self.births.get(&id).is_none(), "birth ID used");
         require!(
@@ -120,7 +123,7 @@ impl Controller {
                 active: true,
                 parent: None,
                 strategy_hash,
-                mutation: 0,
+                mutation: initial_policy,
                 born_turn: self.turn,
                 nonce: 0,
                 pending: None,
@@ -150,6 +153,12 @@ impl Controller {
                 env::log_str(&format!("extinction {id} turn {}", self.turn));
             } else {
                 self.token.internal_withdraw(&id, UPKEEP);
+                near_contract_standards::fungible_token::events::FtBurn {
+                    owner_id: &id,
+                    amount: U128(UPKEEP),
+                    memo: Some("upkeep"),
+                }
+                .emit();
                 self.burned = self.burned.checked_add(UPKEEP).unwrap();
                 env::log_str(&format!("burn {id} {UPKEEP}"));
             }
@@ -245,7 +254,10 @@ impl Controller {
     pub fn set_strategy(&mut self, actor: AccountId, strategy_hash: String, mutation: u8) {
         self.actor(&actor);
         Self::hash(&strategy_hash);
-        require!(mutation <= 3, "mutation bounds");
+        require!(
+            mutation <= 3 && Self::policy_hash(mutation) == strategy_hash,
+            "mutation bounds"
+        );
         let mut c = self.creatures.get(&actor).unwrap();
         c.strategy_hash = strategy_hash;
         c.mutation = mutation;
@@ -301,7 +313,7 @@ impl Controller {
             "birth reserves"
         );
         require!(
-            strategy_hash != p.strategy_hash,
+            mutation != p.mutation && Self::policy_hash(mutation) == strategy_hash,
             "child needs bounded strategy change"
         );
         self.solvent_native();
@@ -365,6 +377,9 @@ impl Controller {
         self.complete_birth(child, nonce, success);
         env::log_str(&format!("trusted birth reconciliation {evidence_hash}"));
     }
+    pub fn strategy_manifest(&self, mutation: u8) -> String {
+        Self::policy(mutation).into()
+    }
     pub fn creature(&self, id: AccountId) -> Option<Creature> {
         self.creatures.get(&id)
     }
@@ -379,6 +394,21 @@ impl Controller {
     }
 }
 impl Controller {
+    fn policy(mutation: u8) -> &'static str {
+        match mutation {
+            0 => "job=bilingual;min_price=90;birth_floor=120",
+            1 => "job=bilingual;min_price=80;birth_floor=140",
+            2 => "job=translation;min_price=30;birth_floor=180",
+            3 => "job=short;min_price=40;birth_floor=120",
+            _ => env::panic_str("mutation bounds"),
+        }
+    }
+    fn policy_hash(mutation: u8) -> String {
+        env::sha256(Self::policy(mutation).as_bytes())
+            .iter()
+            .map(|b| format!("{b:02x}"))
+            .collect()
+    }
     fn only_owner(&self) {
         require!(env::predecessor_account_id() == self.owner, "owner only");
     }
