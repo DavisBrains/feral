@@ -1,0 +1,126 @@
+{
+  "network": "NEAR testnet",
+  "complete": true,
+  "root": "feral-039832.testnet",
+  "creatures": [
+    {
+      "id": "moss.feral-039832.testnet",
+      "balance": "190",
+      "active": true
+    },
+    {
+      "id": "echo.feral-039832.testnet",
+      "balance": "155",
+      "active": true
+    },
+    {
+      "id": "ash.feral-039832.testnet",
+      "balance": "5",
+      "active": false
+    },
+    {
+      "id": "pip.ctrl.feral-039832.testnet",
+      "balance": "90",
+      "active": true
+    }
+  ],
+  "transactions": [
+    {
+      "label": "create-controller",
+      "hash": "5x5KzkB1GAExJdijsqHzMJjjAu2BQxaZVFj2NzNNkLP1"
+    },
+    {
+      "label": "deploy-controller",
+      "hash": "913kMBrX2SQRS4dvyG6X6ccX52bLDA1fqyQv3i4E69LQ"
+    },
+    {
+      "label": "create-moss-account",
+      "hash": "6ZZDiiMMqAEqwfWZYvypY7P2by77og2p3rMroyynUvFE"
+    },
+    {
+      "label": "create-echo-account",
+      "hash": "6Wz8bEm7EnbFG7X7Hoi2ZxGxwd96fg9ptWKvmCz6iEwH"
+    },
+    {
+      "label": "create-ash-account",
+      "hash": "G6xUcPaMXVh1reuzdP5nL1CyP88piJQYQnSabtzT4chR"
+    },
+    {
+      "label": "register-moss",
+      "hash": "Bpau9a8naNbMZLruzrMUaSiSHTy97pojZDvfUEaRSqUD"
+    },
+    {
+      "label": "register-echo",
+      "hash": "UuJF1a5rC2jQoaBnX23dPEouSC59rjpUwAakynNYKgZ"
+    },
+    {
+      "label": "register-ash",
+      "hash": "4tJ4iGeiMvzag4XZo5avabRfxefNBkXxzaFowQtQP2MJ"
+    },
+    {
+      "label": "create-old-job",
+      "hash": "65Ns5r2ejQydVKFv1P7QCsR2wWrQ3TYjyEaCfCHufvZ7"
+    },
+    {
+      "label": "old-short-bid",
+      "hash": "DhE57JAk68VzhFQ3oF7NvMQDEJkFC77ny6nMeo4gJR2P"
+    },
+    {
+      "label": "demand-shock",
+      "hash": "HTMJvkEfbFJqPVHbAu4UHUsJxvXPcexxGGyDDEoiqioV"
+    },
+    {
+      "label": "cancel-old-job",
+      "hash": "Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5"
+    },
+    {
+      "label": "death-tick",
+      "hash": "3g6q5jY88YuuvtbwWvCNSv7uvBRBTZXyBxi4e1tNJ7GD"
+    },
+    {
+      "label": "refused-post-death-spend",
+      "hash": "DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5"
+    },
+    {
+      "label": "create-card-job",
+      "hash": "EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D"
+    },
+    {
+      "label": "paid-collaboration",
+      "hash": "JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU"
+    },
+    {
+      "label": "parent-bid",
+      "hash": "4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve"
+    },
+    {
+      "label": "claim-card-job",
+      "hash": "5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T"
+    },
+    {
+      "label": "paid-job",
+      "hash": "CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq"
+    },
+    {
+      "label": "lineage-goal",
+      "hash": "CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3"
+    },
+    {
+      "label": "funded-child-account-creation",
+      "hash": "9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL"
+    },
+    {
+      "label": "second-upkeep",
+      "hash": "7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M"
+    },
+    {
+      "label": "create-child-job",
+      "hash": "Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV"
+    },
+    {
+      "label": "child-first-bid",
+      "hash": "C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar"
+    }
+  ],
+  "required_external_requests": 0
+}

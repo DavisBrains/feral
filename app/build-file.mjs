@@ -1,0 +1,18 @@
+import {build} from 'vite';
+import {writeFileSync,mkdirSync,rmSync} from 'node:fs';
+import {syncEvidence} from './sync-evidence.mjs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const run=syncEvidence();
+const result=await build({configFile:false,root,base:'./',publicDir:false,build:{write:false,cssCodeSplit:false,assetsInlineLimit:Infinity,target:'es2022',rollupOptions:{input:path.join(root,'src/main.ts'),output:{format:'iife',inlineDynamicImports:true,entryFileNames:'feral.js'}}}});
+const output=(Array.isArray(result)?result[0]:result).output;
+const chunks=output.filter(o=>o.type==='chunk');
+if(chunks.length!==1||chunks[0].imports.length||chunks[0].dynamicImports.length)throw Error('File build must contain exactly one dependency free classic script');
+const css=output.filter(o=>o.type==='asset'&&o.fileName.endsWith('.css')).map(o=>String(o.source)).join('\n');
+const js=chunks[0].code.replace(/<\/script/gi,'<\\/script');
+const html=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><title>Feral · Real testnet life</title><style>${css}</style></head><body><div id="app"></div><script>${js}</script></body></html>`;
+if(/<(?:script|link)[^>]+(?:src|href)=/i.test(html)||/\bfetch\s*\(|XMLHttpRequest|WebSocket|import\s*\(/.test(js)||/url\(\s*["']?(?:https?:|\/)/i.test(css))throw Error('Unexpected external dependency in file build');
+const dest=path.join(root,'dist-file');rmSync(dest,{recursive:true,force:true});mkdirSync(dest,{recursive:true});writeFileSync(path.join(dest,'index.html'),html);
+writeFileSync(path.join(dest,'snapshot-manifest.json'),JSON.stringify({network:run.network,complete:run.complete,root:run.root,creatures:run.final.creatures.map(c=>({id:c.id,balance:c.balance,active:c.creature.active})),transactions:run.transactions.map(t=>({label:t.label,hash:t.hash})),required_external_requests:0},null,2)+'\n');
+console.log(`Self contained file build ${path.join(dest,'index.html')} with zero render requests`);

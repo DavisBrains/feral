@@ -12,3 +12,5 @@ __pycache__/
 /evidence/testnet-*.tmp
 
 /.local-transactions/
+
+/app/dist-file/

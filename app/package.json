@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "tsc --noEmit && vite build",
+    "build": "npm run sync && tsc --noEmit && vite build --base=./",
     "test": "node --test *.test.mjs",
-    "sync": "node sync-evidence.mjs"
+    "sync": "node sync-evidence.mjs",
+    "build:file": "node build-file.mjs && tsc --noEmit"
   },
   "keywords": [],
   "author": "",
