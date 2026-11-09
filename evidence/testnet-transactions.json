@@ -31,7 +31,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "deploy-controller",
@@ -56,7 +57,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "create-moss-account",
@@ -81,7 +83,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "create-echo-account",
@@ -106,7 +109,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "create-ash-account",
@@ -131,7 +135,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "register-moss",
@@ -156,7 +161,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "register-echo",
@@ -181,7 +187,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "register-ash",
@@ -206,7 +213,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "create-old-job",
@@ -231,7 +239,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "old-short-bid",
@@ -256,7 +265,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "demand-shock",
@@ -281,7 +291,8 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
     },
     {
       "label": "cancel-old-job",
@@ -306,7 +317,864 @@
           }
         }
       ],
-      "failure_expected": false
+      "failure_expected": false,
+      "cli_diagnostics": []
+    },
+    {
+      "label": "death-tick",
+      "hash": "3g6q5jY88YuuvtbwWvCNSv7uvBRBTZXyBxi4e1tNJ7GD",
+      "explorer": "https://testnet.nearblocks.io/txns/3g6q5jY88YuuvtbwWvCNSv7uvBRBTZXyBxi4e1tNJ7GD",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "4Tfp1c4JDLJFvmc4aZ3GrkG7DQvDcuQwCCMqfQ5oGejG",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "B2cyQe2jiSZPLYdkdh9PEYPKH62THawPTVGfskeau36L",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000012",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "3HyybKkq1yJEev1FV32aHdHWzx3Y3VYurgPWiP4CVV4K"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1669,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1484,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false
+          },
+          "reported_hash": "3g6q5jY88YuuvtbwWvCNSv7uvBRBTZXyBxi4e1tNJ7GD"
+        }
+      ]
+    },
+    {
+      "label": "refused-post-death-spend",
+      "hash": "DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5",
+      "explorer": "https://testnet.nearblocks.io/txns/DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5",
+      "state": "expected-failure",
+      "signer": "ash.feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "FexyhHuiPu74qKoXTDPKXjrUxNRduWh4ZJXzGuCyVe3q",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "Failure": {
+              "ActionError": {
+                "index": 0,
+                "kind": {
+                  "FunctionCallError": {
+                    "ExecutionError": "Smart contract panicked: extinct"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "CZjDwiTwfcxdqRPdp1mG3AtT7AEsQvmLRTGzA2uRTvFN",
+          "executor": "ash.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": true,
+      "prepared": {
+        "nonce": "276607826000001",
+        "public_key": "ed25519:BGer985ZV5d97H4wzxD9TUmhhvGPfNaENmAjLszxvs3c",
+        "block_hash": "Ay3uRmHiC1FB1hkFvYwsYXaAnp2gW5PsT34F8tAFJwuJ"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 2255,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  ERROR Transaction failed\n│    Gas used: 2.1 Tgas\n│    Transaction fee: 0.0001859465961882 NEAR\n│    Transaction ID: DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet] (failed):   No logs\n│    Logs [ash.feral-039832.testnet]:   No logs\n│     \n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/refused-post-death-spend.json network-config testnet send\n\nError: \n   0: Error: An error occurred during a `FunctionCall` action.\n      ExecutionError(\"Smart contract panicked: extinct\")\n\nLocation:\n   src/common.rs:1864\n",
+          "exit_code": 1,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1090,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": true,
+            "rpc_error": false
+          },
+          "reported_hash": "DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5"
+        }
+      ]
+    },
+    {
+      "label": "create-card-job",
+      "hash": "EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D",
+      "explorer": "https://testnet.nearblocks.io/txns/EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "HSkhrRf3RAMxEvsJ451CyoKRhXqRoXfSfJgXQowHtjgt",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "3wW1kzCfjB41embRdNpDoo7wVLn72gxhyWQr1wAnCqby",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000013",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "78zSHdEP6364zLiFsT5c64xScLQJRBkHRgEnpTSHoV6G"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1980,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 2.3 Tgas\n│    Transaction fee: 0.0002045696868242 NEAR\n│    Transaction ID: EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"create_job\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/create-card-job.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1059,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D"
+        }
+      ]
+    },
+    {
+      "label": "paid-collaboration",
+      "hash": "JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU",
+      "explorer": "https://testnet.nearblocks.io/txns/JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "5tqtJ4fVhqmW1hMzCiTEvWCataTTCwhQutL4n4k4v8KL",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "CHjCb8cAmEufhtxKQXkTYKQSPjaLoHi3PAXirgj6Ai1Z",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000014",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "8KQdYJ3j1EmRoutxwWugnJRDMWMpABEkiHQWWosQDugi"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 2151,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 3.4 Tgas\n│    Transaction fee: 0.0003124805051669 NEAR\n│    Transaction ID: JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:\n│      EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"moss.feral-039832.testnet\",\"new_owner_id\":\"echo.feral-039832.testnet\",\"amount\":\"30\"}]}\n│      service translation-v1 31a7fc823e9f494051540107d59228d426559218d316df47aed3704546297d08\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"pay_creature\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/paid-collaboration.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1334,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU"
+        }
+      ]
+    },
+    {
+      "label": "parent-bid",
+      "hash": "4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve",
+      "explorer": "https://testnet.nearblocks.io/txns/4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "76qhu1ndDSvSAPZ3R7rs9Myh1Duc7nFpq8yvVLEJ9qd1",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "5LKVQqYGwLgsPWcy8UsoAE45ocLfPj6NTxWL2UiZQ8zk",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000015",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "24mgBWEc3r9DF934qkyHYGggkVESDMpyyMyG8ZCJuuZ1"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1784,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 2.7 Tgas\n│    Transaction fee: 0.000241151185535 NEAR\n│    Transaction ID: 4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"bid_job\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/parent-bid.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1050,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve"
+        }
+      ]
+    },
+    {
+      "label": "claim-card-job",
+      "hash": "5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T",
+      "explorer": "https://testnet.nearblocks.io/txns/5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "5UoQ3vudsio6ZHdkXF66VTFRmNFKYMDnCZ4RoGUNDrvW",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "oHapz5b337JchdRMah926xgRiHQfjHsQG8LYVZnNjkU",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000016",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "45AYdhbUr4hTAT1rRGMDdhAKjrYVKotmhg1Ac88LUSxM"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1726,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 2.6 Tgas\n│    Transaction fee: 0.0002299351268827 NEAR\n│    Transaction ID: 5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"claim_job\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/claim-card-job.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1057,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T"
+        }
+      ]
+    },
+    {
+      "label": "paid-job",
+      "hash": "CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq",
+      "explorer": "https://testnet.nearblocks.io/txns/CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "857J5eGfjGTAf2fbmcvpxehpj8Ug5J3oaGj6Q1Kx7nCB",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "4FtXtmBLjNhyxPsjx9gZpBwsM1dGvbCExXHRQm1YU97r",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000017",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "4uGFj8jtK5i9KTmPHJUaWdvdgZjpKesAJ1Z4DPaTRf3d"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1805,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 3.1 Tgas\n│    Transaction fee: 0.0002828936425107 NEAR\n│    Transaction ID: CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:\n│      EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"ctrl.feral-039832.testnet\",\"new_owner_id\":\"moss.feral-039832.testnet\",\"amount\":\"90\"}]}\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"settle_job\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/paid-job.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1227,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq"
+        }
+      ]
+    },
+    {
+      "label": "lineage-goal",
+      "hash": "CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3",
+      "explorer": "https://testnet.nearblocks.io/txns/CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "4U5uVCaoVaH47A2yYGGxE38VEKgrezBGzzYWQQjtVoUY",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "6o5DJQxUXZ72QCyfCXoTgYoQTqCtXd1eeT3Y2phEPvm4",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000018",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "HjQT4KxqSBmz8HaDFPcPcWNahMSiE1oBtBeCgUhVESFL"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1690,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 2.5 Tgas\n│    Transaction fee: 0.0002249853177767 NEAR\n│    Transaction ID: CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"set_goal\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/lineage-goal.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1054,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3"
+        }
+      ]
+    },
+    {
+      "label": "funded-child-account-creation",
+      "hash": "9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL",
+      "explorer": "https://testnet.nearblocks.io/txns/9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "7DBxRTQgNNuydQaDtJ6NYhFzPs7dWbkZHdMu5wAC46Lf",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessReceiptId": "4vZCsoNn7pCwa19ktVqWxL3JnYu7MgWbvUzgJWgaE3dJ"
+          }
+        },
+        {
+          "id": "D9Jx3a1jjYMTZQDA3AghHcc2X66NpdkVWXRufTfbKYZS",
+          "executor": "pip.ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "H7P2NtKMQn8eZFxdfWvLLYAK1s3wrULvxknenb3GPzbi",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "4vZCsoNn7pCwa19ktVqWxL3JnYu7MgWbvUzgJWgaE3dJ",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": "dHJ1ZQ=="
+          }
+        },
+        {
+          "id": "A43NGGTnJepED6MagBeqimDKJJmvJjcJmMMSNDHso8hG",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "4nWzY7oA97sARbqb2A8CSK6TBnFExtdoYGKwjRM1LzuZ",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000019",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "D3n2vdQmrXx8VWyfiefneNEeqANXCrnSTnXiHAKRJDvg"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 2240,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 18.2 Tgas\n│    Transaction fee: 0.0080318590372562 NEAR\n│    Transaction ID: 9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:\n│      EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"moss.feral-039832.testnet\",\"new_owner_id\":\"ctrl.feral-039832.testnet\",\"amount\":\"100\"}]}\n│    Logs [pip.ctrl.feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│    Logs [ctrl.feral-039832.testnet]:\n│      EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_transfer\",\"data\":[{\"old_owner_id\":\"ctrl.feral-039832.testnet\",\"new_owner_id\":\"pip.ctrl.feral-039832.testnet\",\"amount\":\"100\"}]}\n│      EVENT_JSON:{\"standard\":\"nep171\",\"version\":\"1.0.0\",\"event\":\"nft_mint\",\"data\":[{\"owner_id\":\"feral-039832.testnet\",\"token_ids\":[\"pip.ctrl.feral-039832.testnet\"],\"memo\":\"funded life\"}]}\n│    Logs [feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│     \n\nFunction execution return value (printed to stdout):\n\n\nThe \"birth\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/funded-child-account-creation.json network-config testnet send\n\ntrue\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1868,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL"
+        }
+      ]
+    },
+    {
+      "label": "second-upkeep",
+      "hash": "7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M",
+      "explorer": "https://testnet.nearblocks.io/txns/7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "CVafi8atfmsoUY4CEG7emCSexmGorDMiwpBpkrUFqpWt",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "5XJSjhGgA1FbFE1fT5cDKBuuSp598Wp7QAJRcq5FFRSp",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000020",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "DtehK3qek6Rc6dsUawocy654Phwgx3vF2ynXDtTC3Caz"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1578,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 4.1 Tgas\n│    Transaction fee: 0.0003865843231201 NEAR\n│    Transaction ID: 7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:\n│      EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_burn\",\"data\":[{\"owner_id\":\"moss.feral-039832.testnet\",\"amount\":\"10\",\"memo\":\"upkeep\"}]}\n│      burn moss.feral-039832.testnet 10\n│      EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_burn\",\"data\":[{\"owner_id\":\"echo.feral-039832.testnet\",\"amount\":\"10\",\"memo\":\"upkeep\"}]}\n│      burn echo.feral-039832.testnet 10\n│      EVENT_JSON:{\"standard\":\"nep141\",\"version\":\"1.0.0\",\"event\":\"ft_burn\",\"data\":[{\"owner_id\":\"pip.ctrl.feral-039832.testnet\",\"amount\":\"10\",\"memo\":\"upkeep\"}]}\n│      burn pip.ctrl.feral-039832.testnet 10\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"tick\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/second-upkeep.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1644,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M"
+        }
+      ]
+    },
+    {
+      "label": "create-child-job",
+      "hash": "Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV",
+      "explorer": "https://testnet.nearblocks.io/txns/Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "FnaA7ejsQwQM5tEWw5JMUtxPt7ghJ4wVgBR5eoKu66C",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "EPwJZUGLRNc3fx79y4epr3aqRWjJS81iSwBohCVKJDn6",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000021",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "BhZv224th2dGuzc9keFYiTLkWtB8v9dzRdCWEB6bDWvB"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1980,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 2.3 Tgas\n│    Transaction fee: 0.0002047900654817 NEAR\n│    Transaction ID: Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"create_job\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/create-child-job.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1058,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV"
+        }
+      ]
+    },
+    {
+      "label": "child-first-bid",
+      "hash": "C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar",
+      "explorer": "https://testnet.nearblocks.io/txns/C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar",
+      "state": "success",
+      "signer": "feral-039832.testnet",
+      "receiver": "ctrl.feral-039832.testnet",
+      "receipt_ids": [
+        {
+          "id": "HLMzbmBXTtzREMWsH86SbTGrGXq4VYLyJmKDi9og6z3k",
+          "executor": "ctrl.feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        },
+        {
+          "id": "38skEVt9DkHRSdfLG43z5jTLjHQpdZzVr4iVXrkHqbdJ",
+          "executor": "feral-039832.testnet",
+          "status": {
+            "SuccessValue": ""
+          }
+        }
+      ],
+      "failure_expected": false,
+      "prepared": {
+        "nonce": "276606257000022",
+        "public_key": "ed25519:74qz2mMcsfKJkvhvbJnwvxv7o1WNHLq1f6JZu7zLhpxW",
+        "block_hash": "7Q9BPsKeo29K6YvybwbyAKWcYXEqRpFgaooUxnuLvxKx"
+      },
+      "cli_diagnostics": [
+        {
+          "phase": "prepare",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1800,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": true
+          },
+          "reported_hash": null
+        },
+        {
+          "phase": "broadcast",
+          "output": "├  Transaction Execution Info:\n│    Gas used: 2.7 Tgas\n│    Transaction fee: 0.0002422444987363 NEAR\n│    Transaction ID: C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar\n│    To see the transaction in the transaction explorer, please open this url in your browser:\n│    https://explorer.testnet.near.org/transactions/C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar\n│     \n├  Function execution logs:\n│    Logs [ctrl.feral-039832.testnet]:   No logs\n│    Logs [feral-039832.testnet]:   No logs\n│     \n├  Function execution return value:\n│    Empty return value\n│     \n\n\nThe \"bid_job\" call to <ctrl.feral-039832.testnet> on behalf of <feral-039832.testnet> succeeded.\n\n\n\nHere is your console command if you need to script it or re-run:\n    /home/box/.local/lib/node_modules/near-cli-rs/node_modules/.bin_real/near transaction send-signed-transaction file-with-base64-signed-transaction /workspace/near/feral/.local-transactions/child-first-bid.json network-config testnet send\n\n",
+          "exit_code": 0,
+          "signal": null,
+          "timed_out": false,
+          "output_bytes": 1056,
+          "flags": {
+            "timeout": false,
+            "rate_limited": false,
+            "connection": false,
+            "invalid_nonce": false,
+            "expired": false,
+            "insufficient_balance": false,
+            "contract_panic": false,
+            "rpc_error": false
+          },
+          "reported_hash": "C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar"
+        }
+      ]
     }
   ],
   "decisions": {
@@ -336,6 +1204,171 @@
           "action": "bid",
           "job": "short",
           "price": 40
+        }
+      }
+    },
+    "extinct": {
+      "observation": {
+        "actor": "ash.feral-039832.testnet",
+        "policy": 3,
+        "goal": 0,
+        "active": false,
+        "balance": 5,
+        "jobs": [
+          {
+            "kind": "bilingual",
+            "reward": 90
+          }
+        ],
+        "needs_translation": true,
+        "has_translation": false,
+        "provider_active": true,
+        "can_reproduce": false
+      },
+      "result": {
+        "mode": "local-model",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "seconds": 1.5841927280016534,
+        "decision": {
+          "action": "wait"
+        }
+      }
+    },
+    "buy-help": {
+      "observation": {
+        "actor": "moss.feral-039832.testnet",
+        "policy": 0,
+        "goal": 0,
+        "active": true,
+        "balance": 240,
+        "jobs": [
+          {
+            "kind": "bilingual",
+            "reward": 90
+          }
+        ],
+        "needs_translation": true,
+        "has_translation": false,
+        "provider_active": true,
+        "can_reproduce": false
+      },
+      "result": {
+        "mode": "local-model",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "seconds": 5.592988717999106,
+        "decision": {
+          "action": "collaborate",
+          "job": "translation",
+          "price": 30
+        }
+      }
+    },
+    "provider-quote": {
+      "observation": {
+        "actor": "echo.feral-039832.testnet",
+        "policy": 2,
+        "goal": 0,
+        "active": true,
+        "balance": 135,
+        "jobs": [
+          {
+            "kind": "translation",
+            "reward": 30
+          }
+        ],
+        "needs_translation": true,
+        "has_translation": true,
+        "provider_active": true,
+        "can_reproduce": false
+      },
+      "result": {
+        "mode": "local-model",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "seconds": 3.1180664989988145,
+        "decision": {
+          "action": "bid",
+          "job": "translation",
+          "price": 30
+        }
+      }
+    },
+    "parent-bid": {
+      "observation": {
+        "actor": "moss.feral-039832.testnet",
+        "policy": 0,
+        "goal": 0,
+        "active": true,
+        "balance": 210,
+        "jobs": [
+          {
+            "kind": "bilingual",
+            "reward": 90
+          }
+        ],
+        "needs_translation": true,
+        "has_translation": true,
+        "provider_active": true,
+        "can_reproduce": false
+      },
+      "result": {
+        "mode": "local-model",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "seconds": 3.597226974001387,
+        "decision": {
+          "action": "bid",
+          "job": "bilingual",
+          "price": 90
+        }
+      }
+    },
+    "reproduce": {
+      "observation": {
+        "actor": "moss.feral-039832.testnet",
+        "policy": 0,
+        "goal": 2,
+        "active": true,
+        "balance": 300,
+        "jobs": [],
+        "needs_translation": true,
+        "has_translation": true,
+        "provider_active": true,
+        "can_reproduce": true
+      },
+      "result": {
+        "mode": "local-model",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "seconds": 2.110113259001082,
+        "decision": {
+          "action": "reproduce"
+        }
+      }
+    },
+    "child-bid": {
+      "observation": {
+        "actor": "pip.ctrl.feral-039832.testnet",
+        "policy": 1,
+        "goal": 0,
+        "active": true,
+        "balance": 90,
+        "jobs": [
+          {
+            "kind": "bilingual",
+            "reward": 90
+          }
+        ],
+        "needs_translation": true,
+        "has_translation": true,
+        "provider_active": true,
+        "can_reproduce": false
+      },
+      "result": {
+        "mode": "local-model",
+        "model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "seconds": 3.879366409000795,
+        "decision": {
+          "action": "bid",
+          "job": "bilingual",
+          "price": 80
         }
       }
     }
@@ -767,7 +1800,795 @@
           }
         ]
       }
+    },
+    {
+      "step": "death-tick",
+      "transaction": "3g6q5jY88YuuvtbwWvCNSv7uvBRBTZXyBxi4e1tNJ7GD",
+      "explorer": "https://testnet.nearblocks.io/txns/3g6q5jY88YuuvtbwWvCNSv7uvBRBTZXyBxi4e1tNJ7GD",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "600",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "240",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "135",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "refused-post-death-spend",
+      "transaction": "DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5",
+      "explorer": "https://testnet.nearblocks.io/txns/DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5",
+      "state": "expected-failure",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "600",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "240",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "135",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "create-card-job",
+      "transaction": "EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D",
+      "explorer": "https://testnet.nearblocks.io/txns/EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "90",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "240",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "135",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "paid-collaboration",
+      "transaction": "JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU",
+      "explorer": "https://testnet.nearblocks.io/txns/JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "90",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "210",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "165",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "parent-bid",
+      "transaction": "4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve",
+      "explorer": "https://testnet.nearblocks.io/txns/4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "90",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "210",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "165",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "claim-card-job",
+      "transaction": "5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T",
+      "explorer": "https://testnet.nearblocks.io/txns/5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "90",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "210",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "165",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "paid-job",
+      "transaction": "CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq",
+      "explorer": "https://testnet.nearblocks.io/txns/CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "300",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "165",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "lineage-goal",
+      "transaction": "CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3",
+      "explorer": "https://testnet.nearblocks.io/txns/CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "300",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "200000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "165",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "funded-child-account-creation",
+      "transaction": "9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL",
+      "explorer": "https://testnet.nearblocks.io/txns/9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 1,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "20",
+          "supply": "980"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "200",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 1,
+              "pending": null,
+              "native_reserve": "140000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "165",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          },
+          {
+            "id": "pip.ctrl.feral-039832.testnet",
+            "balance": "100",
+            "creature": {
+              "active": true,
+              "parent": "moss.feral-039832.testnet",
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06",
+              "mutation": 1,
+              "born_turn": 1,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "second-upkeep",
+      "transaction": "7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M",
+      "explorer": "https://testnet.nearblocks.io/txns/7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 2,
+          "demand": 1,
+          "market": "510",
+          "pending": "0",
+          "job_escrow": "0",
+          "burned": "50",
+          "supply": "950"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "190",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 1,
+              "pending": null,
+              "native_reserve": "140000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "155",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          },
+          {
+            "id": "pip.ctrl.feral-039832.testnet",
+            "balance": "90",
+            "creature": {
+              "active": true,
+              "parent": "moss.feral-039832.testnet",
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06",
+              "mutation": 1,
+              "born_turn": 1,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "create-child-job",
+      "transaction": "Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV",
+      "explorer": "https://testnet.nearblocks.io/txns/Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 2,
+          "demand": 1,
+          "market": "420",
+          "pending": "0",
+          "job_escrow": "90",
+          "burned": "50",
+          "supply": "950"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "190",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 1,
+              "pending": null,
+              "native_reserve": "140000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "155",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          },
+          {
+            "id": "pip.ctrl.feral-039832.testnet",
+            "balance": "90",
+            "creature": {
+              "active": true,
+              "parent": "moss.feral-039832.testnet",
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06",
+              "mutation": 1,
+              "born_turn": 1,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": "child-first-bid",
+      "transaction": "C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar",
+      "explorer": "https://testnet.nearblocks.io/txns/C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar",
+      "state": "success",
+      "snapshot": {
+        "economy": {
+          "turn": 2,
+          "demand": 1,
+          "market": "420",
+          "pending": "0",
+          "job_escrow": "90",
+          "burned": "50",
+          "supply": "950"
+        },
+        "creatures": [
+          {
+            "id": "moss.feral-039832.testnet",
+            "balance": "190",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+              "mutation": 0,
+              "born_turn": 0,
+              "nonce": 1,
+              "pending": null,
+              "native_reserve": "140000000000000000000000"
+            }
+          },
+          {
+            "id": "echo.feral-039832.testnet",
+            "balance": "155",
+            "creature": {
+              "active": true,
+              "parent": null,
+              "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+              "mutation": 2,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "100000000000000000000000"
+            }
+          },
+          {
+            "id": "ash.feral-039832.testnet",
+            "balance": "5",
+            "creature": {
+              "active": false,
+              "parent": null,
+              "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+              "mutation": 3,
+              "born_turn": 0,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "20000000000000000000000"
+            }
+          },
+          {
+            "id": "pip.ctrl.feral-039832.testnet",
+            "balance": "90",
+            "creature": {
+              "active": true,
+              "parent": "moss.feral-039832.testnet",
+              "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06",
+              "mutation": 1,
+              "born_turn": 1,
+              "nonce": 0,
+              "pending": null,
+              "native_reserve": "0"
+            }
+          }
+        ]
+      }
     }
   ],
-  "complete": false
+  "complete": true
 }

@@ -1,0 +1,8 @@
+{
+  "kept_assets_sha256": "all unchanged",
+  "webp_images": 36,
+  "runtime_image_bytes": 1033098,
+  "runtime_entire_folder_bytes": 1041215,
+  "alpha_roundtrip": "all original alpha channels preserved exactly",
+  "IP_review": "visual design review only; not legal clearance"
+}

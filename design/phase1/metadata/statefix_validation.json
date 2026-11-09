@@ -1,0 +1,15 @@
+{
+  "states_changed": [
+    "pip_hungry",
+    "moss_critical",
+    "ash_hungry",
+    "ash_critical"
+  ],
+  "all_other_protected_files_unchanged": 78,
+  "active_runtime_bytes": 1057692,
+  "entire_runtime_folder_including_archives_bytes": 1225472,
+  "active_webp_count": 36,
+  "alpha_roundtrip": "exact",
+  "unchanged_critical": "pip_critical",
+  "unchanged_fossil": "ash_fossil"
+}

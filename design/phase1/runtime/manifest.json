@@ -1,0 +1,368 @@
+{
+  "format": "WebP lossy RGB / lossless alpha",
+  "images": [
+    {
+      "source": "creatures/ash/ash_critical.png",
+      "runtime": "runtime/creatures/ash/ash_critical.webp",
+      "bytes": 12880,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_critical_128.png",
+      "runtime": "runtime/creatures/ash/ash_critical_128.webp",
+      "bytes": 5074,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_fossil.png",
+      "runtime": "runtime/creatures/ash/ash_fossil.webp",
+      "bytes": 13088,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_fossil_128.png",
+      "runtime": "runtime/creatures/ash/ash_fossil_128.webp",
+      "bytes": 4998,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_front.png",
+      "runtime": "runtime/creatures/ash/ash_front.webp",
+      "bytes": 14538,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_front_128.png",
+      "runtime": "runtime/creatures/ash/ash_front_128.webp",
+      "bytes": 5582,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_hungry.png",
+      "runtime": "runtime/creatures/ash/ash_hungry.webp",
+      "bytes": 11538,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_hungry_128.png",
+      "runtime": "runtime/creatures/ash/ash_hungry_128.webp",
+      "bytes": 4988,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/ash/ash_sprite_sheet.png",
+      "runtime": "runtime/creatures/ash/ash_sprite_sheet.webp",
+      "bytes": 50836,
+      "size": [
+        1024,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/echo/echo_critical.png",
+      "runtime": "runtime/creatures/echo/echo_critical.webp",
+      "bytes": 11532,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/echo/echo_critical_128.png",
+      "runtime": "runtime/creatures/echo/echo_critical_128.webp",
+      "bytes": 4840,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/echo/echo_front.png",
+      "runtime": "runtime/creatures/echo/echo_front.webp",
+      "bytes": 17806,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/echo/echo_front_128.png",
+      "runtime": "runtime/creatures/echo/echo_front_128.webp",
+      "bytes": 7132,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/echo/echo_hungry.png",
+      "runtime": "runtime/creatures/echo/echo_hungry.webp",
+      "bytes": 15910,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/echo/echo_hungry_128.png",
+      "runtime": "runtime/creatures/echo/echo_hungry_128.webp",
+      "bytes": 6470,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/echo/echo_sprite_sheet.png",
+      "runtime": "runtime/creatures/echo/echo_sprite_sheet.webp",
+      "bytes": 44870,
+      "size": [
+        768,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/moss/moss_critical.png",
+      "runtime": "runtime/creatures/moss/moss_critical.webp",
+      "bytes": 16616,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/moss/moss_critical_128.png",
+      "runtime": "runtime/creatures/moss/moss_critical_128.webp",
+      "bytes": 6202,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/moss/moss_front.png",
+      "runtime": "runtime/creatures/moss/moss_front.webp",
+      "bytes": 21798,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/moss/moss_front_128.png",
+      "runtime": "runtime/creatures/moss/moss_front_128.webp",
+      "bytes": 7542,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/moss/moss_hungry.png",
+      "runtime": "runtime/creatures/moss/moss_hungry.webp",
+      "bytes": 20466,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/moss/moss_hungry_128.png",
+      "runtime": "runtime/creatures/moss/moss_hungry_128.webp",
+      "bytes": 7540,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/moss/moss_sprite_sheet.png",
+      "runtime": "runtime/creatures/moss/moss_sprite_sheet.webp",
+      "bytes": 57760,
+      "size": [
+        768,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/pip/pip_critical.png",
+      "runtime": "runtime/creatures/pip/pip_critical.webp",
+      "bytes": 15452,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/pip/pip_critical_128.png",
+      "runtime": "runtime/creatures/pip/pip_critical_128.webp",
+      "bytes": 6022,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/pip/pip_front.png",
+      "runtime": "runtime/creatures/pip/pip_front.webp",
+      "bytes": 14422,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/pip/pip_front_128.png",
+      "runtime": "runtime/creatures/pip/pip_front_128.webp",
+      "bytes": 5482,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/pip/pip_hungry.png",
+      "runtime": "runtime/creatures/pip/pip_hungry.webp",
+      "bytes": 10894,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/pip/pip_hungry_128.png",
+      "runtime": "runtime/creatures/pip/pip_hungry_128.webp",
+      "bytes": 4432,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "creatures/pip/pip_sprite_sheet.png",
+      "runtime": "runtime/creatures/pip/pip_sprite_sheet.webp",
+      "bytes": 39940,
+      "size": [
+        768,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "habitat/habitat_desktop.png",
+      "runtime": "runtime/habitat/habitat_desktop.webp",
+      "bytes": 193530,
+      "size": [
+        1600,
+        1000
+      ],
+      "alpha": "opaque"
+    },
+    {
+      "source": "habitat/habitat_mobile.png",
+      "runtime": "runtime/habitat/habitat_mobile.webp",
+      "bytes": 197922,
+      "size": [
+        800,
+        1100
+      ],
+      "alpha": "opaque"
+    },
+    {
+      "source": "habitat/layers/foreground_leaves.png",
+      "runtime": "runtime/habitat/layers/foreground_leaves.webp",
+      "bytes": 125384,
+      "size": [
+        1600,
+        1000
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "props/fossil_concept.png",
+      "runtime": "runtime/props/fossil_concept.webp",
+      "bytes": 4998,
+      "size": [
+        128,
+        128
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "props/munch_seed_coin_front.png",
+      "runtime": "runtime/props/munch_seed_coin_front.webp",
+      "bytes": 14712,
+      "size": [
+        256,
+        256
+      ],
+      "alpha": "lossless"
+    },
+    {
+      "source": "props/refusal_stamp.png",
+      "runtime": "runtime/props/refusal_stamp.webp",
+      "bytes": 35702,
+      "size": [
+        384,
+        216
+      ],
+      "alpha": "lossless"
+    }
+  ],
+  "image_bytes": 1038898,
+  "revision": "3.1 / Echo critical slumped v2",
+  "archive_note": "Underscore-prefixed archive folders are preserved provenance, not active assets"
+}

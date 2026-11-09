@@ -1,0 +1,35 @@
+{
+  "network": "NEAR testnet + Ethereum Sepolia",
+  "mpc_signer": "v1.signer-prod.testnet",
+  "relayer": {
+    "address": "0x667e3DF0fb679593d4C31C7789926b4EAA7E4C10",
+    "near_predecessor": "feral-039832.testnet",
+    "path": "feral-sepolia-relayer-v1",
+    "balance_eth": "0.0",
+    "nonce": 0
+  },
+  "voucher_signer": {
+    "address": "0x1DeD2a744F7F98cF7aA41B9F505656378Fe8b0a0",
+    "near_predecessor": "ctrl.feral-039832.testnet",
+    "path": "feral-sepolia-v1/moss.feral-039832.testnet",
+    "note": "Signs only the EIP 712 voucher. Needs no ETH."
+  },
+  "tool_provider": {
+    "address": "0xB06d3d94a063b90bAec90C7380a55D34ae10a32d",
+    "near_predecessor": "feral-039832.testnet",
+    "path": "feral-tool-provider-v1",
+    "note": "Receives the 7 TOOL test units. Address only."
+  },
+  "predicted": {
+    "token": "0x791e035df4c255d4b0539Ca80FFAEbe3A623603E",
+    "treasury": "0xCf6DEd4D863cb359F4D7E79734C99549E8Fd3A6C"
+  },
+  "job": {
+    "id": "bilingual-v1",
+    "paid": true,
+    "claimant": "moss.feral-039832.testnet",
+    "output_hash": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5"
+  },
+  "existing_tool_liability": null,
+  "needs_eth_wei": "2000000000000000"
+}

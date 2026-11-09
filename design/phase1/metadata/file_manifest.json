@@ -1,0 +1,1338 @@
+[
+  {
+    "path": "/workspace/near/feral/design/phase1/FILES.txt",
+    "bytes": 24198
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/README.md",
+    "bytes": 8227
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/FILES.txt",
+    "bytes": 21481
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/README.md",
+    "bytes": 7237
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/authorized_replacements.json",
+    "bytes": 928
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/before_sha256.json",
+    "bytes": 32694
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/candidates/echo_critical_first_candidate_1024.png",
+    "bytes": 550102
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/creatures/echo/echo_critical.png",
+    "bytes": 53612
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/creatures/echo/echo_critical_128.png",
+    "bytes": 16642
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/creatures/echo/echo_sprite_sheet.png",
+    "bytes": 159607
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/masters/echo_critical_1024.png",
+    "bytes": 713122
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/masters/echo_editable.svg",
+    "bytes": 2780166
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/metadata/file_manifest.json",
+    "bytes": 34617
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/metadata/sprites.json",
+    "bytes": 5226
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/alpha_quality_check.png",
+    "bytes": 570789
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/color_vision_safe_states.png",
+    "bytes": 100868
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/echo_sheet.png",
+    "bytes": 143167
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/grayscale_contrast.png",
+    "bytes": 40467
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/readability_48px.png",
+    "bytes": 9996
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/readability_96px.png",
+    "bytes": 32870
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/readability_board.png",
+    "bytes": 79982
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/runtime_alpha_check.png",
+    "bytes": 561321
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/runtime_assets_check.png",
+    "bytes": 627961
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/silhouette_48px.png",
+    "bytes": 6021
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/silhouette_96px.png",
+    "bytes": 13288
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/previews/state_audit_48px.png",
+    "bytes": 100868
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/runtime/creatures/echo/echo_critical.webp",
+    "bytes": 16216
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/runtime/creatures/echo/echo_critical_128.webp",
+    "bytes": 6408
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/runtime/creatures/echo/echo_sprite_sheet.webp",
+    "bytes": 49142
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/runtime/manifest.json",
+    "bytes": 8270
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_echo_critical_v2/sources/echo_critical_source.png",
+    "bytes": 835710
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/creatures/ash/ash_sprite_sheet.png",
+    "bytes": 208901
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/creatures/moss/moss_sprite_sheet.png",
+    "bytes": 185328
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/creatures/pip/pip_sprite_sheet.png",
+    "bytes": 143084
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/masters/ash_editable.svg",
+    "bytes": 3637835
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/masters/moss_editable.svg",
+    "bytes": 2976779
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/masters/pip_editable.svg",
+    "bytes": 2417340
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/previews/ash_sheet.png",
+    "bytes": 190219
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/previews/moss_sheet.png",
+    "bytes": 160316
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/previews/pip_sheet.png",
+    "bytes": 126379
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/runtime/creatures/ash/ash_sprite_sheet.webp",
+    "bytes": 50968
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/runtime/creatures/moss/moss_sprite_sheet.webp",
+    "bytes": 61112
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_pre_statefix/runtime/creatures/pip/pip_sprite_sheet.webp",
+    "bytes": 44060
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v1/FILES.txt",
+    "bytes": 6254
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v1/README.md",
+    "bytes": 10553
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v1/build_assets.py",
+    "bytes": 11547
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v1/finalize_handoff.py",
+    "bytes": 3389
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v2/FILES.txt",
+    "bytes": 14796
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v2/README.md",
+    "bytes": 6705
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v2/metadata/sprites.json",
+    "bytes": 5192
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/_v2/runtime/manifest.json",
+    "bytes": 8117
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/build_assets.py",
+    "bytes": 11547
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/ash/ash_critical.png",
+    "bytes": 53526
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/ash/ash_critical_128.png",
+    "bytes": 15888
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/ash/ash_hungry.png",
+    "bytes": 47738
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/ash/ash_hungry_128.png",
+    "bytes": 14758
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/moss/moss_critical.png",
+    "bytes": 57039
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/moss/moss_critical_128.png",
+    "bytes": 17621
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/pip/pip_hungry.png",
+    "bytes": 46573
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_pre_statefix/pip/pip_hungry_128.png",
+    "bytes": 14229
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/echo/echo_critical.png",
+    "bytes": 46537
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/echo/echo_critical_128.png",
+    "bytes": 15594
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/echo/echo_front.png",
+    "bytes": 37146
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/echo/echo_front_128.png",
+    "bytes": 12785
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/echo/echo_hungry.png",
+    "bytes": 37830
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/echo/echo_hungry_128.png",
+    "bytes": 13045
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/echo/echo_sprite_sheet.png",
+    "bytes": 121747
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/pip/pip_critical.png",
+    "bytes": 38980
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/pip/pip_critical_128.png",
+    "bytes": 12417
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/pip/pip_front.png",
+    "bytes": 31485
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/pip/pip_front_128.png",
+    "bytes": 9992
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/pip/pip_hungry.png",
+    "bytes": 33867
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/pip/pip_hungry_128.png",
+    "bytes": 11008
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v1/pip/pip_sprite_sheet.png",
+    "bytes": 103788
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v2/echo/echo_critical.png",
+    "bytes": 28275
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v2/echo/echo_critical_128.png",
+    "bytes": 9488
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v2/echo/echo_front.png",
+    "bytes": 23703
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v2/echo/echo_front_128.png",
+    "bytes": 7569
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v2/echo/echo_hungry.png",
+    "bytes": 26564
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v2/echo/echo_hungry_128.png",
+    "bytes": 8892
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/_v2/echo/echo_sprite_sheet.png",
+    "bytes": 78164
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_critical.png",
+    "bytes": 50775
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_critical_128.png",
+    "bytes": 15201
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_fossil.png",
+    "bytes": 55149
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_fossil_128.png",
+    "bytes": 16178
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_front.png",
+    "bytes": 54710
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_front_128.png",
+    "bytes": 16412
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_hungry.png",
+    "bytes": 40004
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_hungry_128.png",
+    "bytes": 12624
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/ash/ash_sprite_sheet.png",
+    "bytes": 199308
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/echo/echo_critical.png",
+    "bytes": 40555
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/echo/echo_critical_128.png",
+    "bytes": 12807
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/echo/echo_front.png",
+    "bytes": 57688
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/echo/echo_front_128.png",
+    "bytes": 17820
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/echo/echo_hungry.png",
+    "bytes": 48982
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/echo/echo_hungry_128.png",
+    "bytes": 15602
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/echo/echo_sprite_sheet.png",
+    "bytes": 147316
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/moss/moss_critical.png",
+    "bytes": 52042
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/moss/moss_critical_128.png",
+    "bytes": 15722
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/moss/moss_front.png",
+    "bytes": 72150
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/moss/moss_front_128.png",
+    "bytes": 21010
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/moss/moss_hungry.png",
+    "bytes": 55968
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/moss/moss_hungry_128.png",
+    "bytes": 17403
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/moss/moss_sprite_sheet.png",
+    "bytes": 181073
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/pip/pip_critical.png",
+    "bytes": 51854
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/pip/pip_critical_128.png",
+    "bytes": 15317
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/pip/pip_front.png",
+    "bytes": 45241
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/pip/pip_front_128.png",
+    "bytes": 13557
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/pip/pip_hungry.png",
+    "bytes": 34099
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/pip/pip_hungry_128.png",
+    "bytes": 10523
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/creatures/pip/pip_sprite_sheet.png",
+    "bytes": 131126
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/finalize_handoff.py",
+    "bytes": 3389
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/finalize_v3.py",
+    "bytes": 8599
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/habitat/habitat_desktop.png",
+    "bytes": 2009154
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/habitat/habitat_mobile.png",
+    "bytes": 1502297
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/habitat/layers/foreground_leaves.png",
+    "bytes": 530558
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_pre_statefix/ash_critical_1024.png",
+    "bytes": 703184
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_pre_statefix/ash_hungry_1024.png",
+    "bytes": 623276
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_pre_statefix/moss_critical_1024.png",
+    "bytes": 718764
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_pre_statefix/pip_hungry_1024.png",
+    "bytes": 597751
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/ash_critical_1024.png",
+    "bytes": 703184
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/ash_editable.svg",
+    "bytes": 3637835
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/ash_fossil_1024.png",
+    "bytes": 709666
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/ash_front_1024.png",
+    "bytes": 691484
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/ash_hungry_1024.png",
+    "bytes": 623276
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/echo_critical_1024.png",
+    "bytes": 533271
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/echo_editable.svg",
+    "bytes": 1716007
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/echo_front_1024.png",
+    "bytes": 370411
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/echo_hungry_1024.png",
+    "bytes": 382707
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/moss_critical_1024.png",
+    "bytes": 718764
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/moss_editable.svg",
+    "bytes": 2976779
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/moss_front_1024.png",
+    "bytes": 843801
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/moss_hungry_1024.png",
+    "bytes": 669405
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/munch_coin_1024.png",
+    "bytes": 787719
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/pip_critical_1024.png",
+    "bytes": 491036
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/pip_editable.svg",
+    "bytes": 1709405
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/pip_front_1024.png",
+    "bytes": 380973
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/pip_hungry_1024.png",
+    "bytes": 409433
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/refusal_stamp.svg",
+    "bytes": 700
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v1/refusal_stamp_768.png",
+    "bytes": 7812
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v2/echo_critical_1024.png",
+    "bytes": 326065
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v2/echo_editable.svg",
+    "bytes": 1211586
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v2/echo_front_1024.png",
+    "bytes": 278376
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/_v2/echo_hungry_1024.png",
+    "bytes": 303672
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/ash_critical_1024.png",
+    "bytes": 652823
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/ash_editable.svg",
+    "bytes": 3442289
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/ash_fossil_1024.png",
+    "bytes": 709666
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/ash_front_1024.png",
+    "bytes": 691484
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/ash_hungry_1024.png",
+    "bytes": 527025
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/echo_critical_1024.png",
+    "bytes": 507133
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/echo_editable.svg",
+    "bytes": 2505514
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/echo_front_1024.png",
+    "bytes": 741751
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/echo_hungry_1024.png",
+    "bytes": 629671
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/moss_critical_1024.png",
+    "bytes": 672638
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/moss_editable.svg",
+    "bytes": 2915217
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/moss_front_1024.png",
+    "bytes": 843801
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/moss_hungry_1024.png",
+    "bytes": 669405
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/munch_coin_1024.png",
+    "bytes": 787719
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/pip_critical_1024.png",
+    "bytes": 644340
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/pip_editable.svg",
+    "bytes": 2205691
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/pip_front_1024.png",
+    "bytes": 570341
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/pip_hungry_1024.png",
+    "bytes": 439023
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/refusal_stamp.svg",
+    "bytes": 700
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/refusal_stamp_1536.png",
+    "bytes": 1974715
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/masters/refusal_stamp_768.png",
+    "bytes": 590565
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/_v1/file_manifest.json",
+    "bytes": 15024
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/_v1/sprites.json",
+    "bytes": 5178
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/_v1/validation.json",
+    "bytes": 6524
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/echo_critical_v2_validation.json",
+    "bytes": 443
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/echo_v3_approved_hashes.json",
+    "bytes": 8051
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/echo_v3_validation.json",
+    "bytes": 370
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/file_manifest.json",
+    "bytes": 38516
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/keep_as_is_hashes.json",
+    "bytes": 2307
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/revision2_validation.json",
+    "bytes": 275
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/sprites.json",
+    "bytes": 5274
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/statefix_protected_hashes.json",
+    "bytes": 8342
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/statefix_validation.json",
+    "bytes": 379
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/metadata/validation.json",
+    "bytes": 6524
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/alpha_quality_check.png",
+    "bytes": 524514
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/ash_sheet.png",
+    "bytes": 190219
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/color_vision_safe_states.png",
+    "bytes": 194989
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/echo_sheet.png",
+    "bytes": 109173
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/grayscale_contrast.png",
+    "bytes": 72091
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/habitat_desktop_cast_mockup.png",
+    "bytes": 2319760
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/habitat_mobile_cast_mockup.png",
+    "bytes": 1669187
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/moss_sheet.png",
+    "bytes": 160316
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/pip_sheet.png",
+    "bytes": 94721
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/props_board.png",
+    "bytes": 83457
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/readability_48px.png",
+    "bytes": 9214
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/readability_96px.png",
+    "bytes": 29327
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/readability_board.png",
+    "bytes": 76023
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/silhouette_48px.png",
+    "bytes": 5970
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v1/silhouette_96px.png",
+    "bytes": 13293
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/alpha_quality_check.png",
+    "bytes": 522264
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/ash_sheet.png",
+    "bytes": 190219
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/color_vision_safe_states.png",
+    "bytes": 194281
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/echo_sheet.png",
+    "bytes": 70635
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/grayscale_contrast.png",
+    "bytes": 71926
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/habitat_desktop_cast_mockup.png",
+    "bytes": 2322350
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/habitat_mobile_cast_mockup.png",
+    "bytes": 1669643
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/moss_sheet.png",
+    "bytes": 160316
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/pip_sheet.png",
+    "bytes": 126379
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/props_board.png",
+    "bytes": 206641
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/readability_48px.png",
+    "bytes": 8424
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/readability_96px.png",
+    "bytes": 27660
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/readability_board.png",
+    "bytes": 71678
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/refusal_stamp_preview.png",
+    "bytes": 545829
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/runtime_alpha_check.png",
+    "bytes": 512848
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/runtime_assets_check.png",
+    "bytes": 590430
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/silhouette_48px.png",
+    "bytes": 5408
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/_v2/silhouette_96px.png",
+    "bytes": 12143
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/alpha_quality_check.png",
+    "bytes": 560958
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/ash_sheet.png",
+    "bytes": 181651
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/color_vision_safe_states.png",
+    "bytes": 99538
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/echo_sheet.png",
+    "bytes": 134318
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/grayscale_contrast.png",
+    "bytes": 40026
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/habitat_desktop_cast_mockup.png",
+    "bytes": 2329179
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/habitat_mobile_cast_mockup.png",
+    "bytes": 1671405
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/moss_sheet.png",
+    "bytes": 156375
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/pip_sheet.png",
+    "bytes": 116150
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/props_board.png",
+    "bytes": 206641
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/readability_48px.png",
+    "bytes": 15387
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/readability_96px.png",
+    "bytes": 55390
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/readability_board.png",
+    "bytes": 138373
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/refusal_stamp_preview.png",
+    "bytes": 545829
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/runtime_alpha_check.png",
+    "bytes": 552155
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/runtime_assets_check.png",
+    "bytes": 624686
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/silhouette_48px.png",
+    "bytes": 9537
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/silhouette_96px.png",
+    "bytes": 23905
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/state_audit_48px.png",
+    "bytes": 99538
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/previews/statefix_alpha_check.png",
+    "bytes": 299061
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/props/_v1/refusal_stamp.png",
+    "bytes": 17014
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/props/fossil_concept.png",
+    "bytes": 16178
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/props/munch_seed_coin_front.png",
+    "bytes": 59831
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/props/refusal_stamp.png",
+    "bytes": 155040
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/review_v2.py",
+    "bytes": 1626
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/revise_echo_critical_v2.py",
+    "bytes": 9538
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/revise_echo_v3.py",
+    "bytes": 4802
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/revise_v2.py",
+    "bytes": 8344
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/_v2/creatures/echo/echo_critical.webp",
+    "bytes": 13752
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/_v2/creatures/echo/echo_critical_128.webp",
+    "bytes": 5438
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/_v2/creatures/echo/echo_front.webp",
+    "bytes": 9938
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/_v2/creatures/echo/echo_front_128.webp",
+    "bytes": 3966
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/_v2/creatures/echo/echo_hungry.webp",
+    "bytes": 11690
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/_v2/creatures/echo/echo_hungry_128.webp",
+    "bytes": 4818
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/_v2/creatures/echo/echo_sprite_sheet.webp",
+    "bytes": 34608
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/ash/ash_critical.webp",
+    "bytes": 12584
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/ash/ash_critical_128.webp",
+    "bytes": 5122
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/ash/ash_hungry.webp",
+    "bytes": 12414
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/ash/ash_hungry_128.webp",
+    "bytes": 5176
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/moss/moss_critical.webp",
+    "bytes": 19910
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/moss/moss_critical_128.webp",
+    "bytes": 7584
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/pip/pip_hungry.webp",
+    "bytes": 14874
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/_pre_statefix/pip/pip_hungry_128.webp",
+    "bytes": 5906
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_critical.webp",
+    "bytes": 12880
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_critical_128.webp",
+    "bytes": 5074
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_fossil.webp",
+    "bytes": 13088
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_fossil_128.webp",
+    "bytes": 4998
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_front.webp",
+    "bytes": 14538
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_front_128.webp",
+    "bytes": 5582
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_hungry.webp",
+    "bytes": 11538
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_hungry_128.webp",
+    "bytes": 4988
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/ash/ash_sprite_sheet.webp",
+    "bytes": 50836
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/echo/echo_critical.webp",
+    "bytes": 11532
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/echo/echo_critical_128.webp",
+    "bytes": 4840
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/echo/echo_front.webp",
+    "bytes": 17806
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/echo/echo_front_128.webp",
+    "bytes": 7132
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/echo/echo_hungry.webp",
+    "bytes": 15910
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/echo/echo_hungry_128.webp",
+    "bytes": 6470
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/echo/echo_sprite_sheet.webp",
+    "bytes": 44870
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/moss/moss_critical.webp",
+    "bytes": 16616
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/moss/moss_critical_128.webp",
+    "bytes": 6202
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/moss/moss_front.webp",
+    "bytes": 21798
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/moss/moss_front_128.webp",
+    "bytes": 7542
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/moss/moss_hungry.webp",
+    "bytes": 20466
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/moss/moss_hungry_128.webp",
+    "bytes": 7540
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/moss/moss_sprite_sheet.webp",
+    "bytes": 57760
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/pip/pip_critical.webp",
+    "bytes": 15452
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/pip/pip_critical_128.webp",
+    "bytes": 6022
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/pip/pip_front.webp",
+    "bytes": 14422
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/pip/pip_front_128.webp",
+    "bytes": 5482
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/pip/pip_hungry.webp",
+    "bytes": 10894
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/pip/pip_hungry_128.webp",
+    "bytes": 4432
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/creatures/pip/pip_sprite_sheet.webp",
+    "bytes": 39940
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/habitat/habitat_desktop.webp",
+    "bytes": 193530
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/habitat/habitat_mobile.webp",
+    "bytes": 197922
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/habitat/layers/foreground_leaves.webp",
+    "bytes": 125384
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/manifest.json",
+    "bytes": 8267
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/props/fossil_concept.webp",
+    "bytes": 4998
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/props/munch_seed_coin_front.webp",
+    "bytes": 14712
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/runtime/props/refusal_stamp.webp",
+    "bytes": 35702
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_pre_statefix/ash_critical_source.png",
+    "bytes": 675749
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_pre_statefix/ash_hungry_source.png",
+    "bytes": 675692
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_pre_statefix/moss_critical_source.png",
+    "bytes": 745581
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_pre_statefix/pip_hungry_source.png",
+    "bytes": 591347
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/ash_critical_source.png",
+    "bytes": 675749
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/ash_fossil_source.png",
+    "bytes": 683025
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/ash_front_source.png",
+    "bytes": 704656
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/ash_hungry_source.png",
+    "bytes": 675692
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/echo_critical_source.png",
+    "bytes": 514787
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/echo_front_source.png",
+    "bytes": 494442
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/echo_hungry_source.png",
+    "bytes": 468101
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/foreground_leaves_source.png",
+    "bytes": 539852
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/habitat_desktop_source.png",
+    "bytes": 1245319
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/habitat_mobile_source.png",
+    "bytes": 1629554
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/moss_critical_source.png",
+    "bytes": 745581
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/moss_front_source.png",
+    "bytes": 848202
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/moss_hungry_source.png",
+    "bytes": 719407
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/munch_coin_source.png",
+    "bytes": 682055
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/pip_critical_source.png",
+    "bytes": 461725
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/pip_front_source.png",
+    "bytes": 432558
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v1/pip_hungry_source.png",
+    "bytes": 425680
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v2/echo_critical_source.png",
+    "bytes": 567983
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v2/echo_front_source.png",
+    "bytes": 592017
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/_v2/echo_hungry_source.png",
+    "bytes": 540083
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/ash_critical_source.png",
+    "bytes": 863212
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/ash_fossil_source.png",
+    "bytes": 683025
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/ash_front_source.png",
+    "bytes": 704656
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/ash_hungry_source.png",
+    "bytes": 723464
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/echo_critical_source.png",
+    "bytes": 739631
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/echo_front_source.png",
+    "bytes": 907634
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/echo_hungry_source.png",
+    "bytes": 744948
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/foreground_leaves_source.png",
+    "bytes": 539852
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/habitat_desktop_source.png",
+    "bytes": 1245319
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/habitat_mobile_source.png",
+    "bytes": 1629554
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/moss_critical_source.png",
+    "bytes": 844452
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/moss_front_source.png",
+    "bytes": 848202
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/moss_hungry_source.png",
+    "bytes": 719407
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/munch_coin_source.png",
+    "bytes": 682055
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/pip_critical_source.png",
+    "bytes": 567099
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/pip_front_source.png",
+    "bytes": 603218
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/pip_hungry_source.png",
+    "bytes": 587984
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/sources/refusal_material_source.png",
+    "bytes": 1198501
+  },
+  {
+    "path": "/workspace/near/feral/design/phase1/statefix_v3.py",
+    "bytes": 6410
+  }
+]

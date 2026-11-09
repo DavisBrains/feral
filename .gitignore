@@ -14,3 +14,29 @@ __pycache__/
 /.local-transactions/
 
 /app/dist-file/
+
+# never commit keys or credentials
+.near-credentials/
+**/*credentials*
+*.pem
+*.key
+*.p12
+*.secret
+id_rsa*
+.npmrc
+
+# heavy design sources stay on the box; the app only needs the runtime set
+/design/phase1/masters/
+/design/phase1/sources/
+/design/phase1/previews/
+/design/phase1/creatures/
+/design/phase1/habitat/
+/design/phase1/props/
+/design/phase1/_*/
+/design/phase1/runtime/_*/
+/design/phase1/runtime/creatures/_*/
+/design/phase1/FILES.txt
+# phase 2: only the runtime strips and manifest the app loads
+/design/phase2/*
+!/design/phase2/runtime/
+**/node_modules/

@@ -1,0 +1,316 @@
+{
+  "phase": "look-development only; no animation",
+  "frame_size": [
+    256,
+    256
+  ],
+  "foot_anchor": [
+    128,
+    227
+  ],
+  "frame_rate": 0,
+  "palette": {
+    "forest": "#07140E",
+    "soil": "#17251C",
+    "bone": "#EDF5E9",
+    "moss": "#B5FC71",
+    "moss_shadow": "#6E9B46",
+    "echo": "#7DD9EF",
+    "echo_shadow": "#356B80",
+    "ash": "#D39767",
+    "fossil": "#777C70",
+    "pip": "#D4A4FF",
+    "pip_shadow": "#7653A4",
+    "amber": "#F3BF88"
+  },
+  "frames": [
+    {
+      "creature": "moss",
+      "state": "front",
+      "file": "creatures/moss/moss_front.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        63,
+        233,
+        227
+      ],
+      "source_crop": [
+        194,
+        235,
+        879,
+        769
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "moss",
+      "state": "hungry",
+      "file": "creatures/moss/moss_hungry.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        69,
+        233,
+        227
+      ],
+      "source_crop": [
+        187,
+        272,
+        886,
+        798
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "ash",
+      "state": "front",
+      "file": "creatures/ash/ash_front.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        68,
+        233,
+        227
+      ],
+      "source_crop": [
+        187,
+        255,
+        870,
+        772
+      ],
+      "historical_only": true
+    },
+    {
+      "creature": "ash",
+      "state": "fossil",
+      "file": "creatures/ash/ash_fossil.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        68,
+        233,
+        227
+      ],
+      "source_crop": [
+        182,
+        255,
+        875,
+        778
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "pip",
+      "state": "front",
+      "file": "creatures/pip/pip_front.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        38,
+        32,
+        218,
+        227
+      ],
+      "source_crop": [
+        276,
+        165,
+        921,
+        869
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "pip",
+      "state": "critical",
+      "file": "creatures/pip/pip_critical.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        82,
+        233,
+        227
+      ],
+      "source_crop": [
+        276,
+        439,
+        907,
+        873
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "echo",
+      "state": "front",
+      "file": "creatures/echo/echo_front.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        30,
+        32,
+        227,
+        227
+      ],
+      "source_crop": [
+        87,
+        129,
+        896,
+        934
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "echo",
+      "state": "hungry",
+      "file": "creatures/echo/echo_hungry.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        31,
+        32,
+        225,
+        227
+      ],
+      "source_crop": [
+        102,
+        127,
+        888,
+        920
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "echo",
+      "state": "critical",
+      "file": "creatures/echo/echo_critical.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        92,
+        233,
+        227
+      ],
+      "source_crop": [
+        68,
+        190,
+        944,
+        873
+      ],
+      "historical_only": false,
+      "revision": "critical v2 / slumped gourd"
+    },
+    {
+      "creature": "pip",
+      "state": "hungry",
+      "file": "creatures/pip/pip_hungry.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        72,
+        59,
+        184,
+        227
+      ],
+      "source_crop": [
+        277,
+        237,
+        711,
+        896
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "moss",
+      "state": "critical",
+      "file": "creatures/moss/moss_critical.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        89,
+        234,
+        227
+      ],
+      "source_crop": [
+        106,
+        287,
+        970,
+        851
+      ],
+      "historical_only": false
+    },
+    {
+      "creature": "ash",
+      "state": "hungry",
+      "file": "creatures/ash/ash_hungry.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        92,
+        233,
+        227
+      ],
+      "source_crop": [
+        73,
+        247,
+        970,
+        821
+      ],
+      "historical_only": true
+    },
+    {
+      "creature": "ash",
+      "state": "critical",
+      "file": "creatures/ash/ash_critical.png",
+      "foot_anchor": [
+        128,
+        227
+      ],
+      "trim_rect": [
+        23,
+        75,
+        233,
+        227
+      ],
+      "source_crop": [
+        67,
+        244,
+        977,
+        902
+      ],
+      "historical_only": true
+    }
+  ],
+  "revision": "3 / Echo + authorized state audit"
+}

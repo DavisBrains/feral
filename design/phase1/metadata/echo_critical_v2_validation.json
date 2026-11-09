@@ -1,0 +1,21 @@
+{
+  "changed_state": "echo_critical only",
+  "protected_preexisting_files_byte_identical": 277,
+  "active_runtime_bytes_including_manifest": 1047165,
+  "entire_runtime_folder_bytes_including_archives": 1214945,
+  "active_webp_count": 36,
+  "alpha_roundtrip": "exact",
+  "archive": "_pre_echo_critical_v2/",
+  "critical_alpha_bbox_256": [
+    21,
+    91,
+    235,
+    229
+  ],
+  "hungry_alpha_bbox_256": [
+    29,
+    30,
+    227,
+    229
+  ]
+}

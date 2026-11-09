@@ -1,0 +1,15 @@
+{
+  "approved_file_sha256_count": 75,
+  "approved_files": "all byte-identical",
+  "active_runtime_bytes_including_manifest": 1076198,
+  "archived_runtime_bytes": 84210,
+  "entire_runtime_folder_bytes": 1160408,
+  "active_webp_count": 36,
+  "alpha_roundtrip": "exact",
+  "48px_filled_pixel_counts": {
+    "moss": 742,
+    "echo": 694,
+    "pip": 461,
+    "ash": 717
+  }
+}

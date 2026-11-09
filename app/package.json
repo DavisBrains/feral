@@ -7,6 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "npm run sync && tsc --noEmit && vite build --base=./",
     "test": "node --test *.test.mjs",
+    "chain": "node read-chain.mjs",
     "sync": "node sync-evidence.mjs",
     "build:file": "node build-file.mjs && tsc --noEmit"
   },
@@ -15,7 +16,10 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "ethers": "6.17.0"
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "ethers": "6.17.0",
+    "pixi.js": "^8.22.0"
   },
   "devDependencies": {
     "typescript": "5.9.3",

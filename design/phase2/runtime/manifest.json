@@ -1,0 +1,366 @@
+{
+  "format": "horizontal WebP sprite strips, lossy RGB (q90) + lossless alpha",
+  "anchor_note": "foot anchor in each frame; identical across all frames and identical to Phase 1 (128,227)@256",
+  "animations": {
+    "pip_hatch": {
+      "creature": "pip",
+      "animation": "hatch",
+      "frames": 10,
+      "fps": 8,
+      "loop": false,
+      "variants": {
+        "256": {
+          "file": "runtime/pip/pip_hatch_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 86216
+        },
+        "128": {
+          "file": "runtime/pip/pip_hatch_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 32834
+        }
+      },
+      "frame_durations_ms": [
+        500,
+        110,
+        110,
+        180,
+        90,
+        110,
+        130,
+        150,
+        170,
+        600
+      ]
+    },
+    "pip_first_bid": {
+      "creature": "pip",
+      "animation": "first_bid",
+      "frames": 4,
+      "fps": 8,
+      "loop": false,
+      "variants": {
+        "256": {
+          "file": "runtime/pip/pip_first_bid_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 55218
+        },
+        "128": {
+          "file": "runtime/pip/pip_first_bid_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 20922
+        }
+      },
+      "frame_durations_ms": [
+        160,
+        110,
+        130,
+        400
+      ]
+    },
+    "ash_death": {
+      "creature": "ash",
+      "animation": "death",
+      "frames": 8,
+      "fps": 5,
+      "loop": false,
+      "variants": {
+        "256": {
+          "file": "runtime/ash/ash_death_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 83712
+        },
+        "128": {
+          "file": "runtime/ash/ash_death_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 32390
+        }
+      },
+      "frame_durations_ms": [
+        350,
+        450,
+        700,
+        550,
+        600,
+        650,
+        750,
+        0
+      ],
+      "hold_last": true
+    },
+    "moss_idle": {
+      "creature": "moss",
+      "animation": "idle",
+      "frames": 6,
+      "fps": 6,
+      "loop": true,
+      "variants": {
+        "256": {
+          "file": "runtime/moss/moss_idle_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 112940
+        },
+        "128": {
+          "file": "runtime/moss/moss_idle_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 37734
+        }
+      }
+    },
+    "moss_work": {
+      "creature": "moss",
+      "animation": "work",
+      "frames": 4,
+      "fps": 8,
+      "loop": true,
+      "variants": {
+        "256": {
+          "file": "runtime/moss/moss_work_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 80732
+        },
+        "128": {
+          "file": "runtime/moss/moss_work_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 27294
+        }
+      }
+    },
+    "moss_fed_to_hungry": {
+      "creature": "moss",
+      "animation": "fed_to_hungry",
+      "frames": 1,
+      "fps": 0,
+      "loop": false,
+      "variants": {
+        "256": {
+          "file": "runtime/moss/moss_fed_to_hungry_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 19392
+        },
+        "128": {
+          "file": "runtime/moss/moss_fed_to_hungry_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 7250
+        }
+      },
+      "duration_ms": 140,
+      "from_state": "front",
+      "to_state": "hungry"
+    },
+    "moss_hungry_to_critical": {
+      "creature": "moss",
+      "animation": "hungry_to_critical",
+      "frames": 1,
+      "fps": 0,
+      "loop": false,
+      "variants": {
+        "256": {
+          "file": "runtime/moss/moss_hungry_to_critical_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 16654
+        },
+        "128": {
+          "file": "runtime/moss/moss_hungry_to_critical_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 6414
+        }
+      },
+      "duration_ms": 140,
+      "from_state": "hungry",
+      "to_state": "critical"
+    },
+    "echo_idle": {
+      "creature": "echo",
+      "animation": "idle",
+      "frames": 6,
+      "fps": 6,
+      "loop": true,
+      "variants": {
+        "256": {
+          "file": "runtime/echo/echo_idle_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 90762
+        },
+        "128": {
+          "file": "runtime/echo/echo_idle_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 34838
+        }
+      }
+    },
+    "echo_work": {
+      "creature": "echo",
+      "animation": "work",
+      "frames": 4,
+      "fps": 8,
+      "loop": true,
+      "variants": {
+        "256": {
+          "file": "runtime/echo/echo_work_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 67548
+        },
+        "128": {
+          "file": "runtime/echo/echo_work_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 26408
+        }
+      }
+    },
+    "echo_fed_to_hungry": {
+      "creature": "echo",
+      "animation": "fed_to_hungry",
+      "frames": 1,
+      "fps": 0,
+      "loop": false,
+      "variants": {
+        "256": {
+          "file": "runtime/echo/echo_fed_to_hungry_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 15110
+        },
+        "128": {
+          "file": "runtime/echo/echo_fed_to_hungry_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 6282
+        }
+      },
+      "duration_ms": 140,
+      "from_state": "front",
+      "to_state": "hungry"
+    },
+    "echo_hungry_to_critical": {
+      "creature": "echo",
+      "animation": "hungry_to_critical",
+      "frames": 1,
+      "fps": 0,
+      "loop": false,
+      "variants": {
+        "256": {
+          "file": "runtime/echo/echo_hungry_to_critical_256.webp",
+          "frame_width": 256,
+          "frame_height": 256,
+          "anchor": [
+            128.0,
+            227.0
+          ],
+          "bytes": 11666
+        },
+        "128": {
+          "file": "runtime/echo/echo_hungry_to_critical_128.webp",
+          "frame_width": 128,
+          "frame_height": 128,
+          "anchor": [
+            64.0,
+            113.5
+          ],
+          "bytes": 4974
+        }
+      },
+      "duration_ms": 140,
+      "from_state": "hungry",
+      "to_state": "critical"
+    }
+  }
+}
