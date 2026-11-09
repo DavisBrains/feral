@@ -187,3 +187,32 @@ button{font:inherit}
 .attacks{margin-top:32px}.attacks .ah{margin-bottom:16px}.attacks .ah h3{margin:4px 0 8px}.attacks .what small{display:block;overflow-wrap:anywhere;color:var(--bone-2)}.attacks .f-log li{grid-template-columns:24px minmax(0,1fr) 170px 150px;align-items:start;padding:10px}.attacks .amt{white-space:normal;line-height:1.3}.attacks .tn{padding-top:2px}
 @media (max-width:767px){.attacks .f-log li{grid-template-columns:22px minmax(0,1fr);gap:4px 8px}.attacks .f-log li .amt{display:block;grid-column:2}.attacks .f-log li .h{grid-column:2;justify-self:start}}
 .card-svg{display:block;line-height:0}.card-svg svg{width:100%;height:auto;display:block}
+
+/* phase 3 final pass */
+.m-goal{display:none}
+.m-note{margin:0;font-size:14px;color:var(--bone-2)}
+.rowB.is-locked .f-opt,.rowB.is-locked .f-pick,.rowB.is-locked .f-seg button,.rowB.is-locked .f-step button,.rowB.is-locked select{pointer-events:none}
+.f-dock .mid.is-off span{color:var(--bone-3);opacity:.6}
+.f-dock .mid.is-off .f-press{filter:grayscale(.7) brightness(.8)}
+@media (max-width:767px){
+  .bar{padding:12px 0 8px;row-gap:8px}
+  .hero{padding:8px 0 10px}.hero .eyebrow{font-size:11px}
+  .hero-h{font-size:31px;margin:6px 0 8px}
+  .lede{font-size:15px;line-height:1.45}
+  .m-goal{display:block;padding:16px 16px 14px}.m-goal h4{font-size:20px;margin:4px 0 10px}.m-goal .f-rule{margin:12px 0}
+  .rowA>.m-goal{grid-column:auto}
+  .f-play{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:6px 12px}
+  .f-play .f-read{grid-column:2;text-align:left;justify-self:start}
+  .f-track .flag{display:none}
+  .moment{display:none}
+  .f-ledger .f-claim p,.f-ledger .f-claim .stamp,.f-ledger .f-claim .state{display:none}
+  .f-ledger .f-claim{align-items:center}
+  .lh{flex-wrap:wrap}.lh .caps{font-size:11px}
+  .rowE{display:none}
+}
+.rowB .f-opt{background:none;color:inherit}.rowB .f-opt:hover{background:rgba(255,243,201,.6)}
+@media (max-width:767px){
+  .rowA>.f-panel:not(.m-goal):not(.f-pouch),.rowA>div:last-child:not(.f-pouch){display:none}
+  .logp .f-log li:nth-child(n+7){display:none}
+}
+.bar .f-status{flex-wrap:nowrap;gap:8px;font-size:12.5px}

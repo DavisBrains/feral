@@ -14,7 +14,7 @@ export const LAYOUTS: Record<LayoutName, Layout> = {
     homes: { moss: [371, 572], echo: [781, 523], pip: [1192, 556], ash: [560, 760], pip2: [1010, 742], pip3: [1400, 700], pip4: [200, 800] }, fossil: [739, 905],
     nodes: { market: [70, 470], escrow: [1010, 410], furnace: [1090, 735], budget: [70, 300] } },
   mobile: { name: 'mobile', w: 800, h: 1100, size: 262, wander: [26, 8],
-    homes: { moss: [182, 584], echo: [436, 558], pip: [631, 685], ash: [300, 740], pip2: [600, 820], pip3: [700, 520], pip4: [110, 720] }, fossil: [356, 900],
+    homes: { moss: [182, 530], echo: [436, 505], pip: [631, 625], ash: [300, 680], pip2: [600, 760], pip3: [700, 470], pip4: [110, 660] }, fossil: [430, 860],
     nodes: { market: [30, 520], escrow: [610, 430], furnace: [640, 850], budget: [30, 380] } },
 };
 

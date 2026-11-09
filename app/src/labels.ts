@@ -7,7 +7,7 @@ export type Slot = 'al' | 'ar' | 'l' | 'r' | 'bl' | 'br';
 export interface Want { id: string; key: string; box: Box; w: number; h: number; active: boolean }
 export interface Placed { key: string; slot: Slot; x: number; y: number; ax: number; ay: number; c1x: number; tx: number; ty: number }
 const ORDER: Slot[] = ['al', 'ar', 'l', 'r', 'bl', 'br'];
-const PREFER: Record<string, { desktop: Slot; mobile: Slot }> = { moss: { desktop: 'al', mobile: 'al' }, echo: { desktop: 'ar', mobile: 'ar' }, pip: { desktop: 'r', mobile: 'bl' }, ash: { desktop: 'l', mobile: 'r' } };
+const PREFER: Record<string, { desktop: Slot; mobile: Slot }> = { moss: { desktop: 'al', mobile: 'al' }, echo: { desktop: 'ar', mobile: 'ar' }, pip: { desktop: 'r', mobile: 'br' }, ash: { desktop: 'l', mobile: 'r' } };
 const hit = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 export function slotRect(s: Slot, b: Box, w: number, h: number, gap: number): Box {
   const cx = b.x + b.w / 2;

@@ -3,7 +3,7 @@
 // on-chain visitor budget, a global season cap, and a gas floor check on the
 // keeper's function-call key.
 import http from 'node:http';
-import { readFileSync, existsSync, statSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, existsSync, statSync, writeFileSync, mkdirSync, copyFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import * as near from './near.mjs';
@@ -34,6 +34,14 @@ const TRANSLATION_DEMAND = process.env.FERAL_TRANSLATION_DEMAND !== '0';
 // While paused the keeper only reads. Every write and turn is refused, so nothing moves on chain.
 const PAUSED = /^(1|true|yes)$/i.test(String(process.env.FERAL_TURNS_PAUSED || ''));
 const PAUSE_NOTE = 'The terrarium opens soon. You can watch it now, and play starts shortly.';
+// A fresh host (Render wipes its disk) starts from the committed public journal so the
+// turn log and model notes for the current season are not blank. Chain state stays the truth.
+const SEED = new URL('./seed', import.meta.url).pathname;
+if (!existsSync(path.join(DATA, 'journal.jsonl')) && existsSync(path.join(SEED, 'journal.jsonl')) && process.env.FERAL_SEED !== '0') {
+  mkdirSync(path.join(DATA, 'out'), { recursive: true });
+  for (const f of ['journal.jsonl', 'meta.json']) copyFileSync(path.join(SEED, f), path.join(DATA, f));
+  for (const f of readdirSync(path.join(SEED, 'out'))) copyFileSync(path.join(SEED, 'out', f), path.join(DATA, 'out', f));
+}
 const engine = new Engine({ dataDir: DATA, model, translationDemand: TRANSLATION_DEMAND });
 const sha = s => createHash('sha256').update(s).digest('hex');
 
