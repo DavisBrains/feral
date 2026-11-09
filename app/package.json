@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "npm run sync && tsc --noEmit && vite build --base=./",
+    "build": "npm run sync && tsc --noEmit && vite build",
     "test": "node --test *.test.mjs",
     "chain": "node read-chain.mjs",
     "sync": "node sync-evidence.mjs",
