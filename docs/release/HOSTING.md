@@ -6,7 +6,9 @@ Checked on 9 Nov 2026. Free tiers change often, so check again before signing up
 
 ## Live set
 
-1. Page: GitHub Pages from `DavisBrains/feral`, source = GitHub Actions (`.github/workflows/pages.yml`). Public URL: `https://davisbrains.github.io/feral/`.
+1. Page: GitHub Pages from `DavisBrains/feral`. Public URL: `https://davisbrains.github.io/feral/`.
+   - Live now from the `gh-pages` branch (interim), because the box `gh` token lacks the `workflow` scope needed to push `.github/workflows/pages.yml`.
+   - The Actions workflow is committed locally on master (not pushed). After `gh auth refresh -s workflow`, push it and switch Pages source back to GitHub Actions.
 2. Keeper: Render free web service from Blueprint `render.yaml` at the repo root (rootDir `keeper`, plan free).
 3. Model order on Render: NEAR AI Cloud if `NEAR_AI_KEY` is set, otherwise the labelled fixed policy. Local Qwen stays off unless `FERAL_LOCAL_MODEL` is set (it needs about 4 GB and will not fit on 512 MB).
 
