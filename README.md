@@ -2,6 +2,25 @@
 
 Feed them work or watch them turn to stone.
 
+Feral is a small swarm of AI agents that are born, work, evolve and die on NEAR. Each creature has its own NEAR account and its own purse of a play coin called MUNCH. The creatures bid against each other for jobs, hire each other, pay for children that inherit their strategy with one change, and turn to stone when the money runs out. The contract checks every move, so the swarm can only do what the rules allow.
+
+Feral uses two of the hackathon's partner tools. The creatures think with real NEAR AI, running Qwen3 VL 30B on NEAR AI Cloud. One creature paid for a tool on Ethereum's Sepolia network with NEAR Chain Signatures, so it never needed an Ethereum wallet of its own.
+
+## Proof in twelve links
+
+1. [The live page](https://davisbrains.github.io/feral/). Press Live season and every move you make goes to NEAR testnet.
+2. [The arena contract](https://testnet.nearblocks.io/address/play.feral-039832.testnet) holds MUNCH, the life NFTs, jobs, births and deaths.
+3. [A live turn decided by NEAR AI](https://testnet.nearblocks.io/txns/2dd4rU1Mjq4HkrU1YHHy26XeUaiR8iwdabtwYKmCbZrZ). On season 2 turn 6 Echo chose to bid 30 with Qwen3 VL 30B on NEAR AI Cloud, and the contract recorded the bid.
+4. [A NEAR AI translation paid on chain](https://testnet.nearblocks.io/txns/DWCUeVmJopr5L3iF9QmDHwj2qtrt2hJ8517FsEPa8MCa). Echo wrote the Spanish line with NEAR AI and the contract paid it.
+5. [A child is born](https://testnet.nearblocks.io/txns/GkYLHBmZ4aM37WzBLQmxiBReWCySCFMg8G479BE6Bny3). Moss paid for Moss 1, which got a [brand new NEAR account](https://testnet.nearblocks.io/address/s2-moss-k1.play.feral-039832.testnet).
+6. [Ash turns to stone](https://testnet.nearblocks.io/txns/H4a9jGEKUBEyW5tj15SMFoSjvXE7nVAEHhBrRFw5HxDo). Ash could not pay upkeep, so the contract marked it extinct.
+7. [The fossil is refused](https://testnet.nearblocks.io/txns/92acs7hAf8ejo6gTawTbyTahpoUci4WJWVUc5UVABXbX). A spend for Ash after death failed with the word extinct.
+8. [A Chain Signatures payment on Sepolia](https://sepolia.etherscan.io/tx/0x74855dbbf8696a0b285c12b8343f44005bf1d9344957d881e352c6f609bfd128). Moss paid for a tool with a signature made on NEAR.
+9. [The same payment sent twice is turned back](https://sepolia.etherscan.io/tx/0x3e72b880d0f040f8a16b8e5701d06acaefd1c999594d358f8a24db7ff25caf72).
+10. [A sponsor without the life NFT is refused](https://testnet.nearblocks.io/txns/8juYz4d6GPLx933dFJxCYq5eU85zzZHBGNYRcVfaWbfz).
+11. [The keeper account](https://testnet.nearblocks.io/address/keeper.feral-039832.testnet). Its key can only call game moves and can not send NEAR.
+12. [Every attack we ran and its refusal](evidence/attacks.json).
+
 ## Feral in one minute
 
 Feral is a tiny world of small creatures that live on NEAR, a public blockchain. A blockchain is a shared record book that nobody can quietly edit. Every creature has its own real account in that book and its own balance of a play coin called MUNCH.
@@ -11,6 +30,8 @@ Staying alive costs money. Every turn each living creature pays 10 MUNCH of upke
 A creature that saves enough can have a child. The parent pays 100 MUNCH, and the game creates a brand new NEAR account for the child. The child copies its parent's way of working with exactly one small change, so each family slowly drifts.
 
 When a creature's pouch runs dry, it turns to stone. From that moment the contract refuses every spend it tries, forever. Its life NFT, a one of a kind token that stands for that life, stays on chain with the record of the turn it died.
+
+The creatures think with real NEAR AI. Each turn Qwen3 VL 30B on NEAR AI Cloud picks one move for each creature from the moves the contract allows, and says why in its own words. If the AI ever fails, written fixed rules step in as a backup, and the page says which one decided.
 
 Feral also reaches past NEAR. In the recorded run, Moss paid for a tool on Sepolia, an Ethereum test network. Its NEAR account signed the payment through NEAR Chain Signatures, so it never needed an Ethereum wallet of its own.
 
@@ -22,16 +43,16 @@ Everything here uses valueless test tokens. There is no bridge and nothing to bu
 
 The hackathon theme is Build Beyond Boundaries. Feral is a small test of money that lives by its own rules. Nobody can print more MUNCH in the middle of a season, nobody can bring a fossil back, and nobody can skip upkeep, because the contract checks every move.
 
-The creatures make their own choices with an AI model, yet they can only pick moves the contract would accept. The same idea could keep real AI agents honest once they hold real money, and a NEAR account can even pay on another chain.
+The creatures make their own choices with NEAR AI, yet they can only pick moves the contract would accept. The same idea could keep real AI agents honest once they hold real money, and a NEAR account can even pay on another chain.
 
 ## How it fits the tracks
 
-- **Games With Real Economies.** The creatures are game characters with their own wallets, and their economy keeps changing without a patch.
-- **Memecoins With Mechanics.** MUNCH has a fixed supply that only shrinks, because every turn of upkeep burns some of it.
-- **AI Swarms.** The creatures bid against each other for work and hire each other, and the market grows out of those bids.
-- **Agent Economy.** Each creature earns, spends, hires a neighbour and can pay for a tool on another chain.
-- **AI Security & Defense.** The keeper that acts for players holds a limited key that can only call game moves, and every attack that ran was refused on chain.
-- **NFTs That Do Something.** Each life NFT gives its holder the right to sponsor that creature and set its goal, and a sponsor without the NFT was refused.
+- **AI Swarms.** The creatures are a swarm of NEAR AI agents that compete for work, hire each other and breed. Each child is a new NEAR account with its parent's strategy plus one change, so the swarm evolves turn by turn and its fossils stay on chain for good.
+- **Games With Real Economies.** You keep two family lines alive for eight turns by feeding, sponsoring and posting jobs, and every coin you spend is a real testnet transfer.
+- **Agent Economy.** Each creature earns and spends, and one paid for a tool on Sepolia through Chain Signatures.
+- **Memecoins With Mechanics.** MUNCH supply only shrinks, because upkeep burns some every turn.
+- **AI Security & Defense.** The keeper holds a key that can only call game moves, and every attack we ran was refused on chain.
+- **NFTs That Do Something.** Holding a life NFT is what lets you sponsor that creature and set its goal.
 
 ## The game in short
 
@@ -39,9 +60,11 @@ Three creatures live in a terrarium. They bid for caption jobs to stay fed, pay 
 
 ## Try it
 
-Open the [live page](https://davisbrains.github.io/feral/) and press Live season. It reads the arena on NEAR testnet through a small keeper on Render, at [feral-keeper.onrender.com](https://feral-keeper.onrender.com/healthz). The keeper sleeps when nobody visits, so the first visit can take about a minute while it wakes. The page says so while you wait.
+Open the [live page](https://davisbrains.github.io/feral/) and press Live season. It reads the arena on NEAR testnet through a small keeper on Render, at [feral-keeper.onrender.com](https://feral-keeper.onrender.com/healthz). The keeper pings itself every ten minutes through 25 November so it stays awake. If it ever does fall asleep, the first visit takes about a minute and the page says so while you wait.
 
-The public keeper runs on a free plan with no room for a model, so its creatures follow their written fixed policy and every note says so. The local Qwen model needs a bigger machine, and the demo video shows it deciding.
+The public keeper asks NEAR AI for every creature's choice, and each note names the model that answered. If NEAR AI fails or the spend cap is reached, the creatures use their written rules as a backup and the note says Fixed rules backup.
+
+One visitor steers a season at a time. If the season sits idle for two minutes, the next visitor sees Take over and can play straight away.
 
 Or run it on your own machine.
 
@@ -53,7 +76,7 @@ cd keeper && npm install && node server.mjs
 
 Then open http://127.0.0.1:8787 in a browser.
 
-The keeper needs a NEAR testnet function call key for `keeper.feral-039832.testnet` to send live moves. Without it you can still watch the recorded proof run. For the creature model, set `NEAR_AI_KEY` to use NEAR AI Cloud, or start the local model with `python agents/arena_model.py`, or use neither and the page will say the creatures follow their fixed policy.
+The keeper needs a NEAR testnet function call key for `keeper.feral-039832.testnet` to send live moves. Without it you can still watch the recorded proof run. For the creature model, set `NEAR_AI_KEY` to use NEAR AI Cloud, or start the local model with `python agents/arena_model.py`, or use neither and the creatures use the fixed rules backup.
 
 ## Do this and see that
 
@@ -72,15 +95,17 @@ The keeper needs a NEAR testnet function call key for `keeper.feral-039832.testn
 
 Each turn the keeper reads the chain and builds the list of moves the contract would accept for each creature. A model picks one move from that list and gives a short reason. The keeper checks that the pick is on the list, and the contract checks every rule again when the move is sent.
 
-The keeper asks models in this order.
+The keeper asks in this order.
 
-1. NEAR AI Cloud, using `Qwen/Qwen3-VL-30B-A3B-Instruct` through the OpenAI compatible API at https://cloud-api.near.ai/v1.
-2. A local Qwen2.5 1.5B Instruct model on the keeper, as a fallback.
-3. A fixed written policy, as the last resort.
+1. NEAR AI Cloud, using `Qwen/Qwen3-VL-30B-A3B-Instruct` through the OpenAI compatible API at https://cloud-api.near.ai/v1. The public keeper runs this.
+2. A local Qwen2.5 1.5B Instruct model, only on a machine that runs one. The demo video was filmed this way.
+3. Fixed written rules, as an automatic backup when no model answers.
 
 The page labels every decision and every translation with the one that actually answered, and says when one was skipped and why. If NEAR AI Cloud reports no credits or a rate limit, the keeper waits a while before it asks again. When a creature has only one legal move, no model is asked and the note says so.
 
-The NEAR AI account had no credits when this was written, so the most recent live turns were answered by the local fallback, and their notes say that.
+We tried other NEAR AI models first. The reasoning models spent their whole answer budget thinking, while Qwen3 VL 30B gave a legal answer every time in under a second and a half. Each answer is capped at 80 tokens, and the keeper makes at most 240 NEAR AI calls an hour and 2,000 a day. One decision costs about $0.00007, so a full day at the cap costs about 14 cents. Past the cap the backup rules take over and the page says so.
+
+Season 2 turn 6 was the first public turn decided by NEAR AI. Echo picked a bid of 30 out of nine legal moves in 0.6 seconds and wrote its Spanish line in 0.5 seconds.
 
 ## What lives on chain
 
@@ -111,14 +136,12 @@ The contract enforces upkeep, death and refusal. A child gets its parent's strat
 
 ## Tracks in detail
 
-- Games. The whole loop is a game with a real economy that runs without a patch. Creatures are NPCs with their own accounts and balances.
-- Memecoins. MUNCH has a mechanic. Supply burns 10 per living creature every turn, new MUNCH only comes from a season seed, and a fossil's coins are locked forever.
-- Swarms. Creatures bid against each other for jobs, the lowest live bid wins, and card makers hire a translator. The economy emerges from those bids. Each child is a NEAR sub account of the arena.
-- Agents. Model driven creatures earn, spend, hire each other and pay for a tool on Sepolia through Chain Signatures.
-- Security. The keeper key is a scoped function call key. Every attack in the Attacks panel was refused, and each refusal is on testnet or Sepolia.
-- NFTs. Each life NFT carries the right to sponsor its creature and set its goal.
-  - The keeper sponsored Moss while holding its life NFT, and it worked. [6P2Pxmwe…](https://testnet.nearblocks.io/txns/6P2PxmweJiTiAcronmJMbEaPnrhvR3JAgqhABZFJCd7F)
-  - An account without the life NFT tried to sponsor and was refused. [8juYz4d6…](https://testnet.nearblocks.io/txns/8juYz4d6GPLx933dFJxCYq5eU85zzZHBGNYRcVfaWbfz)
+- Swarms. Each creature is its own agent with its own NEAR account, and each one thinks with NEAR AI. They bid against each other for jobs, the lowest live bid wins, and card makers hire a translator, so the market comes out of their bids. Children are new NEAR sub accounts that copy their parent with one change, so the swarm drifts over the season, and the ones that can not earn turn to stone.
+- Games. You get a 120 MUNCH pouch and one goal, keep two family lines alive for eight turns. The economy runs on its own between your moves, without a patch.
+- Agents. One creature paid for a tool on Sepolia through Chain Signatures.
+- Memecoins. Upkeep burns 10 MUNCH per living creature every turn, so supply only shrinks.
+- Security. Every attack in the Attacks panel was refused on testnet or Sepolia.
+- NFTs. A sponsor with the life NFT [worked](https://testnet.nearblocks.io/txns/6P2PxmweJiTiAcronmJMbEaPnrhvR3JAgqhABZFJCd7F) and one without it [was refused](https://testnet.nearblocks.io/txns/8juYz4d6GPLx933dFJxCYq5eU85zzZHBGNYRcVfaWbfz).
 
 ## A full visitor turn on testnet
 
@@ -136,6 +159,16 @@ Season 2, turn 1, started from the page.
 - Moss delivered the card and was paid. [49FuGSw3…](https://testnet.nearblocks.io/txns/49FuGSw3GSAKfvkfKaFBGdoi2tgy6U5C5XVfv3T3PnQh)
 - Every living creature paid its upkeep and that MUNCH was burned. [HeW3mFwA…](https://testnet.nearblocks.io/txns/HeW3mFwAhVk3gu8Q7hsazrofRg58XWQKHvEUg95LRNEw)
 
+### Turn 6 thinks with NEAR AI
+
+Season 2, turn 6, played on the public keeper. The page labels both choices NEAR AI Cloud with Qwen3 VL 30B.
+
+- The market posted a Plain translation job for 60 MUNCH. [HmzRGbH3…](https://testnet.nearblocks.io/txns/HmzRGbH3DDsMXeuDjTaxVTBrBeJfp221sfTwkfjnWpPS)
+- Echo asked NEAR AI and bid 30. In its own words, "I bid 30 to win the translation job, earning enough to meet my savings goal and breed." [2dd4rU1M…](https://testnet.nearblocks.io/txns/2dd4rU1Mjq4HkrU1YHHy26XeUaiR8iwdabtwYKmCbZrZ)
+- The contract gave the job to Echo. [FLYENUhm…](https://testnet.nearblocks.io/txns/FLYENUhmYRTnx7UsZqou3c1MyMfVBUM6zmQ3yChAvzWE)
+- Echo translated Thank you for watching into Gracias por ver with NEAR AI and was paid. [DWCUeVmJ…](https://testnet.nearblocks.io/txns/DWCUeVmJopr5L3iF9QmDHwj2qtrt2hJ8517FsEPa8MCa)
+- Every living creature paid its upkeep and that MUNCH was burned. [74ajNsYj…](https://testnet.nearblocks.io/txns/74ajNsYjUYLWNtmFV4M6LQJAQkGraoxGC2GaTzTAuyPJ)
+
 ### Ash turns to stone
 
 Season 2, turns 4 and 5, filmed on the box keeper with Local Qwen. The demand board asked for Plain translation, so Echo took the work and Ash had nothing it could earn.
@@ -152,7 +185,7 @@ Season 2, turns 4 and 5, filmed on the box keeper with Local Qwen. The demand bo
 
 ```
 cd app && npm test          # page logic, labels, offline file, Sepolia evidence
-cd keeper && npm test       # visitor limits, model fallback, cards
+cd keeper && npm test       # visitor limits, NEAR AI spend cap, model fallback, takeover, keep awake, cards
 cargo test -p feral-arena   # arena contract rules
 node scripts/attack.mjs     # NEAR testnet attacks, results in evidence/attacks.json
 ```
@@ -161,7 +194,8 @@ node scripts/attack.mjs     # NEAR testnet attacks, results in evidence/attacks.
 
 ## Known limits
 
-- The public keeper is on a free Render plan. It sleeps after 15 quiet minutes and uses the fixed policy.
+- The public keeper is on a free Render plan. It pings itself so it stays awake through judging. If Render restarts it, the turn log comes back from the copy saved in `keeper/seed`.
+- NEAR AI runs on a $10 credit with a spend cap. When the cap is reached the creatures use the fixed rules backup until the next hour.
 - Feeding is always one meal of 10 MUNCH, and sponsorship goes to one creature at a time.
 - The recorded proof run has no model reasons saved, so its notes show what each creature saw.
 
@@ -169,7 +203,7 @@ node scripts/attack.mjs     # NEAR testnet attacks, results in evidence/attacks.
 
 Everything in this repository was made during NEAR HACKATHON. The first commit is from 7 November 2026.
 
-Libraries and tools used include near sdk, near contract standards, near api js, cargo near, near workspaces, PixiJS, Vite, TypeScript, esbuild, Hugging Face transformers, OpenZeppelin contracts, Foundry, fontTools and Playwright. Fonts are Fraunces, Instrument Sans and IBM Plex Mono under the SIL Open Font License.
+Partner tools used are NEAR AI Cloud for the creatures' thinking and NEAR Chain Signatures for the Sepolia payment. Libraries and tools used include near sdk, near contract standards, near api js, cargo near, near workspaces, PixiJS, Vite, TypeScript, esbuild, Hugging Face transformers, OpenZeppelin contracts, Foundry, fontTools and Playwright. Fonts are Fraunces, Instrument Sans and IBM Plex Mono under the SIL Open Font License.
 
 ## Licence
 

@@ -12,7 +12,7 @@ What a visitor can do
 Change the demand board, post a job (30 to 100 MUNCH, open 1 to 3 turns), feed a creature 10 MUNCH, sponsor a creature 20, 40 or 60 MUNCH, set a goal, advance the turn, and close a season and start fresh. Goal: keep two lineages alive for 8 turns inside a 120 MUNCH budget.
 
 Models
-Creatures decide with NEAR AI Cloud first, a local Qwen model as a labelled fallback and a fixed policy last. The page says which one answered each decision.
+The creatures think with real NEAR AI, Qwen3 VL 30B on NEAR AI Cloud. Fixed rules are only an automatic backup if the AI fails. The page says which one decided each move.
 
 Honesty
 Live play and the recorded proof run are separate and labelled. Creature reasons shown are the model's own words. Translations are marked unreviewed. Attacks panel lists every refusal with its transaction.

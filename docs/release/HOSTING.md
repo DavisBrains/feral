@@ -37,15 +37,21 @@ Render service `feral-keeper` in Frankfurt on the free plan. It builds from `mas
 | `FERAL_ALLOW_ORIGIN` | `https://davisbrains.github.io` | Only the page may call the keeper from a browser |
 | `FERAL_TRUST_PROXY` | `1` | Rate limits use the real visitor address |
 | `FERAL_LOCAL_MODEL` | `0` | No room for Qwen on 512 MB |
-| `FERAL_NEAR_AI` | `0` | No NEAR AI credits yet |
+| `FERAL_NEAR_AI` | `1` | The creatures think with NEAR AI |
+| `NEAR_AI_MODEL` | `Qwen/Qwen3-VL-30B-A3B-Instruct` | Fast, cheap, and gave a legal answer every time in tests |
+| `FERAL_TAKEOVER_MS` | `120000` | An idle season frees up after two minutes |
+| `FERAL_KEEP_AWAKE_URL` | `https://feral-keeper.onrender.com` | The keeper pings its own `/healthz` so Render does not put it to sleep |
+| `FERAL_KEEP_AWAKE_UNTIL` | `2026-11-26T00:00:00Z` | The ping stops after judging |
 | `FERAL_DATA` | `/tmp/feral-data` | Short lived disk. The chain keeps every balance |
 | `FERAL_TRANSLATION_DEMAND` | `1` | Plain translation jobs are on |
-| `FERAL_TURNS_PAUSED` | `1` for now | Visitors can watch but every move and turn is refused |
+| `FERAL_TURNS_PAUSED` | `0` | Play is open |
 | `NODE_VERSION` | `22` | Same Node as the box |
 
 ### Secret
 
-`FERAL_KEEPER_KEY` holds the private key of the function call key for `keeper.feral-039832.testnet`. That key can only call the arena game methods. The value comes from `/home/box/.feral-keeper/fc-key.json` and is set through the Render API, never printed. The full access key in `.near-credentials` never leaves the box.
+`FERAL_KEEPER_KEY` holds the private key of the function call key for `keeper.feral-039832.testnet`. That key can only call the arena game methods. The value comes from `/home/box/.feral-keeper/fc-key.json` and is set through the Render API, never printed.
+
+`NEAR_AI_KEY` holds the NEAR AI Cloud key with the $10 hackathon credit. It comes from `/home/box/.secrets/near-ai-credit.env` and is set through the Render API, never printed or committed. The keeper caps each answer at 80 tokens and makes at most 240 NEAR AI calls an hour and 2,000 a day (`FERAL_NEAR_AI_PER_HOUR`, `FERAL_NEAR_AI_PER_DAY`). Turns also have their own limit of a few per minute for each visitor address. The full access key in `.near-credentials` never leaves the box.
 
 ### Pause
 
@@ -53,9 +59,9 @@ While `FERAL_TURNS_PAUSED` is `1` the keeper answers every move, season and turn
 
 ## Honest tradeoffs
 
-The free Render plan sleeps after 15 quiet minutes. The first visit after that takes about a minute, and the page shows Waking the terrarium while it waits.
+The free Render plan sleeps after 15 quiet minutes. Through 25 November the keeper pings its own `/healthz` every ten minutes, which reads no chain and calls no model, so it stays awake. Render gives 750 free hours a month and one service awake all month needs about 720. If it ever does sleep, the first visit takes about a minute and the page shows Waking the terrarium while it waits. A GitHub Actions copy of the same ping is in `hosting/github/keepalive.yml`, ready to move into `.github/workflows` once the box token has the workflow scope.
 
-The public keeper uses the labelled fixed policy, and the page says so on every decision. Local Qwen runs on the box, and the demo video is recorded there.
+The public keeper asks NEAR AI for every creature's choice and the page names the model on every note. Fixed rules are only an automatic backup when NEAR AI fails or the spend cap is reached, and the note then says Fixed rules backup. Local Qwen runs on the box, and the demo video was recorded there.
 
 The disk is wiped on each restart, so the page loses old turn notes. The chain keeps every balance, job and creature.
 
@@ -67,4 +73,4 @@ The box keeper can take turns for the season pilot when it gets the header `x-fe
 
 ## Taking over an idle season
 
-The chain keeps the visitor who started a season. The keeper keeps who holds it now. When the holder has made no move for 10 minutes (`FERAL_TAKEOVER_MS`), the page tells the next visitor "This season is free. Take over and play." Pressing Take over sends no transaction. The keeper writes the new holder to its own meta file and adds a line to the turn log. A visitor can start a new season only after the current one ends, or while holding it. On Render the disk is wiped on every deploy, so after a deploy the season is free again.
+The chain keeps the visitor who started a season. The keeper keeps who holds it now. When the holder has made no move for 2 minutes (`FERAL_TAKEOVER_MS`), the page tells the next visitor "This season is free. Take over and play." Pressing Take over sends no transaction. The keeper writes the new holder to its own meta file and adds a line to the turn log. A visitor can start a new season only after the current one ends, or while holding it. On Render the disk is wiped on every deploy, so after a deploy the season is free again.
