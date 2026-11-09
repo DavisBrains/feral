@@ -5,7 +5,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.dirname(fileURLToPath(import.meta.url));
 const run=syncEvidence();
-const result=await build({configFile:false,root,base:'./',publicDir:false,logLevel:'warn',define:{__OFFLINE__:'true'},build:{chunkSizeWarningLimit:4000,write:false,cssCodeSplit:false,assetsInlineLimit:Infinity,target:'es2022',rollupOptions:{input:path.join(root,'src/main.ts'),output:{format:'iife',inlineDynamicImports:true,entryFileNames:'feral.js'}}}});
+const result=await build({configFile:false,root,base:'./',publicDir:false,logLevel:'warn',define:{__OFFLINE__:'true'},resolve:{alias:[{find:/^.*\/runtime\/habitat\/(?:layers\/)?(habitat_desktop|habitat_mobile|foreground_leaves)\.webp$/,replacement:path.join(root,'offline-assets/$1.webp')}]},build:{chunkSizeWarningLimit:4000,write:false,cssCodeSplit:false,assetsInlineLimit:Infinity,target:'es2022',rollupOptions:{input:path.join(root,'src/main.ts'),output:{format:'iife',inlineDynamicImports:true,entryFileNames:'feral.js'}}}});
 const output=(Array.isArray(result)?result[0]:result).output;
 const chunks=output.filter(o=>o.type==='chunk');
 if(chunks.length!==1||chunks[0].imports.length||chunks[0].dynamicImports.length)throw Error('File build must contain exactly one dependency free classic script');

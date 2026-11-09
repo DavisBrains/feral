@@ -1,5 +1,5 @@
 [workspace]
-members = ["controller", "integration-tests", "mock-signer"]
+members = ["controller", "arena", "integration-tests", "mock-signer"]
 resolver = "2"
 [workspace.dependencies]
 near-sdk = "=5.30.1"

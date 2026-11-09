@@ -1,0 +1,1 @@
+Smaller copies of the three habitat images, used only by the single file offline build (build-file.mjs) so it stays inside the 1.2 MB gzip budget. Re-encoded at WebP quality 80 from design/phase1/runtime/habitat. The hosted app keeps the original art.

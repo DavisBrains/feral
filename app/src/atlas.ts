@@ -1,7 +1,7 @@
 // Sprite loader. Phase 2 animation strips drop in through
 // design/phase2/manifest.json. Anything missing falls back to the approved
 // static phase 1 frame for the creature's mood pose.
-import type { Key, Pose } from './scene';
+import { art, type Key, type Pose } from './scene';
 import habitatDesktop from '../../design/phase1/runtime/habitat/habitat_desktop.webp';
 import habitatMobile from '../../design/phase1/runtime/habitat/habitat_mobile.webp';
 import leaves from '../../design/phase1/runtime/habitat/layers/foreground_leaves.webp';
@@ -44,6 +44,8 @@ export interface Atlas {
   coin: HTMLImageElement; stamp: HTMLImageElement;
   clip(key: Key, anim: Anim, pose: Pose): Clip;
   has(key: Key, anim: Anim): boolean;
+  /** Whether designer art exists for this creature's fossil pose. */
+  hasFossil(key: Key): boolean;
   overlay(key: Key, pose: Pose): Clip | null;
   phase2: { loaded: boolean; clips: number; notes: string[] };
 }
@@ -104,16 +106,19 @@ export async function loadAtlas(): Promise<Atlas> {
       else notes.push(`strip ${r.file} smaller than its frame list`);
     } catch (e: any) { notes.push(String(e.message)); }
   }
-  const still = (key: Key, pose: Pose): Clip => {
+  const still = (k: Key, pose: Pose): Clip => {
+    const key = art(k);
     const img = statics[`${key}:${pose}`] ?? statics[`${key}:front`];
     return { frames: [{ img, sx: 0, sy: 0, sw: img.naturalWidth, sh: img.naturalHeight, dx: 0, dy: 0, cell: img.naturalWidth, ax: img.naturalWidth / 2, ay: img.naturalHeight * 227 / 256 }], fps: 0, loop: true, source: 'phase1' };
   };
   return {
     habitat: { desktop, mobile, leaves: leavesImg }, coin: coinImg, stamp: stampImg,
     phase2: { loaded: clips.size > 0, clips: clips.size, notes },
-    overlay: (key, pose) => clips.get(`${key}:overlay_${pose}`) ?? clips.get(`${key}:${pose}_overlay`) ?? null,
-    has: (key, anim) => clips.has(`${key}:${anim}`),
-    clip(key, anim, pose) {
+    overlay: (k, pose) => { const key = art(k); return clips.get(`${key}:overlay_${pose}`) ?? clips.get(`${key}:${pose}_overlay`) ?? null; },
+    has: (k, anim) => clips.has(`${art(k)}:${anim}`),
+    hasFossil: k => !!statics[`${art(k)}:fossil`] || clips.has(`${art(k)}:fossil`),
+    clip(k, anim, pose) {
+      const key = art(k);
       if (anim === 'cooling' || anim === 'hatch' || anim === 'first_bid') { const c = clips.get(`${key}:${anim}`); if (c) return c; }
       if (pose === 'fossil') return clips.get(`${key}:fossil`) ?? still(key, 'fossil');
       const c = clips.get(`${key}:${anim}`) ?? (anim !== 'idle' ? clips.get(`${key}:idle`) : undefined);

@@ -1,0 +1,83 @@
+/* Feral Phase 3 design tokens. Botanical Reliquary UI. Pure CSS custom properties. */
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:300 700;font-display:swap;src:url(../assets/fonts/fraunces-opsz-wght-latin.woff2) format("woff2-variations")}
+@font-face{font-family:"Fraunces";font-style:italic;font-weight:300 700;font-display:swap;src:url(../assets/fonts/fraunces-opsz-wght-latin-italic.woff2) format("woff2-variations")}
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:400 700;font-display:swap;src:url(../assets/fonts/instrument-sans-var-latin.woff2) format("woff2-variations")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(../assets/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
+
+:root{
+  /* world */
+  --forest:#07140E;        /* page / case interior */
+  --forest-2:#0C1D15;      /* recessed wells */
+  --soil:#17251C;          /* dark surfaces, panels */
+  --soil-2:#1F3126;        /* raised dark surface, hover */
+  --soil-line:#2E4436;     /* hairlines on dark */
+  --soil-line-2:#41594A;   /* stronger rule on dark */
+  --bone:#EDF5E9;          /* primary text on dark (14.3:1 on soil) */
+  --bone-2:#B9C4B4;        /* secondary text on dark (8.8:1 on soil) */
+  --bone-3:#8E9A8A;        /* tertiary, meta (5.4:1 on soil) */
+  /* paper */
+  --vellum:#E9E4D2;        /* notice / label / ledger paper */
+  --vellum-2:#DCD5BE;      /* paper shade, pressed */
+  --vellum-3:#C9C0A4;      /* paper rule */
+  --ink:#162018;           /* text on paper (13.2:1) */
+  --ink-2:#3E4A3C;         /* secondary on paper (7.3:1) */
+  --ink-3:#555F50;         /* meta on paper (5.1:1 on vellum, 4.6:1 on vellum-2) */
+  /* creatures (identity) */
+  --moss:#B5FC71; --moss-sh:#6E9B46; --moss-ink:#3B5E1E;
+  --echo:#7DD9EF; --echo-sh:#356B80; --echo-ink:#1E5466;
+  --ash:#D39767;  --fossil:#777C70; --fossil-ink:#4D5149;
+  --pip:#D4A4FF;  --pip-sh:#7653A4; --pip-ink:#56368A;
+  /* money */
+  --amber:#F3BF88;         /* burns, reserves, upkeep */
+  --amber-deep:#B9722F;    /* wax body */
+  --amber-ink:#7E4613;     /* amber text on paper (6.0:1) */
+  --cream:#FFF3C9;         /* selected proof target */
+  /* signal (never colour only, always paired with icon + words) */
+  --rust:#E0896A;          /* errors on dark */
+  --rust-ink:#8E3A1E;      /* errors on paper (6.0:1) */
+  --focus:#FFF3C9;
+
+  /* type */
+  --f-display:"Fraunces", "Iowan Old Style", Georgia, serif;
+  --f-text:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --t-display:clamp(40px, 5.2vw, 76px); --lh-display:0.98;
+  --t-h1:44px; --t-h2:30px; --t-h3:22px; --t-h4:18px;
+  --t-body:16px; --t-small:14px; --t-caps:12px; --t-mono:14px; --t-mono-s:13px;
+  --t-note:17px; /* ink note, Fraunces italic */
+  --caps-track:.14em;
+
+  /* space (4px base) */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+  --page-margin:72px; --gutter:24px; --content:1296px;
+  --tap:44px;
+
+  /* shape */
+  --r-xs:2px; --r-s:4px; --r-m:8px; --r-l:14px; --r-pill:999px;
+  --hair:1px solid var(--soil-line);
+  --rule-ink:1px solid rgba(22,32,24,.22);
+
+  /* depth */
+  --sh-paper:0 1px 0 rgba(255,255,255,.35) inset, 0 2px 0 rgba(0,0,0,.18), 0 10px 22px -8px rgba(0,0,0,.65);
+  --sh-paper-lift:0 1px 0 rgba(255,255,255,.4) inset, 0 3px 0 rgba(0,0,0,.18), 0 18px 30px -10px rgba(0,0,0,.7);
+  --sh-press:0 1px 2px rgba(0,0,0,.35) inset, 0 0 0 rgba(0,0,0,0);
+  --sh-well:0 2px 10px rgba(0,0,0,.55) inset;
+  --sh-glass:0 0 0 1px rgba(237,245,233,.07) inset, 0 30px 60px -20px rgba(0,0,0,.8);
+
+  /* textures */
+  --tex-paper:url(../assets/textures/paper_vellum_512.webp);
+  --tex-soil:url(../assets/textures/soil_panel_512.webp);
+  --tex-forest:url(../assets/textures/forest_page_512.webp);
+  --tex-grain:url(../assets/textures/grain_overlay_128.webp);
+
+  /* motion */
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-settle:cubic-bezier(.34,1.3,.5,1);
+  --d-fast:120ms; --d-base:200ms; --d-slow:420ms; --d-fossil:650ms; --d-hatch:900ms;
+}
+@media (max-width:767px){
+  :root{--page-margin:16px; --gutter:12px; --t-h1:34px; --t-h2:26px; --t-h3:20px; --t-note:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  :root{--d-fast:1ms; --d-base:1ms; --d-slow:120ms; --d-fossil:160ms; --d-hatch:160ms}
+}

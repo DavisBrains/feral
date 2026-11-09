@@ -40,3 +40,13 @@ id_rsa*
 /design/phase2/*
 !/design/phase2/runtime/
 **/node_modules/
+# three pre polish strips the atlas still loads
+!/design/phase2/_pre_polish/
+/design/phase2/_pre_polish/*
+!/design/phase2/_pre_polish/runtime/
+# phase 3 review images stay on the box; tokens, components, assets and card renderer are committed
+/design/phase3/mockups/*.png
+/design/phase3/components/*.png
+/design/phase3/card/*.png
+# keeper runtime state (journal, visitor hashes, rendered outputs)
+/keeper/data/

@@ -3,12 +3,13 @@
 import * as PIXI from 'pixi.js';
 import 'pixi.js/unsafe-eval'; // strict CSP without eval
 import type { Frame } from './atlas';
-import type { Key } from './scene';
+import { art, type Key } from './scene';
 import type { World } from './world';
 
 export interface Renderer { kind: 'pixi' | 'canvas2d'; resize(cssW: number, cssH: number, dpr: number): void; draw(w: World): void; destroy(): void }
 
-export const COLORS: Record<Key, string> = { moss: '#b5fc71', echo: '#7dd9ef', pip: '#d4a4ff', ash: '#d39767' };
+export const COLORS: Record<string, string> = { moss: '#b5fc71', echo: '#7dd9ef', pip: '#d4a4ff', ash: '#d39767' };
+export const colorOf = (k: Key) => COLORS[art(k)];
 const hex = (c: string) => parseInt(c.slice(1), 16);
 
 // Soft radial pools for shadows and mood light. Flat ellipses look cheap.
@@ -27,7 +28,7 @@ export function pools(w: World): Pool[] {
     if (!b.visible) continue;
     const c = w.scene.creatures.find(c => c.key === b.key); if (!c) continue;
     const r = w.layout.size * b.scale;
-    if (c.active) out.push({ x: b.x, y: b.y - r * 0.05, rx: r * 0.75, ry: r * 0.26, color: COLORS[b.key], alpha: 0.32 * b.glow * b.alpha });
+    if (c.active) out.push({ x: b.x, y: b.y - r * 0.05, rx: r * 0.75, ry: r * 0.26, color: colorOf(b.key), alpha: 0.32 * b.glow * b.alpha });
     out.push({ x: b.x, y: b.y + 2, rx: r * 0.42, ry: r * 0.09, color: '#000000', alpha: 0.55 * b.alpha });
   }
   return out;
@@ -37,7 +38,7 @@ export function coinSpin(pt: { kind: string; t: number }, time: number, i: numbe
   if (pt.kind === 'dust') return 1;
   return 0.35 + 0.65 * Math.abs(Math.cos(time * 3.1 + i * 0.9));
 }
-export interface Placed { key: Key; frame: Frame; overlay: Frame | null; x: number; y: number; w: number; h: number; flip: boolean; alpha: number; warm: number }
+export interface Placed { key: Key; frame: Frame; overlay: Frame | null; x: number; y: number; w: number; h: number; flip: boolean; alpha: number; warm: number; stone: number }
 
 // Shared geometry so both renderers place things identically.
 export function placeBodies(w: World): Placed[] {
@@ -50,21 +51,32 @@ export function placeBodies(w: World): Placed[] {
     const sy = s * (1 + b.breathe), sx = s * (1 - b.breathe * 0.5);
     const settled = b.anim === 'fossil' || b.anim === 'cooling';
     // Code tint only stands in for cooling when no designer strip exists.
-    out.push({ key: b.key, frame: f, overlay: o, x: b.x, y: b.y + b.bob, w: sx, h: sy, flip: !settled && b.facing < 0, alpha: b.alpha, warm: b.anim === 'fossil' ? 1 - b.cool : 0 });
+    out.push({ key: b.key, frame: f, overlay: o, x: b.x, y: b.y + b.bob, w: sx, h: sy, flip: !settled && b.facing < 0, alpha: b.alpha, warm: b.anim === 'fossil' && w.atlas.hasFossil(b.key) ? 1 - b.cool : 0,
+      // No fossil art for this creature yet: a code stone tint stands in, so a dead creature never looks alive.
+      stone: b.anim === 'fossil' && !w.atlas.hasFossil(b.key) ? b.cool : 0 });
   }
   return out.sort((a, b) => a.y - b.y);
 }
-// The lineage root runs under the specimen tags, through the soil.
-export function lineageDots(w: World, n = 40): [number, number][] {
-  const m = w.bodies.get('moss'), p = w.bodies.get('pip');
-  if (!m || !p || w.lineage < 0.02) return [];
-  const L = w.layout, x0 = m.x + L.size * 0.12, y0 = m.y + 4, x1 = p.x - L.size * 0.08, y1 = p.y + 4;
-  const mid = L.name === 'mobile' ? 790 : 712, cx = (x0 + x1) / 2, cy = 2 * mid - (y0 + y1) / 2;
-  const pts: [number, number][] = [];
-  const shown = Math.round(n * w.lineage);
-  for (let i = 0; i < shown; i++) { const t = i / (n - 1), u = 1 - t; pts.push([u * u * x0 + 2 * u * t * cx + t * t * x1, u * u * y0 + 2 * u * t * cy + t * t * y1]); }
-  return pts;
+// The lineage root runs under the specimen tags, through the soil. One root
+// per parent and child pair that both exist on screen.
+export function lineageCurves(w: World, n = 40): [number, number][][] {
+  if (w.lineage < 0.02) return [];
+  const out: [number, number][][] = [];
+  for (const c of w.scene.creatures) {
+    if (!c.parent) continue;
+    const pc = w.scene.creatures.find(x => x.id === c.parent);
+    const m = pc && w.bodies.get(pc.key), p = w.bodies.get(c.key);
+    if (!m || !p || !p.visible) continue;
+    const L = w.layout, dir = p.x >= m.x ? 1 : -1, x0 = m.x + dir * L.size * 0.12, y0 = m.y + 4, x1 = p.x - dir * L.size * 0.08, y1 = p.y + 4;
+    const mid = (L.name === 'mobile' ? 790 : 712) + Math.max(0, Math.max(y0, y1) - 640) * 0.5, cx = (x0 + x1) / 2, cy = 2 * mid - (y0 + y1) / 2;
+    const pts: [number, number][] = [];
+    const shown = Math.round(n * w.lineage);
+    for (let i = 0; i < shown; i++) { const t = i / (n - 1), u = 1 - t; pts.push([u * u * x0 + 2 * u * t * cx + t * t * x1, u * u * y0 + 2 * u * t * cy + t * t * y1]); }
+    out.push(pts);
+  }
+  return out;
 }
+export const lineageDots = (w: World, n = 40) => lineageCurves(w, n)[0] ?? [];
 export function stampRect(w: World) {
   const [fx, fy] = w.layout.fossil, k = w.layout.size / 210;
   const big = w.stamp.big, sw = (big ? 400 : 300) * k * w.stamp.scale, sh = sw * 216 / 384;
@@ -111,15 +123,14 @@ export async function createPixi(canvas: HTMLCanvasElement, w: World): Promise<R
       const ps = pools(world);
       while (poolSprites.length < ps.length) { const s = new PIXI.Sprite(discTex); s.anchor.set(0.5); s.blendMode = 'normal'; glowLayer.addChild(s); poolSprites.push(s); }
       poolSprites.forEach((s, i) => { const p = ps[i]; s.visible = !!p; if (!p) return; s.position.set(p.x, p.y); s.width = p.rx * 2; s.height = p.ry * 2; s.tint = hex(p.color); s.alpha = p.alpha; s.blendMode = p.color === '#000000' ? 'normal' : 'add'; });
-      const rootPts = lineageDots(world);
-      if (rootPts.length > 1) {
+      for (const rootPts of lineageCurves(world)) if (rootPts.length > 1) {
         under.moveTo(rootPts[0][0], rootPts[0][1]); for (const [x, y] of rootPts) under.lineTo(x, y);
         under.stroke({ color: 0xd4a4ff, width: 9, alpha: 0.12, cap: 'round', join: 'round' });
         under.moveTo(rootPts[0][0], rootPts[0][1]); for (const [x, y] of rootPts) under.lineTo(x, y);
         under.stroke({ color: 0xe6ccff, width: 2.4, alpha: 0.8, cap: 'round', join: 'round' });
         rootPts.forEach(([x, y], i) => { if (i % 8 === 4) under.circle(x, y, 4).fill({ color: 0xe6ccff, alpha: 0.9 }); });
       }
-      if (world.ring.t >= 0) { const p = world.layout.homes.pip, t = Math.min(1, world.ring.t); under.ellipse(p[0], p[1] - 30, 30 + t * 150, 12 + t * 60).stroke({ color: 0xd4a4ff, width: 4, alpha: 1 - t }); under.ellipse(p[0], p[1] - 30, 60, 26).fill({ color: 0xd4a4ff, alpha: 0.35 * (1 - t) }); }
+      if (world.ring.t >= 0) { const p = world.layout.homes[world.ringKey], t = Math.min(1, world.ring.t); under.ellipse(p[0], p[1] - 30, 30 + t * 150, 12 + t * 60).stroke({ color: 0xd4a4ff, width: 4, alpha: 1 - t }); under.ellipse(p[0], p[1] - 30, 60, 26).fill({ color: 0xd4a4ff, alpha: 0.35 * (1 - t) }); }
       const placed = placeBodies(world);
       for (const s of sprites.values()) { s.base.visible = false; s.over.visible = false; }
       placed.forEach((p, i) => {
@@ -131,7 +142,8 @@ export async function createPixi(canvas: HTMLCanvasElement, w: World): Promise<R
           sp.visible = true; sp.texture = tex(f);
           sp.pivot.set(f.ax - f.dx, f.ay - f.dy); sp.position.set(p.x, p.y);
           sp.scale.set(p.flip ? -p.w : p.w, p.h); sp.alpha = p.alpha;
-          sp.tint = p.warm > 0 ? (0xff << 16) | (Math.round(255 - 70 * p.warm) << 8) | Math.round(255 - 140 * p.warm) : 0xffffff;
+          sp.tint = p.stone > 0 ? (Math.round(255 - 120 * p.stone) << 16) | (Math.round(255 - 112 * p.stone) << 8) | Math.round(255 - 125 * p.stone) : p.warm > 0 ? (0xff << 16) | (Math.round(255 - 70 * p.warm) << 8) | Math.round(255 - 140 * p.warm) : 0xffffff;
+          if (p.stone > 0) sp.alpha = p.alpha * (1 - 0.15 * p.stone);
         }
       });
       world.particles.forEach((pt, i) => {
@@ -179,16 +191,16 @@ export function createCanvas2D(canvas: HTMLCanvasElement, w: World): Renderer {
         ctx.drawImage(tinted(p.color), p.x - p.rx, p.y - p.ry, p.rx * 2, p.ry * 2);
       }
       ctx.globalCompositeOperation = 'source-over';
-      const root = lineageDots(world);
-      if (root.length > 1) {
+      for (const root of lineageCurves(world)) if (root.length > 1) {
         ctx.lineCap = ctx.lineJoin = 'round';
         for (const [wd, a, col] of [[9, 0.12, '#d4a4ff'], [2.4, 0.8, '#e6ccff']] as const) { ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = wd; ctx.beginPath(); root.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); }
         ctx.globalAlpha = 0.9; ctx.fillStyle = '#e6ccff'; root.forEach(([x, y], i) => { if (i % 8 === 4) { ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fill(); } });
       }
-      if (world.ring.t >= 0) { const p = L.homes.pip, t = Math.min(1, world.ring.t); ctx.globalAlpha = 1 - t; ctx.strokeStyle = '#d4a4ff'; ctx.lineWidth = 4; ctx.beginPath(); ctx.ellipse(p[0], p[1] - 30, 30 + t * 150, 12 + t * 60, 0, 0, 7); ctx.stroke(); }
+      if (world.ring.t >= 0) { const p = L.homes[world.ringKey], t = Math.min(1, world.ring.t); ctx.globalAlpha = 1 - t; ctx.strokeStyle = '#d4a4ff'; ctx.lineWidth = 4; ctx.beginPath(); ctx.ellipse(p[0], p[1] - 30, 30 + t * 150, 12 + t * 60, 0, 0, 7); ctx.stroke(); }
       for (const p of placeBodies(world)) {
         ctx.globalAlpha = p.alpha;
-        if (p.warm > 0) ctx.filter = `sepia(${p.warm}) saturate(${1 + p.warm * 2})`;
+        if (p.stone > 0) ctx.filter = `grayscale(${p.stone}) brightness(${1 - 0.35 * p.stone})`;
+        else if (p.warm > 0) ctx.filter = `sepia(${p.warm}) saturate(${1 + p.warm * 2})`;
         img(p.frame, p.x, p.y, p.w, p.h, p.flip); if (p.overlay) img(p.overlay, p.x, p.y, p.w, p.h, p.flip);
         ctx.filter = 'none';
       }

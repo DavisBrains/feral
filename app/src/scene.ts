@@ -1,8 +1,11 @@
 // Pure evidence -> scene projection. No renderer, DOM or network here.
-export type Key = 'moss' | 'echo' | 'ash' | 'pip';
+export type Art = 'moss' | 'echo' | 'ash' | 'pip';
+// Visual slots. Every child uses Pip's art; extra slots only exist in live play.
+export type Key = Art | 'pip2' | 'pip3' | 'pip4';
+export const art = (k: Key): Art => (k.startsWith('pip') ? 'pip' : k) as Art;
 export type Mood = 'abundant' | 'steady' | 'hungry' | 'critical' | 'fossil';
 export type Pose = 'front' | 'hungry' | 'critical' | 'fossil';
-export type Node = Key | 'market' | 'escrow' | 'furnace';
+export type Node = Key | 'market' | 'escrow' | 'furnace' | 'budget';
 
 export interface SceneCreature {
   key: Key; id: string; name: string; balance: number; active: boolean; mood: Mood; pose: Pose;
@@ -17,11 +20,12 @@ export interface Scene {
   refusal: boolean;      // a chain confirmed extinct refusal is on screen
   refusalSeen: boolean;  // the refusal happened at or before this frame
   hatch: boolean;        // this frame is the confirmed funded birth
+  hatchKey?: Key;        // which slot hatched (live play can have several children)
   born: boolean;         // pip exists in contract state at this frame
   working: Key[];        // creatures doing paid work at this frame
 }
 
-export const NAMES: Record<Key, string> = { moss: 'Moss', echo: 'Echo', ash: 'Ash', pip: 'Pip' };
+export const NAMES: Record<Key, string> = { moss: 'Moss', echo: 'Echo', ash: 'Ash', pip: 'Pip', pip2: 'Pip', pip3: 'Pip', pip4: 'Pip' };
 export const keyOf = (id: string): Key => id.split('.')[0] as Key;
 
 export function moodOf(balance: number, active: boolean): Mood {
@@ -93,6 +97,7 @@ export function buildScene(run: any, index: number): Scene {
     refusal: i === refusalIndex,
     refusalSeen: refusalIndex >= 0 && i >= refusalIndex,
     hatch: ev.kind === 'funded-child-account-creation' && ev.status === 'success' && born && !(prev?.creatures ?? []).some((c: any) => keyOf(c.id) === 'pip'),
+    hatchKey: 'pip',
     born, working,
   };
 }

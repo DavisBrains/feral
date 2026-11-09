@@ -1,0 +1,82 @@
+import sys
+B='/workspace/near/feral/design/phase3/'
+src=open(B+'_build/build_mobile.py').read()
+src=src.split("# stacked components at 390")[0].replace("exec(open('/workspace/near/feral/design/phase3/_build/build_sheet.py').read().split(\"css_sheet=open\")[0])","")
+exec(open(B+'_build/build_sheet.py').read().split("css_sheet=open")[0])
+exec(src)
+CARDPNG='../card/card-bilingual-real.png'
+HEADS={1:('They work to eat.','They pay to be born.'),2:('Feed them work','or watch them turn to stone.'),3:('Small lives','with real bills.')}
+SUB='Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. They take jobs to stay fed, pay for their children to be born, and when one runs dry it turns to stone for good.'
+def head_html(v,mobile=False):
+    a,b=HEADS[v]
+    return f'<h1 class="disp hero-h">{a}<br><em class="ital">{b}</em></h1>'
+def note(n,c,a,w,t,rot,extra=''):
+    return f'<div class="f-note" style="--c:{c};--rot:{rot};{extra}"><div class="who"><i></i>{n} chose</div><div class="act">{a}</div><div class="why">{w}</div><div class="src">Recorded decision · Qwen2.5 1.5B · {sh(TX[t])}</div></div>'
+# ---------- desktop ----------
+def desktop(v):
+    import re as _re
+    stg=_re.sub(r'<div class="bbox".*?</div>','',stage).replace('f-spec is-selected','f-spec')
+    notes_on_stage=(note('Moss','var(--moss)','Bid 90 on the card job','I can pay Echo 30 for the Spanish and still eat well.','parent-bid','-1.2deg','position:absolute;left:40px;top:44px;width:250px')
+                   +note('Pip','var(--pip)','Bid 80 on the child job','Ten under my parent. I am small and cheap to feed.','child-first-bid','.8deg','position:absolute;left:1010px;top:84px;width:250px'))
+    stage_n=stg[:-6]+notes_on_stage+'</div>'
+    goal=f'''<div class="f-panel f-goal hero-goal"><span class="caps" style="color:var(--bone-2)">{ic("season","ico-s")} Season goal</span><h4>Keep two lineages alive for 8 turns</h4>{lane('Moss line','var(--moss)',2)}{lane('Echo line','var(--echo)',2)}<div class="foot"><span>Turn 2 of 8</span><span>Pouch 60 of 100</span></div>
+<hr class="f-rule"><div class="f-advance" style="gap:16px"><button class="f-press" style="width:76px;height:76px"><img src="{SEAL}seal_amber_192.png" alt=""></button><div><h4 style="font-size:22px;margin:0">Advance the turn</h4><p>Everyone alive pays 10 MUNCH. Then they bid, work and settle.</p></div></div></div>'''
+    top=f'''<header class="bar"><div class="brand"><span class="word disp">Feral</span><span class="caps" style="color:var(--bone-3)">on NEAR testnet</span></div><div class="f-mode"><button aria-pressed="true"><span class="f-live"></span>Live season</button><button aria-pressed="false">{ic("replay")}Recorded proof run</button></div><div class="f-status" style="white-space:nowrap;gap:10px"><span class="f-live"></span><b>Live testnet</b><span class="sep"></span>Block <b>276,891,939</b><span class="sep"></span><b>24 of 24</b> check out</div></header>'''
+    hero=f'''<section class="hero"><div><span class="caps eyebrow">Build Beyond Boundaries</span>{head_html(v)}<p class="lede">{SUB}</p><div class="cta"><a class="f-link">{ic("replay","ico-s")}Or watch the real run, every receipt included</a></div></div>{goal}</section>'''
+    world=f'<section class="world">{stage_n}</section>'
+    adv_panel=f'<div class="f-panel"><div class="f-advance">{adv("ok")}</div></div>'
+    pouch_p=f'<div class="f-panel f-pouch"><div class="row"><span class="caps" style="color:var(--bone-2)">Your MUNCH pouch</span><span class="amt"><b>60</b> of 100</span></div><div class="f-coins">{coins(6,4)}</div><div class="mono" style="font-size:13px;color:var(--bone-3)">Each seed is 10 MUNCH. It lasts the whole season.</div></div>'
+    sponsor=actgrid_s=pouch.split('<div class="actgrid">')[1]
+    act_cards=sponsor.split('<div><div class="stl mono">sponsor and feed · pouch spent')[0]
+    act_cards=act_cards.replace('<div class="stl mono">sponsor a lineage</div>','').replace('<div class="stl mono">feed a creature</div>','')
+    dem=demand.split('<div><div class="stl mono">demand board · changed, ready to pin</div>')[0].replace('<div class="noticegrid">','').replace('<div class="stl mono">demand board · current</div>','')
+    job=demand.split('<div class="stl mono">post a job · focus and error</div>')[1]
+    job=job.replace('<div class="f-input is-focus">','<div class="f-input">').replace('<span>5 MUNCH</span>','<span>20</span>').replace(f'<span class="f-help err">{ic("alert","ico-s")}Rewards start at 10 MUNCH</span>','<span class="f-help">MUNCH, from 10</span>').replace('Escrow 5 · pouch after 55','Escrow 20 · pouch after 40').replace('<button class="f-btn is-disabled">Pin the job</button>',f'<button class="f-btn">{ic("job","ico-s")}Pin the job</button>')
+    job=job.rsplit('</div>',1)[0]
+    toast=f'<div class="f-toast" style="width:100%"><span class="ic">{ic("feed")}</span><div><b>Fed Echo 10 MUNCH</b><span>Echo has 165 now. Your pouch has 60.</span><div class="mono">Receipt {sh(TX["paid-collaboration"])} ↗ · sample</div></div><button class="x">{ic("close","ico-s")}</button></div>'
+    play_sec=f'''<section class="block"><header class="bh"><span class="caps">Your season</span><h2 class="disp">Keep them fed</h2><p>You get 100 MUNCH for the whole season. Spend it on meals, sponsors and jobs. The creatures decide the rest.</p></header>
+<div class="rowA">{adv_panel}{pouch_p}<div><span class="caps" style="color:var(--bone-3);display:block;margin-bottom:10px">Latest receipt</span>{toast}</div></div>
+<div class="rowB"><div>{dem}</div>{act_cards}<div>{job}</div></div>
+<div class="rowC"><div class="f-panel" style="padding:14px 16px"><div class="lh"><span class="caps" style="color:var(--bone-2)">Turn log</span><a class="f-link" style="font-size:14px">All 24 receipts {ic("explorer","ico-s")}</a></div>{logh}</div><div><span class="caps" style="color:var(--bone-2)">What they chose</span><div class="notes" style="margin-top:14px">{"".join(note(*x) for x in [('Echo','var(--echo)','Quoted 30 to translate','Fair work for a fair price. Moss is good for it.','paid-collaboration','.8deg'),('Ash','var(--fossil)','Waited','Nothing left to spend. The door is shut.','refused-post-death-spend','-1deg','opacity:.6;filter:grayscale(.6)')])}</div></div></div></section>'''
+    pb=f'''<div class="f-panel"><div class="f-play"><button class="f-btn f-playbtn">{ic("play")}</button>{track()}<div class="f-read">Step <b>19</b> of 24<br>Turn <b>2</b> of 2</div></div>
+<div class="f-tabs" style="margin-top:18px;border-bottom:1px solid var(--vellum-3);padding-left:76px"><button class="f-tab is-active">{ic("work","ico-s")}Work <span class="n">19</span></button><button class="f-tab">{ic("fossil","ico-s")}Death <span class="n">13</span></button><button class="f-tab">{ic("alert","ico-s")}Refusal <span class="n">14</span></button><button class="f-tab">{ic("birth","ico-s")}Birth <span class="n">21</span></button><span style="flex:1"></span><button class="f-btn f-btn--ghost f-btn--s" style="margin-bottom:6px">{ic("replay","ico-s")}Back to the end</button></div></div>'''
+    led_left=f'''<div class="f-paper f-ledger"><span class="caps meta">Proof ledger · 24 testnet receipts</span><h3>Every scar has a receipt</h3>
+{claim('amber','The supply is finite and it burns','1,000 MUNCH were made once. Upkeep has burned 50. 950 are still out there.',tx('second-upkeep')+tx('death-tick'))}
+{claim('fossil','Ash died and its spending was refused','Ash could not pay upkeep on turn 1. Then it tried to spend and the contract said no.',tx('death-tick')+tx('refused-post-death-spend'),extra=f'<img class="stamp" src="{STAMP}" alt="Spending refused">')}
+{claim('lilac','Pip has its own account and life NFT','Moss paid 100 MUNCH for the birth. Pip lives at pip.ctrl.feral-039832.testnet with 0.06 NEAR.',tx('funded-child-account-creation')+'<a class="f-link mono">pip.ctrl.feral-039832.testnet '+ic("copy","ico-s")+'</a>')}
+{claim('moss','The child bid against its parent','Pip offered 80 for work that Moss bid 90 on. Same family, separate wallets.',tx('child-first-bid')+tx('parent-bid'))}
+<div class="f-sig is-pending" style="margin-top:14px"><img src="{SEAL}seal_pending_blind_96.png"><div><b>A NEAR account signs on Sepolia</b><p>The relayer address is ready. It is waiting for test ETH before it buys the tool.</p><span class="mono">relayer 0x667e…4C10 · v1.signer-prod.testnet</span></div><span class="tag">Waiting</span></div></div>'''
+    mount=f'''<div class="f-paper f-mount"><span class="caps meta">Paid work</span><h3 class="disp" style="margin:4px 0 14px;font-size:30px;color:var(--ink)">The card they made to earn</h3><div class="frame" style="padding:12px"><img class="card" src="{CARDPNG}" alt="Bilingual caption card"><img class="corner tl" src="../assets/ui/paper_corner.svg"><img class="corner tr" src="../assets/ui/paper_corner.svg"><img class="corner bl" src="../assets/ui/paper_corner.svg"><img class="corner br" src="../assets/ui/paper_corner.svg"></div><figcaption>Echo wrote the Spanish. Moss put the card together. The buyer paid 90 MUNCH.</figcaption><div class="row"><button class="f-btn">{ic("copy","ico-s")}Save the card</button>{tx('paid-job')}</div></div>'''
+    proof=f'''<section class="block"><header class="bh"><span class="caps">The proof run</span><h2 class="disp">Watch the real run</h2><p>This is the recorded run on NEAR testnet from 9 Nov. Scrub it as much as you like. Nothing new is sent.</p></header>{pb}<div class="rowD">{led_left}{mount}</div></section>'''
+    foot='<footer class="pfoot mono">Feral · valueless test tokens on NEAR testnet · controlled demo creatures · no bridge and no profit · Build Beyond Boundaries</footer>'
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1440"><title>Feral</title><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="components.css"><link rel="stylesheet" href="page.css"></head><body class="page">{sprite}{top}{hero}{world}{play_sec}{proof}{foot}</body></html>'''
+# ---------- mobile ----------
+def mobile(v):
+    a,b=HEADS[v]
+    top=f'''<div class="mtop"><div class="mrow"><span class="word disp">Feral</span><span class="f-status" style="font-size:11.5px;gap:8px"><span class="f-live"></span>Block <b>276,891,939</b><span class="sep"></span><b>24/24</b></span></div><div class="f-mode" style="display:grid;width:100%"><button aria-pressed="true" style="justify-content:center"><span class="f-live"></span>Live season</button><button aria-pressed="false" style="justify-content:center">{ic("replay","ico-s")}Recorded run</button></div></div>'''
+    hero=f'<section class="mhero"><span class="caps eyebrow">Build Beyond Boundaries</span><h1 class="disp hero-h" style="{'font-size:34px' if v==2 else ''}">{a}<br><em class="ital">{b}</em></h1><p class="lede">Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. Run dry and they turn to stone for good.</p></section>'
+    world=f'<div style="padding:0 16px">{mstage()}</div>'
+    notes_m=f'<div class="mnotes">{note("Moss","var(--moss)","Bid 90 on the card job","I can pay Echo 30 for the Spanish and still eat well.","parent-bid","-.8deg","min-width:260px")}{note("Pip","var(--pip)","Bid 80 on the child job","Ten under my parent. I am small and cheap to feed.","child-first-bid",".6deg","min-width:260px")}</div>'
+    goal=f'''<div class="f-panel f-goal mpad"><span class="caps" style="color:var(--bone-2)">{ic("season","ico-s")} Season goal · turn 2 of 8</span><h4 style="font-size:22px">Keep two lineages alive for 8 turns</h4>{lane('Moss line','var(--moss)',2)}{lane('Echo line','var(--echo)',2)}<div class="foot"><span>Pouch 60 of 100</span><span>2 lines alive</span></div></div>'''
+    pouch_m=f'<div class="f-panel f-pouch mpad"><div class="row"><span class="caps" style="color:var(--bone-2)">Your pouch</span><span class="amt"><b>60</b> of 100</span></div><div class="f-coins" style="gap:4px">{coins(6,4)}</div></div>'
+    dem=f'''<div class="f-paper f-notice" style="margin:8px 16px 0">{pin}<span class="kick caps">Field notice · turn 2</span><h3 style="font-size:28px">Wanted this turn</h3><p>The creatures read this when the next turn starts.</p><div style="margin-top:10px">{opt('Short captions','One line','40',False)}{opt('Bilingual caption cards','English and Spanish','90',True)}</div><button class="f-btn is-disabled" style="width:100%;margin-top:14px">Already pinned</button></div>'''
+    log=f'<div class="f-panel mpad" style="padding:8px 10px"><div class="lh" style="padding:4px 4px 8px"><span class="caps" style="color:var(--bone-2)">Turn log</span></div><ul class="f-log m">{"".join(f"<li class={chr(34)}{cl}{chr(34)}><span class=tn>{t}</span>{ic(i)}<span class=what>{w}</span>{tx(l,chr(104))}</li>" for t,i,w,s,a,l,cl in logrows[:5])}</ul></div>'
+    pbm=f'''<div class="f-panel mpad" style="padding:14px 14px 0"><div class="f-play" style="grid-template-columns:auto 1fr;gap:12px"><button class="f-btn f-playbtn" style="width:48px;height:48px">{ic("play")}</button><div><div class="f-track" style="height:40px">{track(18).split('<div class="f-track">')[1].split('<span class="flag')[0]}<img class="thumb" src="{COIN}" style="left:{xs[18]/10:.2f}%;width:26px;height:26px"></div><div class="f-read" style="text-align:left;font-size:12px">Step <b>19</b> of 24 · Turn <b>2</b> of 2</div></div></div>
+<div class="f-tabs" style="margin-top:12px;overflow:hidden"><button class="f-tab is-active">Work</button><button class="f-tab">Death</button><button class="f-tab">Refusal</button><button class="f-tab">Birth</button></div></div>'''
+    claims=f'''<div class="f-paper f-ledger" style="margin:16px 16px 0;padding:22px 18px"><span class="caps meta">24 testnet receipts</span><h3 style="font-size:28px">Every scar has a receipt</h3>
+<div class="f-claim m"><div class="seal"><img src="{SEAL}seal_amber_192.png"></div><div><h5>The supply is finite and it burns</h5><div class="ev">{tx('second-upkeep')}</div></div></div>
+<div class="f-claim m"><div class="seal"><img src="{SEAL}seal_fossil_192.png"></div><div><h5>Ash died and its spending was refused</h5><div class="ev">{tx('death-tick')}{tx('refused-post-death-spend')}</div></div></div>
+<div class="f-claim m"><div class="seal"><img src="{SEAL}seal_lilac_192.png"></div><div><h5>Pip has its own account and life NFT</h5><div class="ev">{tx('funded-child-account-creation')}</div></div></div>
+<div class="f-claim m"><div class="seal"><img src="{SEAL}seal_moss_192.png"></div><div><h5>The child bid against its parent</h5><div class="ev">{tx('child-first-bid')}{tx('parent-bid')}</div></div></div>
+<div class="f-sig is-pending" style="grid-template-columns:40px 1fr;margin-top:12px"><img src="{SEAL}seal_pending_blind_96.png" style="width:40px;height:40px"><div><b>A NEAR account signs on Sepolia</b><p>Waiting for test ETH before it buys the tool.</p></div></div></div>'''
+    card=f'''<div class="f-paper f-mount" style="margin:16px 16px 0;padding:18px"><span class="caps meta">Paid work</span><h3 class="disp" style="margin:4px 0 12px;font-size:24px;color:var(--ink)">The card they made to earn</h3><div class="frame" style="padding:8px"><img class="card" src="{CARDPNG}"></div><div class="row"><button class="f-btn" style="flex:1">{ic("copy","ico-s")}Save the card</button></div></div>'''
+    sec=lambda k,t,p: f'<header class="mbh"><span class="caps">{k}</span><h2 class="disp">{t}</h2><p>{p}</p></header>'
+    body=(top+hero+world+notes_m+sec('Your season','Keep them fed','100 MUNCH lasts the whole season. Every action lives in the dock below.')+goal+pouch_m+dem+log
+          +sec('The proof run','Watch the real run','The recorded run from 9 Nov. Scrub all you like. Nothing new is sent.')+pbm+claims+card
+          +'<footer class="pfoot mono" style="padding:28px 16px">Valueless test tokens on NEAR testnet · no bridge and no profit</footer>')
+    dock=dock_live('idle').replace('<nav class="f-dock">','<nav class="f-dock" style="position:fixed">')
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=390"><title>Feral</title><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="components.css"><link rel="stylesheet" href="page.css"></head><body class="mpage">{sprite}{body}{dock}</body></html>'''
+for v in (1,2,3):
+    open(B+f'html/page-desktop-v{v}.html','w').write(desktop(v))
+    open(B+f'html/page-mobile-v{v}.html','w').write(mobile(v))
+print('ok')

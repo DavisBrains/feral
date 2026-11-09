@@ -1,0 +1,44 @@
+# Feral ink icon set: 24px grid, 1.75 stroke, round caps. currentColor.
+I={
+'munch':'<ellipse cx="12" cy="12" rx="8.25" ry="8.25"/><path d="M12 6.6c2.3 1.6 3.2 3.6 3.2 5.4S14.3 15.8 12 17.4c-2.3-1.6-3.2-3.6-3.2-5.4S9.7 8.2 12 6.6z"/><path d="M12 9.2v5.6"/>',
+'burn':'<path d="M12 3.5c.6 2.6 3.9 4.4 3.9 8.3a3.9 3.9 0 0 1-7.8 0c0-1.6.7-2.7 1.6-3.6.1 1.4.8 2.2 1.6 2.4C10.7 8.1 11.2 5.6 12 3.5z"/><path d="M6.5 19.5c1.6-.6 3.4-.9 5.5-.9s3.9.3 5.5.9"/><path d="M8.5 21.5h7" stroke-dasharray="1 2.2"/>',
+'reserve':'<path d="M7 7.5h10l1.2 2.2v8.6a1.7 1.7 0 0 1-1.7 1.7h-8a1.7 1.7 0 0 1-1.7-1.7V9.7z"/><path d="M8.5 4.5h7v3h-7z"/><path d="M9.5 13.5l2.5-2 2.5 2-2.5 2.2z"/>',
+'escrow':'<path d="M12 3.8c3.9 2.4 5.6 5.2 5.6 8.2 0 3.5-2.5 6.6-5.6 8.2-3.1-1.6-5.6-4.7-5.6-8.2 0-3 1.7-5.8 5.6-8.2z"/><path d="M12 6.5v11.2"/><path d="M9.3 10.4h5.4"/>',
+'work':'<path d="M5 19c0-8 4.6-13.3 14-14-.2 9.3-5.7 14-14 14z"/><path d="M5 19l7.2-7.2"/><path d="M9.5 11.5h3.3M12.5 8.6v3.2"/>',
+'transcript':'<path d="M6.5 3.8h8l3 3v13.4h-11z"/><path d="M14.5 3.8v3h3"/><path d="M9 11h6M9 14h6M9 17h3.5"/>',
+'translate':'<path d="M3.8 6h8M7.8 4v2c0 3.7-1.6 6.3-4 7.8M5.6 9.2c1.4 2 3.2 3.4 5.2 4.2"/><path d="M12.6 20l3.3-8.4 3.3 8.4M13.8 17.2h4.2"/>',
+'bid':'<path d="M6 20.2V4.3"/><path d="M6 4.8c2.6-1.4 4.6.9 7 0s3.6-1 5 .1v7.6c-1.4-1.1-2.6-1-5-.1s-4.4-1.4-7 0"/>',
+'birth':'<path d="M12 20.5c-3.8 0-6.3-2.7-6.3-6.2 0-3.9 2.8-7.8 6.3-9.8 3.5 2 6.3 5.9 6.3 9.8 0 3.5-2.5 6.2-6.3 6.2z"/><path d="M7.2 11.6l2.4 1.6 1.8-2.3 1.8 2.6 2-2 1.8 1.2"/>',
+'lineage':'<circle cx="12" cy="4.8" r="1.9"/><path d="M12 6.7v4.6c0 2-1.6 2.8-3.6 3.4S5.5 16.5 5.5 18.4M12 11.3c0 2 1.6 2.8 3.6 3.4s2.9 1.8 2.9 3.7"/><circle cx="5.5" cy="19.6" r="1.4"/><circle cx="18.5" cy="19.6" r="1.4"/>',
+'life_nft':'<path d="M4.5 9.2l6.8-5.4h7.5v7.6l-5.4 6.8a1.7 1.7 0 0 1-2.5.1l-6.5-6.6a1.7 1.7 0 0 1 .1-2.5z"/><circle cx="15.6" cy="7.2" r="1.3"/><path d="M10.6 10.2c1.4.9 2 2 1.9 3.4-1.4.1-2.5-.5-3.4-1.9"/>',
+'account':'<rect x="3.8" y="6" width="16.4" height="12" rx="1.6"/><circle cx="9" cy="11.2" r="2"/><path d="M6.4 15.6c.6-1.3 1.5-1.9 2.6-1.9s2 .6 2.6 1.9M14 10h3.5M14 13.2h3.5"/>',
+'explorer':'<path d="M13.5 4.5h6v6M19.5 4.5l-8.2 8.2"/><path d="M17.5 13.8v4.4a1.7 1.7 0 0 1-1.7 1.7H5.8a1.7 1.7 0 0 1-1.7-1.7V8.2a1.7 1.7 0 0 1 1.7-1.7h4.4"/>',
+'play':'<path d="M8 5.4v13.2c0 .6.7 1 1.2.7l10.2-6.6a.8.8 0 0 0 0-1.4L9.2 4.7C8.7 4.4 8 4.8 8 5.4z"/>',
+'pause':'<path d="M8.5 5v14M15.5 5v14"/>',
+'replay':'<path d="M4.8 12a7.2 7.2 0 1 0 2.2-5.2"/><path d="M4.6 4.2v3.6h3.6"/><path d="M10.5 9.6v4.8l3.8-2.4z"/>',
+'copy':'<rect x="8.2" y="8.2" width="11.5" height="11.5" rx="1.6"/><path d="M15.8 8.2V5.9a1.6 1.6 0 0 0-1.6-1.6H5.9a1.6 1.6 0 0 0-1.6 1.6v8.3a1.6 1.6 0 0 0 1.6 1.6h2.3"/>',
+'close':'<path d="M6.2 6.2l11.6 11.6M17.8 6.2L6.2 17.8"/>',
+'sound_off':'<path d="M4.5 9.5h3.2l4.8-4v13l-4.8-4H4.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>',
+'fossil':'<path d="M4 17.5c0-5 3.6-9.5 8-9.5s8 4.5 8 9.5z"/><path d="M8 17.5c0-2.8 1.8-5.4 4-5.4s4 2.6 4 5.4"/><path d="M12 8v4.1M7.2 11.2l2.3 2M16.8 11.2l-2.3 2"/><path d="M3 20.3h18"/>',
+'advance':'<path d="M12 3.6v2.2M12 18.2v2.2M3.6 12h2.2M18.2 12h2.2"/><circle cx="12" cy="12" r="4.6"/><path d="M11 10.2l2.6 1.8-2.6 1.8z"/>',
+'feed':'<path d="M5 11.5h14c0 4.2-3.1 7.5-7 7.5s-7-3.3-7-7.5z"/><path d="M9.6 8.6c.9-1 2.2-1.5 3.6-1.3M12 7.3c.2-1.5 1-2.6 2.4-3.1"/><path d="M8.5 21h7"/>',
+'sponsor':'<path d="M12 20.2s-7.5-4.4-7.5-10a4.2 4.2 0 0 1 7.5-2.6 4.2 4.2 0 0 1 7.5 2.6c0 5.6-7.5 10-7.5 10z"/><path d="M12 16.6V11.3M9.8 13.2c1-.2 1.8.3 2.2 1.1M14.2 12.3c-1-.2-1.8.3-2.2 1.1"/>',
+'job':'<path d="M6.5 6h11v14.2h-11z"/><circle cx="12" cy="4.8" r="1.6"/><path d="M9 11h6M9 14h6M9 17h3.5"/>',
+'check':'<path d="M5 12.6l4.4 4.4L19 7.4"/>',
+'alert':'<path d="M12 4.2l8.6 15H3.4z"/><path d="M12 10v4.2M12 16.9v.2"/>',
+'pending':'<path d="M7 3.8h10M7 20.2h10"/><path d="M8 3.8c0 4.4 4 5.2 4 8.2s-4 3.8-4 8.2M16 3.8c0 4.4-4 5.2-4 8.2s4 3.8 4 8.2"/><path d="M10 18.4h4"/>',
+'season':'<path d="M12 20.5V9.5"/><path d="M12 13c-3.6 0-5.8-2.2-5.8-5.8 3.6 0 5.8 2.2 5.8 5.8zM12 11c0-3.2 2-5.2 5.2-5.2 0 3.2-2 5.2-5.2 5.2z"/><path d="M7.5 20.5h9"/>',
+'chain_sig':'<path d="M9.6 14.4l4.8-4.8"/><path d="M11 6.9l1.3-1.3a3.4 3.4 0 0 1 4.8 4.8L15.8 11.7M13 17.1l-1.3 1.3a3.4 3.4 0 0 1-4.8-4.8l1.3-1.3"/>',
+}
+# filled 16px variants for the 12 most important
+F=['munch','burn','reserve','escrow','work','bid','birth','lineage','life_nft','account','fossil','explorer']
+import os
+base='/workspace/near/feral/design/phase3/assets/icons/'
+for k,v in I.items():
+    open(base+f'24/{k}.svg','w').write(f'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">{v}</svg>\n')
+for k in F:
+    open(base+f'16/{k}.svg','w').write(f'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">{I[k]}</svg>\n')
+# sprite
+sym=''.join(f'<symbol id="i-{k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">{v}</symbol>' for k,v in I.items())
+open(base+'feral-icons.svg','w').write(f'<svg xmlns="http://www.w3.org/2000/svg" style="display:none">{sym}</svg>\n')
+print(len(I))

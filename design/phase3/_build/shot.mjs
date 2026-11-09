@@ -1,0 +1,12 @@
+import { chromium } from 'playwright-core';
+const [,, file, out, w, dpr] = process.argv;
+const b = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--allow-file-access-from-files','--disable-web-security'] });
+const p = await b.newPage({ viewport: { width: +w, height: 900 }, deviceScaleFactor: +(dpr||1) });
+const errs=[]; p.on('requestfailed', r => errs.push(r.url())); p.on('console', m => { if (m.type()==='error') errs.push(m.text()) });
+await p.goto('file://' + file); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(600);
+await p.addStyleTag({content:'*{animation-play-state:paused!important}'});
+await p.screenshot({ path: out, fullPage: true });
+console.log('shot', out, errs.length ? 'ERR '+errs.join('\n') : 'no errors');
+const fonts = await p.evaluate(() => [...document.fonts].filter(f=>f.status==='loaded').map(f=>f.family+' '+f.style));
+console.log(fonts.join(', '));
+await b.close();

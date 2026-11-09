@@ -2,23 +2,26 @@
 // Canvas2D fallback draw exactly this. Motion is cosmetic: it is driven by
 // verified scene flows and never changes a number shown in the HTML.
 import { frameAt, clipSeconds, type Atlas, type Anim, type Clip } from './atlas';
-import type { Key, Node, Scene } from './scene';
+import { art, type Key, type Node, type Scene } from './scene';
 
 export type LayoutName = 'desktop' | 'mobile';
 export interface Layout { name: LayoutName; w: number; h: number; size: number; wander: [number, number];
-  homes: Record<Key, [number, number]>; fossil: [number, number]; nodes: Record<'market' | 'escrow' | 'furnace', [number, number]> }
+  homes: Record<Key, [number, number]>; fossil: [number, number]; nodes: Record<'market' | 'escrow' | 'furnace' | 'budget', [number, number]> }
 
+// Foot positions and sizes from design/phase3 UI-SPEC 5 (about 1.6x the first build).
 export const LAYOUTS: Record<LayoutName, Layout> = {
-  desktop: { name: 'desktop', w: 1600, h: 1000, size: 240, wander: [70, 14],
-    homes: { moss: [371, 572], echo: [791, 528], pip: [1191, 552], ash: [575, 640] }, fossil: [738, 910],
-    nodes: { market: [70, 470], escrow: [1010, 410], furnace: [1090, 735] } },
-  mobile: { name: 'mobile', w: 800, h: 1100, size: 205, wander: [34, 10],
-    homes: { moss: [178, 582], echo: [430, 560], pip: [684, 690], ash: [250, 700] }, fossil: [360, 965],
-    nodes: { market: [30, 520], escrow: [610, 430], furnace: [640, 850] } },
+  desktop: { name: 'desktop', w: 1600, h: 1000, size: 300, wander: [60, 12],
+    homes: { moss: [371, 572], echo: [781, 523], pip: [1192, 556], ash: [560, 760], pip2: [1010, 742], pip3: [1400, 700], pip4: [200, 800] }, fossil: [739, 905],
+    nodes: { market: [70, 470], escrow: [1010, 410], furnace: [1090, 735], budget: [70, 300] } },
+  mobile: { name: 'mobile', w: 800, h: 1100, size: 262, wander: [26, 8],
+    homes: { moss: [182, 584], echo: [436, 558], pip: [631, 685], ash: [300, 740], pip2: [600, 820], pip3: [700, 520], pip4: [110, 720] }, fossil: [356, 900],
+    nodes: { market: [30, 520], escrow: [610, 430], furnace: [640, 850], budget: [30, 380] } },
 };
 
-const SPEED: Record<Key, number> = { moss: 26, echo: 44, pip: 20, ash: 30 };
-const SCALE: Record<Key, number> = { moss: 1.05, echo: 0.98, pip: 0.74, ash: 0.92 };
+const SPEED: Record<string, number> = { moss: 26, echo: 44, pip: 20, ash: 30 };
+export const SCALE: Record<string, number> = { moss: 1.03, echo: 0.99, pip: 0.78, ash: 0.91 };
+// Several fossils can rest in the soil in live play. Offsets fan them out.
+const FOSSIL_FAN: [number, number][] = [[0, 0], [-300, 6], [300, 6], [-560, 14], [560, 14], [-680, 20], [680, 20]];
 
 export interface Body { key: Key; x: number; y: number; tx: number; ty: number; wait: number; facing: 1 | -1; moving: boolean;
   t: number; alpha: number; targetAlpha: number; cool: number; coolTarget: number; anim: Anim; animT: number; clip: Clip; overlay: Clip | null;
@@ -34,6 +37,7 @@ export class World {
   reduced = false;
   stamp = { alpha: 0, target: 0, scale: 1, big: false };
   ring = { t: -1 };
+  ringKey: Key = 'pip';
   lineage = 0; lineageTarget = 0;
   quiet = 0; quietTarget = 0;
   time = 0;
@@ -48,7 +52,10 @@ export class World {
   }
   home(k: Key): [number, number] {
     const c = this.scene?.creatures.find(c => c.key === k);
-    return c && !c.active ? this.layout.fossil : this.layout.homes[k];
+    if (!c || c.active) return this.layout.homes[k];
+    const i = Math.max(0, this.scene.creatures.filter(x => !x.active).findIndex(x => x.key === k));
+    const [dx, dy] = FOSSIL_FAN[i % FOSSIL_FAN.length], m = this.layout.name === 'mobile' ? 0.55 : 1;
+    return [this.layout.fossil[0] + dx * m, this.layout.fossil[1] + dy];
   }
   // animate=false snaps (scrubbing, jumps, first paint). Only a forward step
   // by one recorded event plays its flows.
@@ -60,9 +67,9 @@ export class World {
       const [hx, hy] = this.home(c.key);
       if (!b) {
         b = { key: c.key, x: hx, y: hy, tx: hx, ty: hy, wait: Math.random() * 2, facing: 1, moving: false, t: Math.random() * 6, alpha: 1, targetAlpha: 1, cool: c.active ? 0 : 1, coolTarget: c.active ? 0 : 1,
-          anim: 'idle', animT: 0, clip: this.atlas.clip(c.key, 'idle', c.pose), overlay: null, frame: 0, scale: SCALE[c.key], glow: 0, visible: true, breathe: 0, bob: 0, fx: hx, fy: hy, special: null, specialUntil: 0 };
+          anim: 'idle', animT: 0, clip: this.atlas.clip(c.key, 'idle', c.pose), overlay: null, frame: 0, scale: SCALE[art(c.key)], glow: 0, visible: true, breathe: 0, bob: 0, fx: hx, fy: hy, special: null, specialUntil: 0 };
         this.bodies.set(c.key, b);
-        if (animate && s.hatch && c.key === 'pip') { b.alpha = 0; b.targetAlpha = 1; this.ring.t = this.reduced ? -1 : 0; if (motion) this.playSpecial(b, 'hatch', 0.45); }
+        if (animate && s.hatch && c.key === (s.hatchKey ?? 'pip')) { this.ringKey = c.key; b.alpha = 0; b.targetAlpha = 1; this.ring.t = this.reduced ? -1 : 0; if (motion) this.playSpecial(b, 'hatch', 0.45); }
       }
       const wasActive = prev?.creatures.find(p => p.key === c.key)?.active;
       if (motion && wasActive && !c.active) this.playSpecial(b, 'cooling');
@@ -101,7 +108,7 @@ export class World {
     b.overlay = pose === 'hungry' || pose === 'critical' ? this.atlas.overlay(b.key, pose) : null;
   }
   pos(n: Node): [number, number] {
-    if (n === 'market' || n === 'escrow' || n === 'furnace') return this.layout.nodes[n];
+    if (n === 'market' || n === 'escrow' || n === 'furnace' || n === 'budget') return this.layout.nodes[n];
     const b = this.bodies.get(n);
     const lift = this.layout.size * 0.35;
     return b ? [b.x, b.y - lift] : [this.layout.homes[n][0], this.layout.homes[n][1] - lift];
@@ -109,13 +116,14 @@ export class World {
   free() { return this.particles.find(p => !p.on); }
   spawnFlows(s: Scene) {
     s.flows.forEach((f, fi) => {
-      const [x0, y0] = this.pos(f.from), [x1, y1] = f.to === 'pip' && s.hatch ? [this.layout.homes.pip[0], this.layout.homes.pip[1] - 40] : this.pos(f.to);
+      const hk = s.hatchKey ?? 'pip';
+      const [x0, y0] = this.pos(f.from), [x1, y1] = f.to === hk && s.hatch ? [this.layout.homes[hk][0], this.layout.homes[hk][1] - 40] : this.pos(f.to);
       const n = Math.min(12, 4 + Math.round(f.amount / 20));
       for (let i = 0; i < n; i++) {
         const p = this.free(); if (!p) return;
         const lift = 90 + Math.random() * 60;
         Object.assign(p, { on: true, kind: 'coin', x0, y0, x1, y1, x: x0, y: y0, cx: (x0 + x1) / 2 + (Math.random() - 0.5) * 80, cy: Math.min(y0, y1) - lift,
-          t: 0, dur: 1.25 + Math.random() * 0.4, delay: fi * 0.3 + i * 0.09 + (s.hatch && f.to === 'pip' ? 0.9 : 0), size: (this.layout.name === 'mobile' ? 40 : 36) + Math.random() * 8, alpha: 1, then: f.to === 'furnace' ? 'dust' : 'none' });
+          t: 0, dur: 1.25 + Math.random() * 0.4, delay: fi * 0.3 + i * 0.09 + (s.hatch && f.to === hk ? 0.9 : 0), size: (this.layout.name === 'mobile' ? 40 : 36) + Math.random() * 8, alpha: 1, then: f.to === 'furnace' ? 'dust' : 'none' });
       }
     });
   }
@@ -131,7 +139,7 @@ export class World {
       if (!c) continue;
       // reduced motion: opacity only, no travel
       if (b.special === 'hatch') b.targetAlpha = 1;
-      b.alpha = b.special === 'hatch' ? 1 : this.reduced ? (b.alpha < b.targetAlpha ? Math.min(b.targetAlpha, b.alpha + dt / 0.2) : b.targetAlpha) : ease(b.alpha, b.targetAlpha, b.key === 'pip' && this.ring.t >= 0 && this.ring.t < 0.45 ? 0 : 3.2);
+      b.alpha = b.special === 'hatch' ? 1 : this.reduced ? (b.alpha < b.targetAlpha ? Math.min(b.targetAlpha, b.alpha + dt / 0.2) : b.targetAlpha) : ease(b.alpha, b.targetAlpha, b.key === this.ringKey && this.ring.t >= 0 && this.ring.t < 0.45 ? 0 : 3.2);
       b.cool = this.reduced ? b.coolTarget : b.coolTarget > b.cool ? Math.min(1, b.cool + dt / 0.65) : b.coolTarget;
       const settled = !c.active;
       if (this.reduced || settled) {
@@ -145,19 +153,19 @@ export class World {
           b.wait -= dt; b.moving = false;
           if (b.wait <= 0 && pace > 0) {
             const [hx, hy] = this.home(b.key), [rx, ry] = this.layout.wander;
-            const r = b.key === 'pip' ? 0.5 : 1;
+            const r = art(b.key) === 'pip' ? 0.5 : 1;
             b.tx = hx + (Math.random() * 2 - 1) * rx * r; b.ty = hy + (Math.random() * 2 - 1) * ry;
           }
         } else {
           const dx = b.tx - b.x, dy = b.ty - b.y, d = Math.hypot(dx, dy);
-          const step = SPEED[b.key] * pace * dt * (this.layout.name === 'mobile' ? 0.6 : 1);
-          if (d <= step || d < 1) { b.x = b.tx; b.y = b.ty; b.moving = false; b.wait = 2.5 + Math.random() * (b.key === 'pip' ? 2 : 4); }
+          const step = SPEED[art(b.key)] * pace * dt * (this.layout.name === 'mobile' ? 0.6 : 1);
+          if (d <= step || d < 1) { b.x = b.tx; b.y = b.ty; b.moving = false; b.wait = 2.5 + Math.random() * (art(b.key) === 'pip' ? 2 : 4); }
           else { b.x += dx / d * step; b.y += dy / d * step; b.moving = true; if (Math.abs(dx) > 2) b.facing = dx > 0 ? 1 : -1; }
         }
         const rate = c.mood === 'critical' ? 0.7 : c.mood === 'hungry' ? 1.1 : 1.6;
         b.breathe = Math.sin(b.t * rate * 2) * (c.mood === 'critical' ? 0.008 : 0.016);
         // walking from code: a short step bob when no walk strip exists
-        b.bob = b.moving && !this.atlas.has(b.key, 'walk') ? Math.abs(Math.sin(b.t * (b.key === 'pip' ? 9 : 7))) * -5 : 0;
+        b.bob = b.moving && !this.atlas.has(b.key, 'walk') ? Math.abs(Math.sin(b.t * (art(b.key) === 'pip' ? 9 : 7))) * -5 : 0;
       }
       this.pickClip(b, c.pose);
       b.animT += dt;

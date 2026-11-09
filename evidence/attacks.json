@@ -1,0 +1,126 @@
+{
+  "updated": "2026-11-09T08:53:51.685Z",
+  "arena": "play.feral-039832.testnet",
+  "attacks": [
+    {
+      "at": "2026-11-09T08:53:51.684Z",
+      "id": "sepolia-voucher-replay",
+      "chain": "sepolia",
+      "title": "Replay the redeemed voucher on Sepolia",
+      "attempt": "relayer 0x667e3DF0fb679593d4C31C7789926b4EAA7E4C10 resubmits voucher nonce 0, already paid in 0x74855dbbf8696a0b285c12b8343f44005bf1d9344957d881e352c6f609bfd128",
+      "tx": "0x3e72b880d0f040f8a16b8e5701d06acaefd1c999594d358f8a24db7ff25caf72",
+      "explorer": "https://sepolia.etherscan.io/tx/0x3e72b880d0f040f8a16b8e5701d06acaefd1c999594d358f8a24db7ff25caf72",
+      "refused": true,
+      "reason": "reverted on chain, simulated revert Expired",
+      "used_nonce_on_chain": true,
+      "voucher_expiry": 1794212212,
+      "mpc_sign_tx": "FB3SUZjqBgfpavs6VLyHX9bdzhRZqDF48z2jjY6Nb4bR",
+      "block": 12096460,
+      "gas_used": "43928"
+    },
+    {
+      "at": "2026-11-09T08:53:06.343Z",
+      "id": "forged-birth-callback",
+      "chain": "near-testnet",
+      "title": "Forged birth callback",
+      "attempt": "feral-039832.testnet calls on_birth directly to mint a child without paying",
+      "tx": "Gn5P4zJ6BeADzDJbh4k8qvsmF1g75NVEK12vHdyM25ZD",
+      "refused": true,
+      "reason": "Method on_birth is private"
+    },
+    {
+      "at": "2026-11-09T08:53:11.091Z",
+      "id": "forged-founders-callback",
+      "chain": "near-testnet",
+      "title": "Replayed founders callback",
+      "attempt": "feral-039832.testnet replays on_founders for season 2",
+      "tx": "ChmP5MSobiN9CULorDLcUUt47MxpzDJyi7d6zJ5AFJYf",
+      "refused": true,
+      "reason": "Method on_founders is private"
+    },
+    {
+      "at": "2026-11-09T08:53:14.819Z",
+      "id": "sponsor-non-holder",
+      "chain": "near-testnet",
+      "title": "Sponsor without the life NFT",
+      "attempt": "feral-039832.testnet holds no life NFT and tries to sponsor moss with 20 MUNCH",
+      "tx": "8juYz4d6GPLx933dFJxCYq5eU85zzZHBGNYRcVfaWbfz",
+      "refused": true,
+      "reason": "life NFT holder only"
+    },
+    {
+      "at": "2026-11-09T08:53:19.233Z",
+      "id": "tick-non-owner",
+      "chain": "near-testnet",
+      "title": "Advance time without the keeper",
+      "attempt": "feral-039832.testnet calls tick directly",
+      "tx": "Acrv9m1wnY8iHzGtq2qs1Ld5dGUhUaFCbFtJWFPuLowG",
+      "refused": true,
+      "reason": "owner only"
+    },
+    {
+      "at": "2026-11-09T08:53:23.130Z",
+      "id": "duplicate-season",
+      "chain": "near-testnet",
+      "title": "Second seed while a season is live",
+      "attempt": "The keeper key asks for another 1,000 MUNCH seed mid season",
+      "tx": "F6kpESoEA5BMuQvq6iNJFTg9LJ3bqXeY6wkpgmUGVwrk",
+      "refused": true,
+      "reason": "close the current season first"
+    },
+    {
+      "at": "2026-11-09T08:53:23.131Z",
+      "id": "duplicate-birth",
+      "chain": "near-testnet",
+      "title": "Two births for one parent",
+      "attempt": "Send two birth calls for the same parent at once",
+      "tx": null,
+      "refused": null,
+      "reason": "skipped this run, no living parent can afford one birth yet. Covered by arena unit tests (duplicate_birth_refused_while_pending, birth_callback_replay_refused)."
+    },
+    {
+      "at": "2026-11-09T08:53:23.386Z",
+      "id": "key-other-contract",
+      "chain": "near-testnet",
+      "title": "Keeper key against the proof run contract",
+      "attempt": "keeper key calls tick on ctrl.feral-039832.testnet",
+      "tx": null,
+      "refused": true,
+      "reason": "Access key receiver play.feral-039832.testnet does not match transaction receiver ctrl.feral-039832.testnet",
+      "stage": "rejected-before-execution"
+    },
+    {
+      "at": "2026-11-09T08:53:23.664Z",
+      "id": "key-method-out-of-list",
+      "chain": "near-testnet",
+      "title": "Keeper key moving MUNCH out",
+      "attempt": "keeper key calls ft_transfer, a method outside its list",
+      "tx": null,
+      "refused": true,
+      "reason": "Access key does not allow method ft_transfer",
+      "stage": "rejected-before-execution"
+    },
+    {
+      "at": "2026-11-09T08:53:23.925Z",
+      "id": "key-deposit",
+      "chain": "near-testnet",
+      "title": "Keeper key attaching a deposit",
+      "attempt": "keeper key calls feed with 1 yocto attached",
+      "tx": null,
+      "refused": true,
+      "reason": "Deposit is not allowed with function call",
+      "stage": "rejected-before-execution"
+    },
+    {
+      "at": "2026-11-09T08:53:24.213Z",
+      "id": "key-move-near",
+      "chain": "near-testnet",
+      "title": "Keeper key sending NEAR",
+      "attempt": "keeper key tries to transfer 0.01 NEAR to the root account",
+      "tx": null,
+      "refused": true,
+      "reason": "Access key requires full access",
+      "stage": "rejected-before-execution"
+    }
+  ]
+}
