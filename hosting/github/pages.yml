@@ -27,7 +27,7 @@ jobs:
         working-directory: app
         env:
           VITE_BASE: /feral/
-          # Repo variable; empty until the Hugging Face Space URL is known. Empty falls back to the recorded replay.
+          # Repo variable FERAL_KEEPER_URL, the Render keeper origin. Empty falls back to the recorded replay.
           VITE_KEEPER_URL: ${{ vars.FERAL_KEEPER_URL }}
         run: npm run build
       - uses: actions/upload-pages-artifact@v3

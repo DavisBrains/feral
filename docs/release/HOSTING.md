@@ -1,53 +1,62 @@
-# Hosting plan
+# Hosting
 
-Page on GitHub Pages. Keeper on a Hugging Face Docker Space (free CPU basic: 2 vCPU, 16 GB RAM) with the local Qwen model. No card. David creates the Space himself; secrets go in the Space settings afterwards.
+The page lives on GitHub Pages and the keeper lives on a free Render web service. Checked on 9 Nov 2026. Free plans change often, so check again before you rely on one.
 
-Checked on 9 Nov 2026. Free tiers change often, so check again before signing up.
+## Live links
 
-## Live set
+| What | Where |
+| --- | --- |
+| Page | [davisbrains.github.io/feral](https://davisbrains.github.io/feral/) |
+| Keeper | [feral-keeper.onrender.com](https://feral-keeper.onrender.com/healthz) |
+| Keeper state | [feral-keeper.onrender.com/api/state](https://feral-keeper.onrender.com/api/state) |
 
-1. Page: GitHub Pages from `DavisBrains/feral`. Public URL: `https://davisbrains.github.io/feral/`.
-   - Live now from the `gh-pages` branch (interim), because the box `gh` token lacks the `workflow` scope needed to push `.github/workflows/pages.yml`.
-   - The Actions workflow is committed locally on master (not pushed). After `gh auth refresh -s workflow`, push it and switch Pages source back to GitHub Actions.
-2. Keeper: Hugging Face Docker Space from `hosting/hf-space/` (run `./hosting/hf-space/assemble.sh` before the first Space push).
-3. Model order on the Space: NEAR AI Cloud if `NEAR_AI_KEY` is set, otherwise local Qwen (`FERAL_LOCAL_MODEL=1`, baked into the image), otherwise the labelled fixed policy.
+## Page
 
-### Hugging Face free CPU, the honest tradeoffs
-- Free CPU Spaces sleep after about 48 hours with no visitors. Cold start loads Qwen and can take a few minutes. The page shows **Waking the terrarium**, then falls back to the recorded proof run if it never answers.
-- Space disk is ephemeral. The chain keeps every balance, job and creature, so play carries on, but the page's turn log, the model reasons and new card files from before the restart are lost.
-- The pinned Qwen2.5 1.5B Instruct weights are downloaded at image build time so wake skips that download.
+The page is built with `VITE_BASE=/feral/` and `VITE_KEEPER_URL=https://feral-keeper.onrender.com` and pushed to the `gh-pages` branch. The repo variable `FERAL_KEEPER_URL` holds the same address.
 
-## Secret env vars for the keeper (Space → Settings → Variables and secrets)
+The Actions workflow is kept in `hosting/github/pages.yml`. The box `gh` token has no workflow scope, so it is not in `.github/workflows` yet. Once that scope is added, move it there and switch Pages to GitHub Actions.
 
-| Name | Required | What it is | Where the value lives on this box (path only) | How the keeper loads it |
-| --- | --- | --- | --- | --- |
-| `FERAL_KEEPER_KEY` | yes | Private key of the **function-call** access key for `keeper.feral-039832.testnet` (limited to arena game methods). Never a full-access key. | `/home/box/.feral-keeper/fc-key.json` field `private_key` | `near.mjs` `loadKey()` reads `process.env.FERAL_KEEPER_KEY`, else `FERAL_KEEPER_KEY_FILE` (default `~/.feral-keeper/fc-key.json`) |
-| `NEAR_AI_KEY` | no | NEAR AI Cloud API key. Optional on this Space. Local Qwen is the main brain. | `/home/box/.secrets/near-ai.env` name `NEAR_AI_KEY` | `server.mjs` calls `loadEnvFile` for that path on this box; on the Space set the secret directly |
+To rebuild by hand
 
-Do **not** upload `/home/box/.near-credentials/testnet/keeper.feral-039832.testnet.json`. That file is a full-access credential and must never go on the Space.
+```
+cd app
+VITE_BASE=/feral/ VITE_KEEPER_URL=https://feral-keeper.onrender.com npm run build
+```
 
-## Non-secret env (set in the Space Dockerfile)
+Then copy `app/dist` to the `gh-pages` branch with an empty `.nojekyll` file.
 
-- `HOST=0.0.0.0`
-- `PORT=7860` (Space `app_port`)
-- `FERAL_ALLOW_ORIGIN=https://davisbrains.github.io`
-- `FERAL_TRUST_PROXY=1`
-- `FERAL_TRANSLATION_DEMAND=1`
-- `FERAL_LOCAL_MODEL=1`
-- `FERAL_MODEL_URL=http://127.0.0.1:11436`
-- `FERAL_DATA=/tmp/feral-data` (ephemeral)
+## Keeper
 
-## GitHub Pages build
+Render service `feral-keeper` in Frankfurt on the free plan. It builds from `master` with root folder `keeper`, runs `npm ci --omit=dev`, then `node server.mjs`, and checks `/healthz`.
 
-- Workflow builds with `VITE_BASE=/feral/` and `VITE_KEEPER_URL` from the repo variable `FERAL_KEEPER_URL`.
-- Until that variable is set to the Space URL, live mode shows that the keeper is not linked and the recorded proof run still works.
-- After the Space is live at `https://<user>-<space>.hf.space`, set repo variable `FERAL_KEEPER_URL` to that origin (no trailing slash) and rebuild Pages.
+### Plain settings
 
-## Steps for David
+| Name | Value | Why |
+| --- | --- | --- |
+| `HOST` | `0.0.0.0` | Listen for Render |
+| `FERAL_ALLOW_ORIGIN` | `https://davisbrains.github.io` | Only the page may call the keeper from a browser |
+| `FERAL_TRUST_PROXY` | `1` | Rate limits use the real visitor address |
+| `FERAL_LOCAL_MODEL` | `0` | No room for Qwen on 512 MB |
+| `FERAL_NEAR_AI` | `0` | No NEAR AI credits yet |
+| `FERAL_DATA` | `/tmp/feral-data` | Short lived disk. The chain keeps every balance |
+| `FERAL_TRANSLATION_DEMAND` | `1` | Plain translation jobs are on |
+| `FERAL_TURNS_PAUSED` | `1` for now | Visitors can watch but every move and turn is refused |
+| `NODE_VERSION` | `22` | Same Node as the box |
 
-1. Create a Hugging Face account (or sign in) and a new **Docker** Space.
-2. From this repo run `./hosting/hf-space/assemble.sh`, then push `hosting/hf-space` to the Space git remote.
-3. In Space settings, add secrets `FERAL_KEEPER_KEY` (and optional `NEAR_AI_KEY`).
-4. Confirm `https://<user>-<space>.hf.space/healthz` returns `ok` and `/api/state` shows the model route (`local-qwen` or NEAR AI).
-5. Set GitHub repo variable `FERAL_KEEPER_URL` to that origin and refresh the Pages build.
-6. Open `https://davisbrains.github.io/feral/` and play one visitor turn from the public address.
+### Secret
+
+`FERAL_KEEPER_KEY` holds the private key of the function call key for `keeper.feral-039832.testnet`. That key can only call the arena game methods. The value comes from `/home/box/.feral-keeper/fc-key.json` and is set through the Render API, never printed. The full access key in `.near-credentials` never leaves the box.
+
+### Pause
+
+While `FERAL_TURNS_PAUSED` is `1` the keeper answers every move, season and turn with code 423 and the note "The terrarium opens soon". The page shows that note on its controls and the creatures stay put. Set it to `0` in Render to open play.
+
+## Honest tradeoffs
+
+The free Render plan sleeps after 15 quiet minutes. The first visit after that takes about a minute, and the page shows Waking the terrarium while it waits.
+
+The public keeper uses the labelled fixed policy, and the page says so on every decision. Local Qwen runs on the box, and the demo video is recorded there.
+
+The disk is wiped on each restart, so the page loses old turn notes. The chain keeps every balance, job and creature.
+
+Hugging Face Spaces was the first plan. On 9 Nov 2026 it refused to create a Docker Space without a paid PRO plan, so `hosting/hf-space` stays here for later.

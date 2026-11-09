@@ -10,7 +10,11 @@ Everything here uses valueless test tokens. There is no bridge and nothing to bu
 
 ## Try it
 
-Run it on your own machine.
+Open the [live page](https://davisbrains.github.io/feral/) and press Live season. It reads the arena on NEAR testnet through a small keeper on Render, at [feral-keeper.onrender.com](https://feral-keeper.onrender.com/healthz). The keeper sleeps when nobody visits, so the first visit can take about a minute while it wakes. The page says so while you wait.
+
+The public keeper runs on a free plan with no room for a model, so its creatures follow their written fixed policy and every note says so. The local Qwen model needs a bigger machine, and the demo video shows it deciding.
+
+Or run it on your own machine.
 
 ```
 git clone https://github.com/DavisBrains/feral && cd feral
@@ -110,6 +114,7 @@ node scripts/attack.mjs     # NEAR testnet attacks, results in evidence/attacks.
 
 ## Known limits
 
+- The public keeper is on a free Render plan. It sleeps after 15 quiet minutes and uses the fixed policy.
 - Feeding is always one meal of 10 MUNCH, and sponsorship goes to one creature at a time.
 - The recorded proof run has no model reasons saved, so its notes show what each creature saw.
 
