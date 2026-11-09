@@ -60,3 +60,7 @@ The public keeper uses the labelled fixed policy, and the page says so on every 
 The disk is wiped on each restart, so the page loses old turn notes. The chain keeps every balance, job and creature.
 
 Hugging Face Spaces was the first plan. On 9 Nov 2026 it refused to create a Docker Space without a paid PRO plan, so `hosting/hf-space` stays here for later.
+
+## Box operator path
+
+The box keeper can take turns for the season pilot when it gets the header `x-feral-operator` with the token from `FERAL_OPERATOR_TOKEN`. It only works for requests from 127.0.0.1 with no forwarding header, and only when the token is at least 32 characters. This was added to film Ash's last turns from a fresh headless browser. Never set `FERAL_OPERATOR_TOKEN` on Render.

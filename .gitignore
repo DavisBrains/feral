@@ -50,3 +50,7 @@ id_rsa*
 /design/phase3/card/*.png
 # keeper runtime state (journal, visitor hashes, rendered outputs)
 /keeper/data/
+
+# raw demo footage stays on the box
+video/raw/*.webm
+video/raw/stills/

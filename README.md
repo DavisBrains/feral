@@ -136,6 +136,18 @@ Season 2, turn 1, started from the page.
 - Moss delivered the card and was paid. [49FuGSw3…](https://testnet.nearblocks.io/txns/49FuGSw3GSAKfvkfKaFBGdoi2tgy6U5C5XVfv3T3PnQh)
 - Every living creature paid its upkeep and that MUNCH was burned. [HeW3mFwA…](https://testnet.nearblocks.io/txns/HeW3mFwAhVk3gu8Q7hsazrofRg58XWQKHvEUg95LRNEw)
 
+### Ash turns to stone
+
+Season 2, turns 4 and 5, filmed on the box keeper with Local Qwen. The demand board asked for Plain translation, so Echo took the work and Ash had nothing it could earn.
+
+- Echo bid on the Plain translation job. [F43rzKM4…](https://testnet.nearblocks.io/txns/F43rzKM4a6z7rsRz3DfKg2h5PTJvmHkog7WpdWYRhNog)
+- Echo wrote the Spanish line with Local Qwen and was paid 60 MUNCH. [23GTkCFM…](https://testnet.nearblocks.io/txns/23GTkCFMi41Yg3ox5DpwXmjHT3enBnmkvK4PJ4vhJuUY)
+- Moss paid for a child and Moss 1 was born with its own account. [GkYLHBmZ…](https://testnet.nearblocks.io/txns/GkYLHBmZ4aM37WzBLQmxiBReWCySCFMg8G479BE6Bny3)
+- Ash paid its last 10 MUNCH of upkeep and was left with nothing. [HNmYXzGe…](https://testnet.nearblocks.io/txns/HNmYXzGeiDwKTJiEGJZ19aPv1yD72oAyA6yT3osZioi7)
+- On turn 5 Ash could not pay upkeep, so the contract turned it to stone. The receipt logs the extinction of s2 ash on turn 5. [H4a9jGEK…](https://testnet.nearblocks.io/txns/H4a9jGEKUBEyW5tj15SMFoSjvXE7nVAEHhBrRFw5HxDo)
+- The keeper then asked the contract to spend for Ash. The contract refused with the word extinct. [92acs7hA…](https://testnet.nearblocks.io/txns/92acs7hAf8ejo6gTawTbyTahpoUci4WJWVUc5UVABXbX)
+- Ash's life NFT still exists and its life record now reads inactive, died on turn 5. [The account](https://testnet.nearblocks.io/address/s2-ash.play.feral-039832.testnet)
+
 ## Tests
 
 ```

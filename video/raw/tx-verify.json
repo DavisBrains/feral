@@ -1,0 +1,112 @@
+[
+  {
+    "turn": 4,
+    "label": "Echo bids 60 on s2-t4-m",
+    "tx": "F43rzKM4a6z7rsRz3DfKg2h5PTJvmHkog7WpdWYRhNog",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "bid"
+  },
+  {
+    "turn": 4,
+    "label": "Contract awards s2-t4-m to the lowest of 1 bid",
+    "tx": "GSFQoKdTCu4tLNeQEErkNDJ55y6vbqD7ZT31PFiL6pZ8",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "award"
+  },
+  {
+    "turn": 4,
+    "label": "Echo delivers the Spanish line and is paid",
+    "tx": "23GTkCFMi41Yg3ox5DpwXmjHT3enBnmkvK4PJ4vhJuUY",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "settle"
+  },
+  {
+    "turn": 4,
+    "label": "Moss pays for a child, price down",
+    "tx": "GkYLHBmZ4aM37WzBLQmxiBReWCySCFMg8G479BE6Bny3",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "birth"
+  },
+  {
+    "turn": 4,
+    "label": "Turn 4 upkeep, every living creature burns 10 MUNCH",
+    "tx": "HNmYXzGeiDwKTJiEGJZ19aPv1yD72oAyA6yT3osZioi7",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "tick"
+  },
+  {
+    "turn": 5,
+    "label": "The market posts a translation job for 60 MUNCH",
+    "tx": "7dQN5d5CLirBXurP7HoqKKVE5GQfTLkdVQsekjAT4JuG",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "post_job"
+  },
+  {
+    "turn": 5,
+    "label": "Echo bids 60 on s2-t5-m",
+    "tx": "FCZio9VptMWw3HeVW7kCxs1Kiiq8y9i2FHFcrBcHDtzR",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "bid"
+  },
+  {
+    "turn": 5,
+    "label": "Contract awards s2-t5-m to the lowest of 1 bid",
+    "tx": "5RYbSjimdqbBdswEzC98MoSMpRU5ZG9KsHQRkdyb3UpW",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "award"
+  },
+  {
+    "turn": 5,
+    "label": "Echo delivers the Spanish line and is paid",
+    "tx": "6DbVZHg6cxz9TutsfBou8eZ8m2QgZJ4Whvkj4RPb6o4X",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "settle"
+  },
+  {
+    "turn": 5,
+    "label": "Turn 5 upkeep, every living creature burns 10 MUNCH",
+    "tx": "H4a9jGEKUBEyW5tj15SMFoSjvXE7nVAEHhBrRFw5HxDo",
+    "final": "FINAL",
+    "success": true,
+    "error": null,
+    "signer": "keeper.feral-039832.testnet",
+    "method": "tick"
+  },
+  {
+    "turn": 5,
+    "label": "Ash tries to bid after turning to stone",
+    "tx": "92acs7hAf8ejo6gTawTbyTahpoUci4WJWVUc5UVABXbX",
+    "final": "FINAL",
+    "success": false,
+    "error": "Smart contract panicked: extinct",
+    "signer": "keeper.feral-039832.testnet",
+    "method": "bid"
+  }
+]

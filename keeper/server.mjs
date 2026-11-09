@@ -81,6 +81,17 @@ async function chainState() {
 const json = (res, code, obj, extra = {}) => { res.writeHead(code, { 'content-type': 'application/json', 'cache-control': 'no-store', ...cors(), ...extra }); res.end(JSON.stringify(obj)); };
 const cors = () => ORIGIN ? { 'access-control-allow-origin': ORIGIN, 'access-control-allow-headers': 'content-type,x-feral-visitor', 'access-control-allow-methods': 'GET,POST,OPTIONS' } : {};
 const ipOf = req => (process.env.FERAL_TRUST_PROXY === '1' ? String(req.headers['x-forwarded-for'] ?? '').split(',')[0].trim() : '') || req.socket.remoteAddress;
+// Box only operator path. When FERAL_OPERATOR_TOKEN is set (never on the public host),
+// a loopback request with the matching x-feral-operator header acts for the season's
+// pilot, so a recording browser can steer a season another local browser started.
+const OPERATOR = process.env.FERAL_OPERATOR_TOKEN || '';
+function isOperator(req) {
+  if (!OPERATOR || OPERATOR.length < 32) return false;
+  const a = req.socket.remoteAddress || '';
+  if (!['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(a) || req.headers['x-forwarded-for']) return false;
+  const h = String(req.headers['x-feral-operator'] ?? '');
+  return h.length === OPERATOR.length && sha(h) === sha(OPERATOR);
+}
 function visitorOf(req) {
   const v = String(req.headers['x-feral-visitor'] ?? '');
   if (!/^[a-f0-9]{32,64}$/.test(v)) return null;
@@ -96,7 +107,7 @@ function publicLog(season) {
 }
 async function state(req) {
   const [chain, m, key] = await Promise.all([chainState(), checkModel(), keyHealth()]);
-  const me = visitorOf(req), s = chain.season;
+  const s = chain.season, me = isOperator(req) && s?.pilot ? s.pilot : visitorOf(req);
   const idle = Date.now() - engine.meta.lastActivity;
   const pilot = !!(s && me && s.pilot === me);
   const ended = !s || s.closed || ['won', 'lost', 'failed'].includes(s.status) || s.status.startsWith('abandoned');
@@ -123,7 +134,8 @@ async function api(req, res, url) {
   }
   if (req.method !== 'POST') return json(res, 404, { error: 'not found' });
   if (PAUSED) return json(res, 423, { error: PAUSE_NOTE, paused: true });
-  const me = visitorOf(req);
+  let me = visitorOf(req);
+  if (isOperator(req)) { const s = (await chainState()).season; if (s?.pilot) me = s.pilot; }
   if (!me) return json(res, 400, { error: 'visitor id missing' });
   if (limited('p:' + ipOf(req), 20, 6) || limited('v:' + me, 20, 6)) return json(res, 429, { error: 'Too many actions. Wait a few seconds.', retry_after_s: 20 });
   const key = await keyHealth();
@@ -161,4 +173,4 @@ http.createServer(async (req, res) => {
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
     serveStatic(req, res, url);
   } catch (e) { console.error(e); json(res, e.status ?? 500, { error: String(e.message).slice(0, 200) }); }
-}).listen(PORT, HOST, () => console.log(`feral keeper on http://${HOST}:${PORT} · arena ${near.CONTRACT} · models ${model?.url ?? 'none (fixed policy)'}${PAUSED ? ' · turns paused' : ''}`));
+}).listen(PORT, HOST, () => console.log(`feral keeper on http://${HOST}:${PORT} · arena ${near.CONTRACT} · models ${model?.url ?? 'none (fixed policy)'}${PAUSED ? ' · turns paused' : ''}${OPERATOR ? ' · operator path on' : ''}`));

@@ -1,0 +1,29 @@
+<!doctype html><meta charset="utf-8"><style>
+body{margin:0;background:#0f1a12;color:#e9e4d4;font:18px/1.45 ui-monospace,Menlo,monospace;padding:48px 64px}
+h1{font:600 34px Georgia,serif;margin:0 0 6px} p.s{color:#9fb29f;margin:0 0 28px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:28px} .c{background:#18261b;border:1px solid #2f4632;border-radius:10px;padding:20px 24px}
+.c h2{font:600 15px system-ui;letter-spacing:.12em;text-transform:uppercase;color:#c9a96b;margin:0 0 12px} pre{margin:0;white-space:pre-wrap;font-size:15px}
+.bad{color:#ff9b85;font-weight:700} .ok{color:#9be38f}</style>
+<h1>Ash on NEAR testnet after turning to stone</h1><p class="s">Raw reads from the testnet RPC at block 276912679. Contract play.feral-039832.testnet</p>
+<div class="g"><div class="c"><h2>Life NFT · nft_token</h2><pre>{
+  "token_id": "s2-ash.play.feral-039832.testnet",
+  "owner_id": "keeper.feral-039832.testnet",
+  "title": "Feral life ash",
+  "extra": {
+    "season": 2,
+    "policy": "job=short;min_price=40;birth_floor=120",
+    "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a"
+  }
+}</pre></div>
+<div class="c"><h2>Life record · lives_of season 2</h2><pre>{
+  "id": "s2-ash.play.feral-039832.testnet",
+  "balance": "0",
+  "active": false,
+  "born_turn": 0,
+  "died_turn": 5,
+  "earned": "0",
+  "burned": "40"
+}</pre></div>
+<div class="c" style="grid-column:span 2"><h2>Spend after death · bid as Ash</h2><pre>tx      92acs7hAf8ejo6gTawTbyTahpoUci4WJWVUc5UVABXbX
+status  <span class="bad">Failure · Smart contract panicked: extinct</span>
+link    testnet.nearblocks.io/txns/92acs7hAf8ejo6gTawTbyTahpoUci4WJWVUc5UVABXbX</pre></div></div>
