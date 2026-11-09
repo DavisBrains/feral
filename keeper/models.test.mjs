@@ -1,6 +1,6 @@
 import test from 'node:test'; import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync } from 'node:fs'; import { tmpdir } from 'node:os'; import path from 'node:path';
-import { nearAiAdapter, localAdapter, modelChain, classify, loadEnvFile } from './models.mjs';
+import { nearAiAdapter, localAdapter, modelChain, classify, loadEnvFile, localModelEnabled } from './models.mjs';
 import { decide, translate } from './policy.mjs';
 
 const KEY = 'sk-test-SECRET-123';
@@ -77,4 +77,12 @@ test('a billing block is saved and restored so a restart does not call again', a
   await assert.rejects(a.choose({}, opts)); assert.equal(saved.kind, 'billing'); assert.ok(!JSON.stringify(saved).includes(KEY));
   const b = nearAiAdapter({ key: KEY, now: () => t, state, fetchImpl: async () => { calls++; return NO_CREDIT; } });
   await assert.rejects(b.choose({}, opts)); assert.equal(calls, 1); assert.equal(b.status().ready, false);
+});
+
+test('local Qwen stays off unless FERAL_LOCAL_MODEL is set', () => {
+  assert.equal(localModelEnabled({}), false);
+  assert.equal(localModelEnabled({ FERAL_LOCAL_MODEL: '' }), false);
+  assert.equal(localModelEnabled({ FERAL_LOCAL_MODEL: '0' }), false);
+  assert.equal(localModelEnabled({ FERAL_LOCAL_MODEL: '1' }), true);
+  assert.equal(localModelEnabled({ FERAL_LOCAL_MODEL: 'true' }), true);
 });

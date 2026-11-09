@@ -9,7 +9,7 @@ import { createHash } from 'node:crypto';
 import * as near from './near.mjs';
 import { Engine } from './engine.mjs';
 import { describe, LINES, KINDS, CHANGES, GOALS } from './policy.mjs';
-import { loadEnvFile, nearAiAdapter, localAdapter, modelChain } from './models.mjs';
+import { loadEnvFile, nearAiAdapter, localAdapter, modelChain, localModelEnabled } from './models.mjs';
 
 const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || '127.0.0.1';
@@ -19,13 +19,15 @@ const ORIGIN = process.env.FERAL_ALLOW_ORIGIN || '';
 const LEASE_MS = Number(process.env.FERAL_LEASE_MS || 15 * 60 * 1000);
 const SEASONS_PER_HOUR = Number(process.env.FERAL_SEASONS_PER_HOUR || 6);
 const MIN_ALLOWANCE = 20_000_000_000_000_000_000_000n; // 0.02 NEAR of gas left on the key
-// NEAR AI Cloud first, local Qwen as the labelled fallback, fixed policy last.
-// The key comes from NEAR_AI_KEY, or the env file on this box. It is never logged.
+// Model order for a small host (Render free): NEAR AI Cloud if a key is set, then
+// the labelled fixed policy. The local Qwen model only loads when FERAL_LOCAL_MODEL
+// is set (it needs about 4 GB and will not fit on a 512 MB free instance).
+// The NEAR AI key comes from NEAR_AI_KEY, or the env file on this box. Never logged.
 const jsonState = f => ({ load: () => existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null, save: j => { mkdirSync(path.dirname(f), { recursive: true }); writeFileSync(f, JSON.stringify(j)); } });
 loadEnvFile(process.env.FERAL_NEAR_AI_ENV_FILE ?? '/home/box/.secrets/near-ai.env');
 const model = modelChain([
   process.env.FERAL_NEAR_AI === '0' ? null : nearAiAdapter({ key: process.env.NEAR_AI_KEY, model: process.env.NEAR_AI_MODEL || undefined, state: jsonState(path.join(DATA, 'near-ai-state.json')) }),
-  process.env.FERAL_MODEL_URL === '' ? null : localAdapter(process.env.FERAL_MODEL_URL ?? 'http://127.0.0.1:11436'),
+  localModelEnabled() ? localAdapter(process.env.FERAL_MODEL_URL || 'http://127.0.0.1:11436') : null,
 ]);
 // Plain translation demand is on by default after the arena upgrade. Set FERAL_TRANSLATION_DEMAND=0 to hide it.
 const TRANSLATION_DEMAND = process.env.FERAL_TRANSLATION_DEMAND !== '0';
@@ -140,6 +142,10 @@ function serveStatic(req, res, url) {
 }
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
-  try { if (url.pathname.startsWith('/api/')) return await api(req, res, url); serveStatic(req, res, url); }
-  catch (e) { console.error(e); json(res, e.status ?? 500, { error: String(e.message).slice(0, 200) }); }
+  try {
+    // Render and other hosts probe this. No secrets, no chain calls.
+    if (url.pathname === '/healthz') { res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store', ...cors() }); return res.end('ok'); }
+    if (url.pathname.startsWith('/api/')) return await api(req, res, url);
+    serveStatic(req, res, url);
+  } catch (e) { console.error(e); json(res, e.status ?? 500, { error: String(e.message).slice(0, 200) }); }
 }).listen(PORT, HOST, () => console.log(`feral keeper on http://${HOST}:${PORT} · arena ${near.CONTRACT} · models ${model?.url ?? 'none (fixed policy)'}`));

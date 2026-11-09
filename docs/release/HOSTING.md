@@ -1,49 +1,50 @@
-# Hosting plan (draft, nothing signed up, pushed or deployed)
+# Hosting plan
 
-With NEAR AI Cloud answering for the creatures, the keeper no longer needs the 4 GB local model. It is a small Node server (about 100 MB of memory) that needs one secret, the keeper function call key, plus the NEAR AI key.
+Page on GitHub Pages. Keeper on a Render free web service. No card. David signs into Render with GitHub himself; the Blueprint and secrets list below are ready for the dashboard afterwards.
 
 Checked on 9 Nov 2026. Free tiers change often, so check again before signing up.
 
-## Recommended free set, no card
+## Live set
 
-1. Page on GitHub Pages from the DavisBrains/feral repo. No new account, free for a public repo. Needs the repo to be public, which David must approve.
-   Or Cloudflare Pages. Free, no card, needs a Cloudflare account that David creates.
-2. Keeper on a Render free web service. Free, no card, needs a Render account that David creates and links to GitHub.
-3. Stopgap while the above is not ready, a Cloudflare quick tunnel from this box. No account at all.
+1. Page: GitHub Pages from `DavisBrains/feral`, source = GitHub Actions (`.github/workflows/pages.yml`). Public URL: `https://davisbrains.github.io/feral/`.
+2. Keeper: Render free web service from Blueprint `render.yaml` at the repo root (rootDir `keeper`, plan free).
+3. Model order on Render: NEAR AI Cloud if `NEAR_AI_KEY` is set, otherwise the labelled fixed policy. Local Qwen stays off unless `FERAL_LOCAL_MODEL` is set (it needs about 4 GB and will not fit on 512 MB).
 
 ### Render free, the honest tradeoffs
-- It sleeps after 15 minutes with no visitors and takes about a minute to wake. The page shows Reading the chain meanwhile.
+- It sleeps after 15 minutes with no visitors and takes about a minute to wake. The page shows **Waking the terrarium**, then falls back to the recorded proof run if it never answers.
 - Its disk is wiped on every restart, deploy or sleep. The chain keeps every balance, job and creature, so play carries on, but the page's turn log, the model reasons and new card files from before the restart are lost. The NEAR AI no credit wait also resets, so after a restart the keeper makes one call to learn it again.
 - 750 free hours a month, enough for one service running all month.
 - Render may restart a free service at any time.
-- Fix later if needed by saving the journal to a free Postgres (expires after 30 days on Render) or rebuilding the log from chain receipts.
 
-### Cloudflare quick tunnel, the honest tradeoffs
-- `cloudflared tunnel --url http://127.0.0.1:8787` gives a random trycloudflare.com address in seconds with no account.
-- It only works while this box and the keeper are running, and the address changes each time it starts.
-- Cloudflare says quick tunnels are for testing. There is no uptime promise.
-- It serves the page and the keeper together from the box, so nothing else needs hosting.
+## Secret env vars for the keeper (Render dashboard, sync: false)
 
-### Not free for a new account any more
-- Koyeb closed its free plan to new sign ups in 2026 and needs a card.
-- Fly.io and Railway need a card.
+| Name | Required | What it is | Where the value lives on this box (path only) | How the keeper loads it |
+| --- | --- | --- | --- | --- |
+| `FERAL_KEEPER_KEY` | yes | Private key of the **function-call** access key for `keeper.feral-039832.testnet` (limited to arena game methods). Never a full-access key. | `/home/box/.feral-keeper/fc-key.json` field `private_key` | `near.mjs` `loadKey()` reads `process.env.FERAL_KEEPER_KEY`, else `FERAL_KEEPER_KEY_FILE` (default `~/.feral-keeper/fc-key.json`) |
+| `NEAR_AI_KEY` | no | NEAR AI Cloud API key. Without it (or with no credits) the page labels **Fixed policy**. | `/home/box/.secrets/near-ai.env` name `NEAR_AI_KEY` | `server.mjs` calls `loadEnvFile` for that path on this box; on Render set the env var directly |
 
-## Settings for the keeper on any host
-- `FERAL_KEEPER_KEY` the keeper function call key, set as a secret.
-- `NEAR_AI_KEY` the NEAR AI Cloud key, set as a secret. On this box it is read from /home/box/.secrets/near-ai.env and never logged.
-- `NEAR_AI_MODEL` optional, defaults to Qwen/Qwen3-VL-30B-A3B-Instruct.
-- `FERAL_MODEL_URL=` empty on a small host so the keeper skips the local model and falls straight to the fixed policy if NEAR AI cannot answer.
-- `FERAL_ALLOW_ORIGIN` the page address, when the page is hosted apart from the keeper.
-- `FERAL_TRUST_PROXY=1` so rate limits see the visitor address behind the host's proxy.
-- `HOST=0.0.0.0` and `PORT` from the host.
+Do **not** upload `/home/box/.near-credentials/testnet/keeper.feral-039832.testnet.json`. That file is a full-access credential and must never go on Render.
 
-Build the page with `VITE_KEEPER_URL=https://<keeper address> npm run build` and publish `app/dist`.
+## Non-secret env (already in `render.yaml`)
 
-## Steps once David approves each one
-1. Make the repo public, or create the Cloudflare account.
-2. Create the Render account and the web service from the repo, root `keeper`, start `node server.mjs`, then add the secrets.
-3. Check `/api/state` answers and shows the model route.
-4. Build and publish the page pointing at the keeper.
-5. Play one visitor turn from the public address and record the hashes.
+- `HOST=0.0.0.0`
+- `PORT` from Render
+- `FERAL_ALLOW_ORIGIN=https://davisbrains.github.io`
+- `FERAL_TRUST_PROXY=1`
+- `FERAL_TRANSLATION_DEMAND=1`
+- Leave `FERAL_LOCAL_MODEL` unset on Render
 
-The quick tunnel can be started from this box at any time David says so.
+## GitHub Pages build
+
+- Workflow builds with `VITE_BASE=/feral/` and `VITE_KEEPER_URL` from the repo variable `FERAL_KEEPER_URL`.
+- Until that variable is set to the Render URL, live mode shows that the keeper is not linked and the recorded proof run still works.
+- After Render gives a URL like `https://feral-keeper.onrender.com`, set repo variable `FERAL_KEEPER_URL` to that origin (no trailing slash) and re-run the Pages workflow.
+
+## Steps for David and the dashboard
+
+1. David signs into Render with GitHub (no card).
+2. New Blueprint from `DavisBrains/feral`, path `render.yaml` (or New Web Service, root `keeper`, build `npm install --omit=dev`, start `node server.mjs`, plan free).
+3. Paste `FERAL_KEEPER_KEY` (and optional `NEAR_AI_KEY`) in the Render env UI.
+4. Confirm `https://<service>.onrender.com/healthz` returns `ok` and `/api/state` shows the model route.
+5. Set GitHub repo variable `FERAL_KEEPER_URL` to that origin and wait for Pages to redeploy.
+6. Open `https://davisbrains.github.io/feral/` and play one visitor turn from the public address.

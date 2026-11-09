@@ -1,0 +1,26 @@
+# Feral keeper on Render free (no card). David creates the Render account
+# and links GitHub; Blueprint path is render.yaml at the repo root.
+# Secrets with sync: false are entered in the Render dashboard (never committed).
+services:
+  - type: web
+    name: feral-keeper
+    runtime: node
+    plan: free
+    rootDir: keeper
+    buildCommand: npm install --omit=dev
+    startCommand: node server.mjs
+    healthCheckPath: /healthz
+    envVars:
+      - key: HOST
+        value: "0.0.0.0"
+      - key: FERAL_ALLOW_ORIGIN
+        value: https://davisbrains.github.io
+      - key: FERAL_TRUST_PROXY
+        value: "1"
+      - key: FERAL_TRANSLATION_DEMAND
+        value: "1"
+      # Local Qwen stays off on the 512MB free instance. Leave FERAL_LOCAL_MODEL unset.
+      - key: FERAL_KEEPER_KEY
+        sync: false
+      - key: NEAR_AI_KEY
+        sync: false

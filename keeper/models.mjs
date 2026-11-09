@@ -11,6 +11,11 @@ export const NEAR_AI_BASE = 'https://cloud-api.near.ai/v1';
 // Open weights, hosted by NEAR AI itself, structured outputs, no reasoning tokens, $0.15 in / $0.55 out per million tokens.
 export const NEAR_AI_DEFAULT_MODEL = 'Qwen/Qwen3-VL-30B-A3B-Instruct';
 
+/** Local Qwen only when FERAL_LOCAL_MODEL is set. Off by default for 512 MB hosts. */
+export function localModelEnabled(env = process.env) {
+  return /^(1|true|yes)$/i.test(String(env.FERAL_LOCAL_MODEL || ''));
+}
+
 /** Load KEY=VALUE lines into env without overriding what is already set. Returns the names loaded, never values. */
 export function loadEnvFile(file, env = process.env) {
   if (!file || !existsSync(file)) return [];

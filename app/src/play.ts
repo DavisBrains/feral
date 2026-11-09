@@ -25,6 +25,10 @@ const put = (el: HTMLElement | null, html: string) => { if (el && (el as any)._h
 export function startPlay(host: PlayHost, api: string) {
   const vid = visitorId();
   let st: any = null, prev: LiveSnap | null = null, idx = 0, pending: string | null = null, timer: any, err: string | null = null, limitedUntil = 0;
+  // Render free sleeps after ~15 min idle and takes about a minute to wake. Keep
+  // retrying with a friendly message, then fall back to the recorded replay.
+  let wakeStarted = 0, wakeFails = 0;
+  const WAKE_MS = 90_000;
   const ui = { feedPick: '', sponsorPick: '', sponsorAmt: 20, demandPick: -1, jobLine: 0, jobReward: 60, jobTurns: 2, goalPick: '', goal: 0, sheet: '' as Sheet };
   const modeEl = document.getElementById('pl-mode')!;
   const banner = document.createElement('div'); banner.id = 'pl-banner'; banner.className = 'pl-banner';
@@ -34,9 +38,16 @@ export function startPlay(host: PlayHost, api: string) {
   scrim.addEventListener('click', () => { ui.sheet = ''; render(); });
 
   async function get() {
-    const r = await fetch(api + '/api/state', { headers: { 'x-feral-visitor': vid }, cache: 'no-store' });
-    if (!r.ok) throw new Error('keeper ' + r.status);
-    return r.json();
+    if (!api) throw new Error('keeper url missing');
+    const ctrl = new AbortController();
+    // Cold starts on Render free can hold the first request for about a minute.
+    const wait = wakeStarted && !st ? WAKE_MS : 20_000;
+    const to = setTimeout(() => ctrl.abort(), wait);
+    try {
+      const r = await fetch(api + '/api/state', { headers: { 'x-feral-visitor': vid }, cache: 'no-store', signal: ctrl.signal });
+      if (!r.ok) throw new Error('keeper ' + r.status);
+      return r.json();
+    } finally { clearTimeout(to); }
   }
   async function post(path: string, body: any, label: string) {
     pending = label; render();
@@ -72,7 +83,7 @@ export function startPlay(host: PlayHost, api: string) {
     clearTimeout(timer);
     if (host.mode() === 'live' && (force || !document.hidden)) {
       try {
-        const next = await get(); err = null;
+        const next = await get(); err = null; wakeStarted = 0; wakeFails = 0;
         const snap: LiveSnap = next.chain;
         const changed = !st || JSON.stringify(st.chain.lives) !== JSON.stringify(snap.lives) || JSON.stringify(st.chain.season) !== JSON.stringify(snap.season);
         const logChanged = !st || st.log.length !== next.log.length;
@@ -82,9 +93,14 @@ export function startPlay(host: PlayHost, api: string) {
         if (changed) { const sc = liveScene(prev, snap, ++idx); host.show(sc, !!prev); prev = snap; }
         else if (logChanged) host.relabel();
         render();
-      } catch (e) { err = String((e as Error).message); render(); }
+      } catch (e) {
+        err = String((e as Error).message);
+        if (!st) { if (!wakeStarted) wakeStarted = Date.now(); wakeFails += 1; }
+        render();
+      }
     }
-    timer = setTimeout(poll, st?.busy || pending ? 1200 : 3000);
+    const waking = !!api && !!wakeStarted && !st && (Date.now() - wakeStarted < WAKE_MS);
+    timer = setTimeout(poll, st?.busy || pending ? 1200 : waking ? 2000 : 3000);
   }
 
   // ---------- data helpers ----------
@@ -125,7 +141,18 @@ export function startPlay(host: PlayHost, api: string) {
     document.body.classList.toggle('sheet-open', live && !!ui.sheet);
     if (!live) { put(banner, `<div class="f-banner">${ico('replay')}<span><b>Recorded proof run.</b> <span class="long">A replay of the real run from 9 Nov. Nothing new is sent.</span><span class="short">A replay of the real run. Nothing new is sent.</span></span></div>`); renderSeasonIdle(); return; }
     const hero = document.getElementById('hero-side'), body = document.getElementById('season-body'), lede = document.getElementById('season-lede');
-    if (err && !st) { put(banner, ''); put(hero, `<div class="f-panel f-empty err"><img src="${rootCorner}" alt=""><b>The keeper went quiet</b><span>Live play needs the keeper service. The recorded proof run still works.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`); put(body, ''); dock(null); return; }
+    if (err && !st) {
+      put(banner, '');
+      const waking = !!api && wakeStarted && (Date.now() - wakeStarted < WAKE_MS);
+      if (!api) {
+        put(hero, `<div class="f-panel f-empty"><img src="${rootCorner}" alt=""><b>Live keeper not linked yet</b><span>This build has no keeper address, so only the recorded proof run is available.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
+      } else if (waking) {
+        put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Waking the terrarium</b><span>The free keeper sleeps when quiet and takes about a minute to wake. Hang on, or watch the recorded proof run.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
+      } else {
+        put(hero, `<div class="f-panel f-empty err"><img src="${rootCorner}" alt=""><b>The keeper went quiet</b><span>Live play needs the keeper service. The recorded proof run still works.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
+      }
+      put(body, ''); dock(null); return;
+    }
     if (!st) { put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Reading the chain</b><span>Asking the arena contract for this season.</span></div>`); return; }
     const s = st.chain.season, m = st.model;
     const near = (m.providers ?? []).find((p: any) => p.provider === 'near-ai');
