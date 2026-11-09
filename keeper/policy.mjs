@@ -8,7 +8,7 @@ export const CHANGES = ['price down', 'price up', 'breeding floor down', 'breedi
 export const GOALS = ['work', 'save', 'breed'];
 export const UPKEEP = 10, CHILD_MUNCH = 60, PARENT_FLOOR = 20, MAX_LIVES = 7;
 
-// mirrors Genome::can_take in arena/src/lib.rs (translators take plain translation jobs after the pending arena upgrade)
+// mirrors Genome::can_take in arena/src/lib.rs (translators take plain translation jobs)
 export const canTake = (g, kind) => g.job === 0 ? kind === 0 : g.job === 1 ? kind <= 1 : kind === 2;
 export function mutate(g, change) {
   const c = { ...g };

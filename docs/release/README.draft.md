@@ -110,7 +110,6 @@ node scripts/attack.mjs     # NEAR testnet attacks, results in evidence/attacks.
 
 ## Known limits
 
-- The Plain translation notice is shown but switched off. It needs an arena upgrade that is built and tested in `arena/pending` and has not been deployed.
 - Feeding is always one meal of 10 MUNCH, and sponsorship goes to one creature at a time.
 - The recorded proof run has no model reasons saved, so its notes show what each creature saw.
 

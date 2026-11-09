@@ -12,5 +12,6 @@
 - Tests: app 30 pass, keeper 9 pass, arena cargo 30 pass. Offline file 1.13 MB gzip (budget 1.2 MB), habitat art re-encoded for the offline file only.
 - NEAR AI Cloud adapter (keeper/models.mjs). Order NEAR AI Cloud (Qwen/Qwen3-VL-30B-A3B-Instruct), local Qwen fallback, fixed policy. One probe call returned 402 no_limit_configured. Billing, auth and rate errors open a breaker that is saved to keeper/data, so no repeat calls until the wait ends. Key read from env or /home/box/.secrets/near-ai.env, never logged or committed.
 - Season 2 turn 3 answered by the local fallback with NEAR AI skipped for no credits, no NEAR AI call made. post_job H7rHsJ7E…, bid CRYmiu9H…, award 28Fi9eJR…, buy_translation mebytnvN…, settle CNf6QhD1…, tick FnRpdrNz….
-- Plain translation demand. Arena change and tests done (33 cargo tests), wasm built to arena/pending (sha256 522b7d1d…). Deploy was blocked pending David's approval, so the option shows switched off until FERAL_TRANSLATION_DEMAND=1.
+- Plain translation demand. Arena upgrade deployed to play.feral-039832.testnet (tx 88hZidL37ouSca9LcovKmqJScgSFitf5MBdfGRwMEypd, code hash 6XktndWUZjt2LgXzc4vcFFH1FL6HZykWY7Ys5cQQJycP, sha256 522b7d1d…). Keeper defaults FERAL_TRANSLATION_DEMAND on.
+- Plain translation pinned on season 2 (set_demand kind 2, tx EcoJSvAtFt17MHnNSzVih5tkfGccNd52NNhu2vjcTBe8, demand_version 3). Live turn skipped so Ash stays at 10 MUNCH for the video death take.
 - README merged into docs/release/README.draft.md with a phone PDF, LICENSE MIT added, HOSTING.md rewritten for free no card hosting.

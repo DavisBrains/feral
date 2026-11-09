@@ -27,8 +27,8 @@ const model = modelChain([
   process.env.FERAL_NEAR_AI === '0' ? null : nearAiAdapter({ key: process.env.NEAR_AI_KEY, model: process.env.NEAR_AI_MODEL || undefined, state: jsonState(path.join(DATA, 'near-ai-state.json')) }),
   process.env.FERAL_MODEL_URL === '' ? null : localAdapter(process.env.FERAL_MODEL_URL ?? 'http://127.0.0.1:11436'),
 ]);
-// Plain translation demand needs the arena upgrade in arena/pending. Off until it is deployed.
-const TRANSLATION_DEMAND = process.env.FERAL_TRANSLATION_DEMAND === '1';
+// Plain translation demand is on by default after the arena upgrade. Set FERAL_TRANSLATION_DEMAND=0 to hide it.
+const TRANSLATION_DEMAND = process.env.FERAL_TRANSLATION_DEMAND !== '0';
 const engine = new Engine({ dataDir: DATA, model, translationDemand: TRANSLATION_DEMAND });
 const sha = s => createHash('sha256').update(s).digest('hex');
 
