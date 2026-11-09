@@ -281,7 +281,9 @@ Desktop order (1440, 72 margins). Top bar (wordmark, mode switch centred, status
 
 Mobile (390). Top bar plus full width mode switch · hero 40 (v2 at 34 to hold two lines) · stage 358 × 492 with compact labels · bid notes in a horizontal strip · season goal · pouch · demand notice · turn log · proof run (compact playback, ledger at 64 px seals, card) · footer · fixed dock with the Advance wax press.
 
-Hero headline variants, rendered at the fold.
-1. `They work to eat.` / *`They pay to be born.`* (default in the full pages)
-2. `Feed them work` / *`or watch them turn to stone.`*
-3. `Small lives` / *`with real bills.`*
+Hero headline. **Chosen default is headline 2** (picked by David on 9 Nov).
+- **Default** `Feed them work` / *`or watch them turn to stone.`* Desktop sets it on two lines at 76. Mobile sets it on three deliberate lines at 40 (`Feed them work` / *`or watch them`* / *`turn to stone.`*) so no single word is left alone. Lede for this headline avoids repeating "stone". Desktop `Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. They take jobs to stay fed and pay for their children to be born. A creature that runs dry never comes back.` Mobile `Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. A creature that runs dry never comes back.`
+- Alternate 1 `They work to eat.` / *`They pay to be born.`*
+- Alternate 3 `Small lives` / *`with real bills.`*
+
+Default source `html/page-desktop-v2.html` and `html/page-mobile-v2.html` render `mockups/page-desktop-1440.png` and `mockups/page-mobile-390.png`. Alternates stay in `page-*-v1.html` and `page-*-v3.html` with their folds `mockups/hero-variant-{1,3}-*.png`. Earlier headline 1 full pages are archived in `mockups/_headline1/`; the first headline 2 fold drafts (three line mobile wrap, repeated lede) are archived in `mockups/_headline2_fold_draft/`.

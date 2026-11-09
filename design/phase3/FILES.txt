@@ -5,6 +5,7 @@
 /workspace/near/feral/design/phase3/_build/build_page.py
 /workspace/near/feral/design/phase3/_build/build_sheet.py
 /workspace/near/feral/design/phase3/_build/cards.mjs
+/workspace/near/feral/design/phase3/_build/full.mjs
 /workspace/near/feral/design/phase3/_build/icons.py
 /workspace/near/feral/design/phase3/_build/ink_ornaments_src.jpg
 /workspace/near/feral/design/phase3/_build/package.json
@@ -12,6 +13,7 @@
 /workspace/near/feral/design/phase3/_build/process.py
 /workspace/near/feral/design/phase3/_build/sheet.css
 /workspace/near/feral/design/phase3/_build/shot.mjs
+/workspace/near/feral/design/phase3/_build/v2.mjs
 /workspace/near/feral/design/phase3/_build/wax_seal_src.jpg
 /workspace/near/feral/design/phase3/assets/fonts/OFL-LICENSES.txt
 /workspace/near/feral/design/phase3/assets/fonts/fraunces-opsz-wght-latin-italic.woff2
@@ -128,6 +130,12 @@
 /workspace/near/feral/design/phase3/html/page-mobile-v3.html
 /workspace/near/feral/design/phase3/html/page.css
 /workspace/near/feral/design/phase3/html/tokens.css
+/workspace/near/feral/design/phase3/mockups/_headline1/page-desktop-1440.png
+/workspace/near/feral/design/phase3/mockups/_headline1/page-mobile-390.png
+/workspace/near/feral/design/phase3/mockups/_headline2_fold_draft/hero-variant-2-desktop.png
+/workspace/near/feral/design/phase3/mockups/_headline2_fold_draft/hero-variant-2-mobile.png
+/workspace/near/feral/design/phase3/mockups/_headline2_fold_draft/page-desktop-v2.html
+/workspace/near/feral/design/phase3/mockups/_headline2_fold_draft/page-mobile-v2.html
 /workspace/near/feral/design/phase3/mockups/hero-variant-1-desktop.png
 /workspace/near/feral/design/phase3/mockups/hero-variant-1-mobile.png
 /workspace/near/feral/design/phase3/mockups/hero-variant-2-desktop.png

@@ -6,8 +6,8 @@ for (const v of [1,2,3]) {
   jobs.push([`html/page-desktop-v${v}.html`,1440,900,`mockups/hero-variant-${v}-desktop.png`,false]);
   jobs.push([`html/page-mobile-v${v}.html`,390,844,`mockups/hero-variant-${v}-mobile.png`,false]);
 }
-jobs.push(['html/page-desktop-v1.html',1440,900,'mockups/page-desktop-1440.png',true]);
-jobs.push(['html/page-mobile-v1.html',390,844,'mockups/page-mobile-390.png',true]);
+jobs.push(['html/page-desktop-v2.html',1440,900,'mockups/page-desktop-1440.png',true]);
+jobs.push(['html/page-mobile-v2.html',390,844,'mockups/page-mobile-390.png',true]);
 for (const [f,w,h,out,full] of jobs) {
   const p = await b.newPage({ viewport:{width:w,height:h}, deviceScaleFactor: w<500?2:1 });
   const errs=[]; p.on('requestfailed', r=>errs.push(r.url()));

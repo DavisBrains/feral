@@ -7,6 +7,8 @@ exec(src)
 CARDPNG='../card/card-bilingual-real.png'
 HEADS={1:('They work to eat.','They pay to be born.'),2:('Feed them work','or watch them turn to stone.'),3:('Small lives','with real bills.')}
 SUB='Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. They take jobs to stay fed, pay for their children to be born, and when one runs dry it turns to stone for good.'
+SUB2='Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. They take jobs to stay fed and pay for their children to be born. A creature that runs dry never comes back.'
+MLEDE2='Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. A creature that runs dry never comes back.'
 def head_html(v,mobile=False):
     a,b=HEADS[v]
     return f'<h1 class="disp hero-h">{a}<br><em class="ital">{b}</em></h1>'
@@ -22,7 +24,7 @@ def desktop(v):
     goal=f'''<div class="f-panel f-goal hero-goal"><span class="caps" style="color:var(--bone-2)">{ic("season","ico-s")} Season goal</span><h4>Keep two lineages alive for 8 turns</h4>{lane('Moss line','var(--moss)',2)}{lane('Echo line','var(--echo)',2)}<div class="foot"><span>Turn 2 of 8</span><span>Pouch 60 of 100</span></div>
 <hr class="f-rule"><div class="f-advance" style="gap:16px"><button class="f-press" style="width:76px;height:76px"><img src="{SEAL}seal_amber_192.png" alt=""></button><div><h4 style="font-size:22px;margin:0">Advance the turn</h4><p>Everyone alive pays 10 MUNCH. Then they bid, work and settle.</p></div></div></div>'''
     top=f'''<header class="bar"><div class="brand"><span class="word disp">Feral</span><span class="caps" style="color:var(--bone-3)">on NEAR testnet</span></div><div class="f-mode"><button aria-pressed="true"><span class="f-live"></span>Live season</button><button aria-pressed="false">{ic("replay")}Recorded proof run</button></div><div class="f-status" style="white-space:nowrap;gap:10px"><span class="f-live"></span><b>Live testnet</b><span class="sep"></span>Block <b>276,891,939</b><span class="sep"></span><b>24 of 24</b> check out</div></header>'''
-    hero=f'''<section class="hero"><div><span class="caps eyebrow">Build Beyond Boundaries</span>{head_html(v)}<p class="lede">{SUB}</p><div class="cta"><a class="f-link">{ic("replay","ico-s")}Or watch the real run, every receipt included</a></div></div>{goal}</section>'''
+    hero=f'''<section class="hero"><div><span class="caps eyebrow">Build Beyond Boundaries</span>{head_html(v)}<p class="lede">{SUB2 if v==2 else SUB}</p><div class="cta"><a class="f-link">{ic("replay","ico-s")}Or watch the real run, every receipt included</a></div></div>{goal}</section>'''
     world=f'<section class="world">{stage_n}</section>'
     adv_panel=f'<div class="f-panel"><div class="f-advance">{adv("ok")}</div></div>'
     pouch_p=f'<div class="f-panel f-pouch"><div class="row"><span class="caps" style="color:var(--bone-2)">Your MUNCH pouch</span><span class="amt"><b>60</b> of 100</span></div><div class="f-coins">{coins(6,4)}</div><div class="mono" style="font-size:13px;color:var(--bone-3)">Each seed is 10 MUNCH. It lasts the whole season.</div></div>'
@@ -54,7 +56,7 @@ def desktop(v):
 def mobile(v):
     a,b=HEADS[v]
     top=f'''<div class="mtop"><div class="mrow"><span class="word disp">Feral</span><span class="f-status" style="font-size:11.5px;gap:8px"><span class="f-live"></span>Block <b>276,891,939</b><span class="sep"></span><b>24/24</b></span></div><div class="f-mode" style="display:grid;width:100%"><button aria-pressed="true" style="justify-content:center"><span class="f-live"></span>Live season</button><button aria-pressed="false" style="justify-content:center">{ic("replay","ico-s")}Recorded run</button></div></div>'''
-    hero=f'<section class="mhero"><span class="caps eyebrow">Build Beyond Boundaries</span><h1 class="disp hero-h" style="{'font-size:34px' if v==2 else ''}">{a}<br><em class="ital">{b}</em></h1><p class="lede">Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. Run dry and they turn to stone for good.</p></section>'
+    hero=f'<section class="mhero"><span class="caps eyebrow">Build Beyond Boundaries</span><h1 class="disp hero-h">{a}<br><em class="ital">{'or watch them<br>turn to stone.' if v==2 else b}</em></h1><p class="lede">{MLEDE2 if v==2 else 'Four small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. Run dry and they turn to stone for good.'}</p></section>'
     world=f'<div style="padding:0 16px">{mstage()}</div>'
     notes_m=f'<div class="mnotes">{note("Moss","var(--moss)","Bid 90 on the card job","I can pay Echo 30 for the Spanish and still eat well.","parent-bid","-.8deg","min-width:260px")}{note("Pip","var(--pip)","Bid 80 on the child job","Ten under my parent. I am small and cheap to feed.","child-first-bid",".6deg","min-width:260px")}</div>'
     goal=f'''<div class="f-panel f-goal mpad"><span class="caps" style="color:var(--bone-2)">{ic("season","ico-s")} Season goal · turn 2 of 8</span><h4 style="font-size:22px">Keep two lineages alive for 8 turns</h4>{lane('Moss line','var(--moss)',2)}{lane('Echo line','var(--echo)',2)}<div class="foot"><span>Pouch 60 of 100</span><span>2 lines alive</span></div></div>'''
