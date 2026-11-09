@@ -4,7 +4,7 @@
  * Phone-friendly page (≈120×210 mm) via headless Chrome / Playwright CDP.
  * Matches the prior preview: Tinos body, DejaVu Sans Mono code, "N / M" footer.
  *
- * Chrome's print path on this box maps CSS px → PDF pts at ~0.5, so body type
+ * printToPDF runs at scale 0.6 (Chrome used to shrink wide pages to fit), so body type
  * is authored at 24px / 37.5px leading to land near the prior 13.3pt / 18.75pt look.
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -278,7 +278,7 @@ try {
     landscape: false,
     displayHeaderFooter: true,
     printBackground: true,
-    scale: 1,
+    scale: 0.6,
     paperWidth: 4.7367,
     paperHeight: 8.2767,
     marginTop: 0.53,

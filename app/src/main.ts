@@ -12,7 +12,8 @@ import { loadAtlas } from './atlas';
 import { World, LAYOUTS, SCALE, type LayoutName } from './world';
 import { createPixi, createCanvas2D, type Renderer } from './render';
 import { readChain, txVerdict, reconciles, type ChainState } from './chain';
-import { esc, ico, short, cap, nf, txLink, acctLink, moodWord, SEAL, COLOR, PORTRAIT, COIN } from './ui';
+import { esc, ico, short, cap, nf, txLink, acctLink, moodWord, tip, installTips, SEAL, COLOR, PORTRAIT, COIN } from './ui';
+installTips();
 import { placeLabels, type Box, type Slot } from './labels';
 
 declare const __OFFLINE__: boolean;
@@ -57,7 +58,7 @@ document.body.classList.add('page');
 const app = $('#app');
 app.innerHTML = `
 <header class="bar"><div class="brand"><span class="word disp">Feral</span><span class="caps tag">on NEAR testnet</span></div><div class="modeslot" id="pl-mode">${OFFLINE ? '' : ''}</div><div class="f-status" id="source" aria-live="polite"></div></header>
-<section class="hero"><div class="hero-copy"><span class="caps eyebrow">Build Beyond Boundaries</span><h1 class="disp hero-h">Feed them work<br><em class="ital">or watch them turn to stone.</em></h1><p class="lede"><span class="long">Small creatures live on NEAR testnet. Each turn costs them 10 MUNCH. They take jobs to stay fed and pay for their children to be born. A creature that runs dry never comes back.</span><span class="short">Each turn costs them 10 MUNCH. A creature that runs dry never comes back.</span></p><div class="cta"><a class="f-link" href="#proof">${ico('replay', 'ico-s')}Or watch the real run, every receipt included</a></div></div><div class="hero-side" id="hero-side"></div></section>
+<section class="hero"><div class="hero-copy"><span class="caps eyebrow">Build Beyond Boundaries</span><h1 class="disp hero-h">Feed them work<br><em class="ital">or watch them ${tip('turn to stone', 'stone', true)}.</em></h1><p class="lede"><span class="long">Small creatures live on NEAR testnet. Each turn costs them 10 ${tip('MUNCH', 'munch')}. They take jobs to stay fed and pay for their children to be born. A creature that runs dry never comes back.</span><span class="short">Each turn costs them 10 ${tip('MUNCH', 'munch')}. A creature that runs dry never comes back.</span></p><div class="cta"><a class="f-link" href="#proof">${ico('replay', 'ico-s')}Or watch the real run, every receipt included</a></div></div><div class="hero-side" id="hero-side"></div></section>
 <section class="world"><div class="f-stage" id="stage"><canvas id="world" aria-hidden="true"></canvas><svg class="f-leaders" id="leaders" aria-hidden="true"></svg><div class="labels" id="labels"></div><div class="stage-notes" id="stage-notes" aria-live="polite"></div><div class="flowtag" id="flowtag" aria-hidden="true"></div><div class="loading" id="loading">Loading the habitat</div></div>
  <div class="f-panel drawer" id="drawer" hidden></div><div class="mnotes" id="mnotes"></div></section>
 <section class="block season" id="season"><header class="bh"><span class="caps">Your season</span><h2 class="disp">Keep them fed</h2><p id="season-lede">Start a live season to play. Every move is a NEAR testnet transaction.</p></header><div id="season-body"></div></section>

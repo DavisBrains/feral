@@ -216,3 +216,11 @@ button{font:inherit}
   .logp .f-log li:nth-child(n+7){display:none}
 }
 .bar .f-status{flex-wrap:nowrap;gap:8px;font-size:12.5px}
+
+/* plain word tooltips */
+.f-term{text-decoration:underline dotted;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 55%,transparent);cursor:help;border-radius:2px}
+.f-term.is-quiet{text-decoration-color:transparent}
+.f-term.is-quiet:hover,.f-term.is-quiet:focus-visible{text-decoration-color:color-mix(in srgb,currentColor 55%,transparent)}
+.f-term:focus-visible{outline:2px solid var(--cream);outline-offset:2px}
+.f-tipbox{position:fixed;z-index:80;max-width:280px;padding:10px 13px;background:var(--vellum,#E9E4D2) var(--tex-paper,none);color:var(--ink,#162018);font:400 14px/1.45 var(--f-text);letter-spacing:0;text-transform:none;border-radius:4px;box-shadow:0 2px 0 rgba(0,0,0,.25),0 14px 28px -8px rgba(0,0,0,.7);pointer-events:none}
+.f-tipbox[hidden]{display:none}

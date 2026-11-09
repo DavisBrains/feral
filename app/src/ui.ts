@@ -43,3 +43,53 @@ export function lane(name: string, color: string, held: number, total: number, a
   const stone = alive ? '' : `<g transform="translate(${Math.max(0, pts * step - 11).toFixed(1)},3)"><circle cx="11" cy="11" r="12" fill="var(--forest)" stroke="var(--fossil)"/><use href="#i-fossil" x="2" y="2" width="18" height="18" stroke="#C3C6BB" fill="none"/></g>`;
   return `<div class="f-lane" style="--c:${color}"><span class="who"><i></i>${esc(name)} line</span><svg viewBox="-4 -4 208 36" aria-hidden="true"><path class="vine" d="${vine}"/><path class="rest" d="M${(pts * step).toFixed(1)},14 L${W},14"/>${leaves}${nodes}${stone}</svg><span class="st">${alive ? `${held} of ${total}` : `ended t${endedTurn}`}</span></div>`;
 }
+
+// Plain words for the jargon. Shown in one tooltip box on hover, focus or tap (see installTips).
+export const TIPS: Record<string, string> = {
+  munch: 'MUNCH is the play coin of Feral. It has no real value. Creatures spend it to stay alive.',
+  upkeep: 'Upkeep is the 10 MUNCH every living creature pays each turn. It is burned, so it is gone for good.',
+  pouch: 'Your pouch is the MUNCH you get for one season. You spend it on meals, sponsors and jobs.',
+  bid: 'A bid is the price a creature asks to do a job. The lowest fair bid wins the work.',
+  settle: 'Settling is when the contract pays for finished work and charges upkeep, all on chain.',
+  demand: 'The market pays for one kind of work each turn. Pinning a new notice changes what the creatures chase.',
+  sponsor: 'Sponsoring gives a creature extra MUNCH from your pouch. Only the holder of its life NFT may do it.',
+  lineage: 'A lineage is one family line, a founder plus every child born from it.',
+  goal: 'Keep two family lines alive until the last turn of the season to win.',
+  fixed: 'No AI model is running here, so each creature follows its written rules. Every note says so.',
+  qwen: 'A small open AI model on the keeper picks each move from the moves the contract allows.',
+  nearai: 'An AI model on NEAR AI Cloud picks each move from the moves the contract allows.',
+  proof: 'A replay of a real run that already happened on NEAR testnet. Nothing new is sent.',
+  stone: 'A creature that cannot pay upkeep dies and becomes a fossil. The contract refuses anything it tries after that.',
+};
+/** Wrap a jargon word so it explains itself. `html` is trusted markup. */
+export const tip = (html: string, key: keyof typeof TIPS | string, quiet = false) =>
+  `<span class="f-term${quiet ? ' is-quiet' : ''}" tabindex="0" role="button" aria-describedby="tipdef-${key}" data-tip="${key}">${html}</span>`;
+export function installTips() {
+  if (document.getElementById('f-tipbox')) return;
+  const defs = document.createElement('div'); defs.hidden = true;
+  defs.innerHTML = Object.entries(TIPS).map(([k, t]) => `<span id="tipdef-${k}">${esc(t)}</span>`).join('');
+  const box = document.createElement('div'); box.id = 'f-tipbox'; box.className = 'f-tipbox'; box.setAttribute('role', 'tooltip'); box.hidden = true;
+  document.body.append(defs, box);
+  let cur: HTMLElement | null = null, pinned = false;
+  const show = (el: HTMLElement) => {
+    cur = el; box.textContent = TIPS[el.dataset.tip!] ?? ''; box.hidden = false;
+    const r = el.getBoundingClientRect(), bw = box.offsetWidth, bh = box.offsetHeight, m = 12;
+    const x = Math.max(m, Math.min(innerWidth - bw - m, r.left + r.width / 2 - bw / 2));
+    const above = r.top - bh - 10 > m;
+    box.style.left = x + 'px'; box.style.top = (above ? r.top - bh - 10 : r.bottom + 10) + 'px';
+    box.dataset.side = above ? 'top' : 'bottom';
+  };
+  const hide = () => { cur = null; pinned = false; box.hidden = true; };
+  const termOf = (t: EventTarget | null) => (t as HTMLElement | null)?.closest?.('.f-term') as HTMLElement | null;
+  document.addEventListener('mouseover', e => { const el = termOf(e.target); if (el && !pinned) show(el); });
+  document.addEventListener('mouseout', e => { const el = termOf(e.target); if (el && !pinned && !el.contains(e.relatedTarget as Node)) hide(); });
+  document.addEventListener('focusin', e => { const el = termOf(e.target); if (el) show(el); });
+  document.addEventListener('focusout', e => { if (termOf(e.target) && !pinned) hide(); });
+  document.addEventListener('click', e => {
+    const el = termOf(e.target);
+    if (el) { e.stopPropagation(); if (cur === el && pinned) hide(); else { show(el); pinned = true; } return; }
+    if (pinned) hide();
+  }, true);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(); else if ((e.key === 'Enter' || e.key === ' ') && termOf(e.target)) { e.preventDefault(); show(termOf(e.target)!); pinned = true; } });
+  addEventListener('scroll', () => { if (cur && !pinned) hide(); else if (cur) show(cur); }, { passive: true });
+}
