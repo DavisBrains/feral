@@ -114,11 +114,9 @@ node scripts/attack.mjs     # NEAR testnet attacks, results in evidence/attacks.
 - Feeding is always one meal of 10 MUNCH, and sponsorship goes to one creature at a time.
 - The recorded proof run has no model reasons saved, so its notes show what each creature saw.
 
-## How this was built
+## Credits
 
 Everything in this repository was made during NEAR HACKATHON. The first commit is from 7 November 2026.
-
-AI did most of the hands on work, directed and reviewed by David. AI coding agents wrote the contracts, keeper, page, tests and docs. The creature, habitat and interface art was generated with image models and then cleaned up and processed locally. Creature decisions and Spanish lines come from the language models named above.
 
 Libraries and tools used include near sdk, near contract standards, near api js, cargo near, near workspaces, PixiJS, Vite, TypeScript, esbuild, Hugging Face transformers, OpenZeppelin contracts, Foundry, fontTools and Playwright. Fonts are Fraunces, Instrument Sans and IBM Plex Mono under the SIL Open Font License.
 
