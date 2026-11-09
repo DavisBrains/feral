@@ -8,6 +8,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import * as near from './near.mjs';
 import { Engine } from './engine.mjs';
+import { you as youOf, takeOver, helmOf, isEnded } from './helm.mjs';
 import { describe, LINES, KINDS, CHANGES, GOALS } from './policy.mjs';
 import { loadEnvFile, nearAiAdapter, localAdapter, modelChain, localModelEnabled } from './models.mjs';
 
@@ -16,7 +17,6 @@ const HOST = process.env.HOST || '127.0.0.1';
 const STATIC = path.resolve(process.env.FERAL_STATIC || new URL('../app/dist', import.meta.url).pathname);
 const DATA = path.resolve(process.env.FERAL_DATA || new URL('./data', import.meta.url).pathname);
 const ORIGIN = process.env.FERAL_ALLOW_ORIGIN || '';
-const LEASE_MS = Number(process.env.FERAL_LEASE_MS || 15 * 60 * 1000);
 const SEASONS_PER_HOUR = Number(process.env.FERAL_SEASONS_PER_HOUR || 6);
 const MIN_ALLOWANCE = 20_000_000_000_000_000_000_000n; // 0.02 NEAR of gas left on the key
 // Model order: NEAR AI Cloud if a key is set, then local Qwen when
@@ -107,14 +107,11 @@ function publicLog(season) {
 }
 async function state(req) {
   const [chain, m, key] = await Promise.all([chainState(), checkModel(), keyHealth()]);
-  const s = chain.season, me = isOperator(req) && s?.pilot ? s.pilot : visitorOf(req);
-  const idle = Date.now() - engine.meta.lastActivity;
-  const pilot = !!(s && me && s.pilot === me);
-  const ended = !s || s.closed || ['won', 'lost', 'failed'].includes(s.status) || s.status.startsWith('abandoned');
+  const s = chain.season, me = isOperator(req) && s ? helmOf(engine.meta, s) : visitorOf(req);
   return {
     chain: { ...chain, lives: chain.lives.map(l => ({ ...l, plain: describe(l.life.genome) })) },
     contract: near.CONTRACT, keeper_account: near.KEEPER, explorer: near.explorerAccount(near.CONTRACT),
-    you: PAUSED ? { pilot: false, can_start: false, lease_left_ms: 0 } : { pilot, can_start: ended || pilot || idle > LEASE_MS, lease_left_ms: Math.max(0, LEASE_MS - idle) },
+    you: youOf(engine.meta, s, me, Date.now(), { paused: PAUSED }),
     paused: PAUSED, paused_note: PAUSED ? PAUSE_NOTE : null,
     busy: engine.busy, progress: engine.progress, model: m, key, translation_demand: TRANSLATION_DEMAND,
     lines: LINES, kinds: KINDS, changes: CHANGES, goals: GOALS,
@@ -135,23 +132,31 @@ async function api(req, res, url) {
   if (req.method !== 'POST') return json(res, 404, { error: 'not found' });
   if (PAUSED) return json(res, 423, { error: PAUSE_NOTE, paused: true });
   let me = visitorOf(req);
-  if (isOperator(req)) { const s = (await chainState()).season; if (s?.pilot) me = s.pilot; }
+  if (isOperator(req)) { const s = (await chainState()).season; if (s) me = helmOf(engine.meta, s); }
   if (!me) return json(res, 400, { error: 'visitor id missing' });
   if (limited('p:' + ipOf(req), 20, 6) || limited('v:' + me, 20, 6)) return json(res, 429, { error: 'Too many actions. Wait a few seconds.', retry_after_s: 20 });
   const key = await keyHealth();
   if (key.error || key.full_access || (key.allowance_left && BigInt(key.allowance_left) < MIN_ALLOWANCE)) return json(res, 503, { error: 'The keeper key is out of testnet gas allowance. The terrarium is paused.' });
   const b = await body(req);
   const chain = await chainState(); const s = chain.season;
+  if (url.pathname === '/api/takeover') {
+    if (engine.busy) return json(res, 409, { error: 'The keeper is busy. Try again in a moment.' });
+    const r = takeOver(engine.meta, s, me, Date.now());
+    if (!r.ok) return json(res, 409, { error: r.error });
+    engine.saveMeta();
+    const entry = engine.record({ season: s.id, turn: s.turn, kind: 'visitor', label: 'A new visitor took over the season', visitor: me, ok: true });
+    return json(res, 200, { entry: { ...entry, visitor: undefined } });
+  }
   if (url.pathname === '/api/season') {
-    const st = await state(req);
-    if (!st.you.can_start) return json(res, 403, { error: 'Another visitor holds this season. You can watch, or start a new one when it ends or sits idle.' });
+    const st = youOf(engine.meta, s, me, Date.now());
+    if (!st.can_start) return json(res, 403, { error: isEnded(s) ? 'You can not start a season right now.' : 'This season is still live. Take it over when it is free, or watch it end.' });
     const hourAgo = Date.now() - 3600_000; while (seasonStarts.length && seasonStarts[0] < hourAgo) seasonStarts.shift();
     if (seasonStarts.length >= SEASONS_PER_HOUR) return json(res, 429, { error: 'Season limit reached for this hour. Watch the current one.' });
     seasonStarts.push(Date.now());
     const r = await engine.startSeason(me, { target: 8, budget: 120 });
     snapCache.at = 0; return json(res, r.ok ? 200 : 502, { entry: r });
   }
-  if (!s || s.pilot !== me) return json(res, 403, { error: 'Only the visitor who started this season can act. Start your own when it ends.' });
+  if (!s || helmOf(engine.meta, s) !== me) return json(res, 403, { error: 'Only the visitor who holds this season can act. Take it over when it sits idle.' });
   if (url.pathname === '/api/turn') { const r = await engine.turn(me); snapCache.at = 0; return json(res, 200, { entry: r }); }
   if (url.pathname === '/api/action') { const r = await engine.visitor(me, b); snapCache.at = 0; return json(res, r.ok ? 200 : 422, { entry: r }); }
   return json(res, 404, { error: 'not found' });

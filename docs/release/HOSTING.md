@@ -64,3 +64,7 @@ Hugging Face Spaces was the first plan. On 9 Nov 2026 it refused to create a Doc
 ## Box operator path
 
 The box keeper can take turns for the season pilot when it gets the header `x-feral-operator` with the token from `FERAL_OPERATOR_TOKEN`. It only works for requests from 127.0.0.1 with no forwarding header, and only when the token is at least 32 characters. This was added to film Ash's last turns from a fresh headless browser. Never set `FERAL_OPERATOR_TOKEN` on Render.
+
+## Taking over an idle season
+
+The chain keeps the visitor who started a season. The keeper keeps who holds it now. When the holder has made no move for 10 minutes (`FERAL_TAKEOVER_MS`), the page tells the next visitor "This season is free. Take over and play." Pressing Take over sends no transaction. The keeper writes the new holder to its own meta file and adds a line to the turn log. A visitor can start a new season only after the current one ends, or while holding it. On Render the disk is wiped on every deploy, so after a deploy the season is free again.

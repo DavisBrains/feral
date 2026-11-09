@@ -65,6 +65,7 @@ export function startPlay(host: PlayHost, api: string) {
   const nameOf = (id: string) => cap(st?.chain?.lives?.find((l: any) => l.id === id)?.life?.name ?? id.split('.')[0].split('-').slice(1).join('-'));
   function receiptCopy(path: string, body: any, e: any): [string, string] {
     if (path === '/api/turn') { const r = e.result ?? {}; return [`Turn ${r.turn ?? ''} settled`, `${r.burned ?? '?'} MUNCH burned.${r.died?.length ? ` ${r.died.map(nameOf).join(' and ')} turned to stone.` : ' Everyone made it.'}${r.status && r.status !== 'live' ? ` Season ${r.status}.` : ''}`]; }
+    if (path === '/api/takeover') return ['The season is yours', 'Feed, post jobs and advance the turn. It stays yours while you keep playing.'];
     if (path === '/api/season') return ['Season started', 'A fresh 1,000 MUNCH seed and three founder accounts are on testnet.'];
     if (body.type === 'feed') return [`Fed ${nameOf(body.actor)} ${UPKEEP} MUNCH`, 'It went straight to their balance on chain.'];
     if (body.type === 'sponsor') return [`You back ${nameOf(body.actor)}`, `${body.amount} MUNCH moved from your pouch to their balance.`];
@@ -114,7 +115,7 @@ export function startPlay(host: PlayHost, api: string) {
   const pouch = (s: any) => ({ left: Number(s.budget_left), total: Number(s.budget) });
   const blocked = () => !!st?.paused || !!pending || !!st?.busy || Date.now() < limitedUntil;
   const locked = () => blocked() || !st?.you?.pilot;
-  const lockWord = () => st?.paused ? 'Opens soon' : !st?.you?.pilot ? 'Start your own season to act' : '';
+  const lockWord = () => st?.paused ? 'Opens soon' : !st?.you?.pilot ? (st?.you?.can_take ? 'Take over the season to act' : 'Another visitor is playing') : '';
 
   const mname = (m: any) => String(m ?? '').replace(/^.*\//, '').replace('-Instruct', '');
   // who actually answered: NEAR AI Cloud, the local Qwen fallback, or neither
@@ -167,7 +168,7 @@ export function startPlay(host: PlayHost, api: string) {
     const active = s && s.status === 'live' && !s.closed, you = st.you, pilot = you.pilot && active;
     put(lede, s ? `You get ${nf(s.budget)} MUNCH for the whole season. Spend it on meals, sponsors and jobs. Every turn each creature pays its ${tip('upkeep', 'upkeep')}. The creatures decide the rest.` : 'Start a live season to play. Every move is a NEAR testnet transaction.');
     put(hero, heroHtml(s, active, you));
-    put(body, !s ? '' : `<div class="rowA"><div class="f-panel f-goal m-goal">${goalHtml(s)}${st.paused || !pilot ? `<hr class="f-rule"><p class="m-note">${st.paused ? 'The terrarium opens soon. Feeding, jobs and turns open shortly.' : active ? 'Another visitor holds this season. You can watch every receipt.' : 'Start a new season from the dock.'}</p>` : ''}</div>${outcomeHtml(s)}${pouchHtml(s, pilot)}${receiptHtml(s)}</div>
+    put(body, !s ? '' : `<div class="rowA"><div class="f-panel f-goal m-goal">${goalHtml(s)}${st.paused || !pilot ? `<hr class="f-rule"><p class="m-note">${st.paused ? 'The terrarium opens soon. Feeding, jobs and turns open shortly.' : active ? (you.can_take ? 'This season is free. Take over and play.' : 'Another visitor holds this season. You can watch every receipt.') : 'Start a new season from the dock.'}</p>` : ''}</div>${outcomeHtml(s)}${pouchHtml(s, pilot)}${receiptHtml(s)}</div>
       <div class="rowB${pilot && !st.paused ? '' : ' is-locked'}">${demandHtml(s)}${sponsorHtml(s)}${feedHtml(s)}${jobHtml(s)}</div>
       <div class="rowC">${logHtml(s)}<div class="chose"><span class="caps c2">What they chose · turn ${lastTurn()}${answeredBy()}</span><div class="notes">${decisionNotes().map(noteHtml).join('') || '<div class="f-panel f-empty"><img src="' + sprout + '" alt=""><b>No decisions yet</b><span>Advance a turn and their choices land here.</span></div>'}</div></div></div>
       <div class="rowE">${treeHtml(s)}${pilot ? goalSetHtml(s) : ''}${workHtml(s)}${keyHtml()}</div>`);
@@ -207,7 +208,8 @@ export function startPlay(host: PlayHost, api: string) {
       const ended = s && (s.status === 'won' || s.status === 'lost'), can = you.can_start;
       return `<div class="f-advance compact">${press(can ? '' : 'is-disabled', can ? 'season' : '', ended && s.status === 'won' ? SEAL.moss : SEAL.amber, 'Start a new season', !can)}<div><h4>${ended ? (s.status === 'won' ? 'Season won. Start another?' : 'Season lost. Try again?') : 'Start a live season'}</h4><p>Mints a fresh 1,000 MUNCH seed and creates three founder accounts on NEAR testnet. You get a 120 MUNCH pouch.</p><div class="tx">${can ? 'One season at a time. It is yours while you play.' : `Free again in ${Math.ceil(you.lease_left_ms / 60000)} min, or when it ends.`}</div></div></div>`;
     }
-    if (!you.pilot) return `<div class="f-advance compact">${press('is-disabled', '', SEAL.amber, 'Advance is held by another visitor', true)}<div><h4>You are watching season ${s.id}</h4><p>Another visitor holds this season. Everything here is read from the chain.</p><div class="tx">${you.can_start ? `It has gone quiet. <button class="f-link" data-act="season">Start a new season</button>` : `Free in ${Math.ceil(you.lease_left_ms / 60000)} min if it sits idle.`}</div></div></div>`;
+    if (!you.pilot && you.can_take) return `<div class="f-advance compact">${press('', 'takeover', SEAL.amber, 'Take over this season')}<div><h4>This season is free</h4><p>Take over and play. Every creature stays as it is, fossils too.</p><div class="tx">The last visitor has been quiet for 10 minutes. <button class="f-btn f-btn--s" data-act="takeover">Take over</button></div></div></div>`;
+    if (!you.pilot) return `<div class="f-advance compact">${press('is-disabled', '', SEAL.amber, 'Advance is held by another visitor', true)}<div><h4>You are watching season ${s.id}</h4><p>Another visitor is playing this season. Everything here is read from the chain.</p><div class="tx">It is free to take over in ${Math.max(1, Math.ceil(you.lease_left_ms / 60000))} min if it sits idle.</div></div></div>`;
     const dis = blocked();
     return `<div class="f-advance compact">${press(dis ? 'is-disabled' : '', 'turn', SEAL.amber, 'Advance the turn', dis)}<div><h4>Advance the turn</h4><p>Everyone alive pays ${UPKEEP} MUNCH. That is their ${tip('upkeep', 'upkeep')}. Then they bid, work and ${tip('settle', 'settle')}.</p><div class="tx">Turn ${s.turn + 1} is next · ${alive} alive · ${alive * UPKEEP} MUNCH will burn</div><button class="f-link pl-reset" data-act="season">${ico('season', 'ico-s')}Close this season and start fresh</button></div></div>`;
   }
@@ -271,7 +273,7 @@ export function startPlay(host: PlayHost, api: string) {
   }
   function watchHtml(s: any, you: any) {
     if (st.paused) return `<div class="f-panel f-empty"><img src="${sprout}" alt=""><b>The terrarium opens soon</b><span>Watch the creatures live while you wait. Every change you see comes from a chain read.</span></div>`;
-    return `<div class="f-panel f-empty"><img src="${sprout}" alt=""><b>${s.status === 'live' ? 'You are watching' : 'This season has ended'}</b><span>${s.status === 'live' ? 'The visitor who started this season holds the controls. Every change you see comes from a chain read.' : 'Start a new season to play. The old one stays on chain.'}</span></div>`;
+    return `<div class="f-panel f-empty"><img src="${sprout}" alt=""><b>${s.status === 'live' ? 'You are watching' : 'This season has ended'}</b><span>${s.status === 'live' ? (st.you?.can_take ? 'This season is free. Take over and play.' : 'Another visitor holds the controls. Every change you see comes from a chain read.') : 'Start a new season to play. The old one stays on chain.'}</span></div>`;
   }
   function treeHtml(s: any) {
     const rows = familyTree(st.chain);
@@ -323,8 +325,8 @@ export function startPlay(host: PlayHost, api: string) {
     if (host.mode() !== 'live') return;
     const dis = !pilot || blocked();
     const it = (k: Sheet, icon: string, t: string) => `<button class="it${ui.sheet === k ? ' is-on' : ''}${pilot ? '' : ' is-disabled'}" data-sheetbtn="${k}" ${pilot ? '' : 'aria-disabled="true"'}>${ico(icon)}${t}</button>`;
-    const act = s && s.status === 'live' ? (st?.you?.pilot ? 'turn' : '') : st?.you?.can_start ? 'season' : '';
-    put(d, `${it('feed', 'feed', 'Feed')}${it('job', 'job', 'Post job')}<div class="mid${act && !(act === 'turn' && dis) && !blocked() ? '' : ' is-off'}"><button class="f-press${act && !(act === 'turn' && dis) && !blocked() ? '' : ' is-disabled'}${st?.busy || pending === 'turn' ? ' is-pending' : ''}" ${act ? `data-act="${act}"` : ''} aria-label="${act === 'season' ? 'Start a season' : 'Advance the turn'}"><img src="${SEAL.amber}" alt=""></button><span>${act === 'season' ? 'Start' : 'Advance'}</span></div>${it('sponsor', 'sponsor', 'Sponsor')}<button class="it" data-proof="1">${ico('munch')}Proof</button>`);
+    const act = s && s.status === 'live' ? (st?.you?.pilot ? 'turn' : st?.you?.can_take ? 'takeover' : '') : st?.you?.can_start ? 'season' : '';
+    put(d, `${it('feed', 'feed', 'Feed')}${it('job', 'job', 'Post job')}<div class="mid${act && !(act === 'turn' && dis) && !blocked() ? '' : ' is-off'}"><button class="f-press${act && !(act === 'turn' && dis) && !blocked() ? '' : ' is-disabled'}${st?.busy || pending === 'turn' ? ' is-pending' : ''}" ${act ? `data-act="${act}"` : ''} aria-label="${act === 'season' ? 'Start a season' : act === 'takeover' ? 'Take over this season' : 'Advance the turn'}"><img src="${SEAL.amber}" alt=""></button><span>${act === 'season' ? 'Start' : act === 'takeover' ? 'Take over' : 'Advance'}</span></div>${it('sponsor', 'sponsor', 'Sponsor')}<button class="it" data-proof="1">${ico('munch')}Proof</button>`);
   }
 
   // ---------- events ----------
@@ -343,9 +345,10 @@ export function startPlay(host: PlayHost, api: string) {
     const gp = t.closest<HTMLElement>('[data-goalpick]'); if (gp) { ui.goalPick = gp.dataset.goalpick!; render(); return; }
     const g = t.closest<HTMLElement>('[data-goal]'); if (g) { ui.goal = Number(g.dataset.goal); render(); return; }
     const act = t.closest<HTMLButtonElement>('[data-act]'); if (!act || act.disabled || blocked()) return;
-    if (act.dataset.act !== 'season' && !st?.you?.pilot) return;
+    if (act.dataset.act !== 'season' && act.dataset.act !== 'takeover' && !st?.you?.pilot) return;
     const k = act.dataset.act;
-    if (k === 'turn') post('/api/turn', {}, 'turn');
+    if (k === 'takeover') post('/api/takeover', {}, 'takeover');
+    else if (k === 'turn') post('/api/turn', {}, 'turn');
     else if (k === 'season') { if (st?.chain?.season?.status === 'live' && st?.you?.pilot && !confirm('Close this season and start a fresh one? The old one stays on chain.')) return; post('/api/season', {}, 'season'); }
     else if (k === 'demand') { const kind = ui.demandPick; ui.demandPick = -1; post('/api/action', { type: 'demand', kind }, 'demand'); }
     else if (k === 'job') post('/api/action', { type: 'job', reward: ui.jobReward, line: ui.jobLine, turns: ui.jobTurns }, 'job');
