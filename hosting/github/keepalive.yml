@@ -1,0 +1,18 @@
+name: keep the keeper awake
+# Backup to the keeper's own ping in keeper/awake.mjs. Kept here until the box gh token
+# has the workflow scope, then move it to .github/workflows. It only reads /healthz,
+# which runs no turn and calls no model.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+permissions: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping health
+        run: |
+          if [ "$(date -u +%Y%m%d)" -gt 20261125 ]; then echo "judging is over"; exit 0; fi
+          curl -fsS --max-time 90 --retry 2 https://feral-keeper.onrender.com/healthz

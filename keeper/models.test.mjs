@@ -60,7 +60,7 @@ test('chain falls back to local Qwen and says why, then to the fixed policy', as
   const t = await translate('Hello.', chain); assert.equal(t.provider, 'local-qwen'); assert.equal(t.es, 'Hola.');
   localUp = false;
   const d2 = await decide(life, snap, chain);
-  assert.equal(d2.mode, 'fixed-policy'); assert.equal(d2.provider_label, 'Fixed policy'); assert.equal(d2.skipped.length, 2);
+  assert.equal(d2.mode, 'fixed-policy'); assert.equal(d2.provider_label, 'Fixed rules backup'); assert.equal(d2.skipped.length, 2);
   await assert.rejects(chain.health(), e => e.providers.length === 2);
 });
 test('env file loads names without overriding and without exposing values', () => {
@@ -85,4 +85,27 @@ test('local Qwen stays off unless FERAL_LOCAL_MODEL is set', () => {
   assert.equal(localModelEnabled({ FERAL_LOCAL_MODEL: '0' }), false);
   assert.equal(localModelEnabled({ FERAL_LOCAL_MODEL: '1' }), true);
   assert.equal(localModelEnabled({ FERAL_LOCAL_MODEL: 'true' }), true);
+});
+
+test('the spend cap stops NEAR AI calls and the creatures fall back to the fixed rules backup', async () => {
+  let calls = 0, t = 0;
+  const ai = nearAiAdapter({ key: KEY, now: () => t, cap: { perHour: 2, perDay: 3 }, fetchImpl: async () => { calls++; return answer({ choice: 1, reason: 'Work pays.' }); } });
+  await ai.choose({}, opts); await ai.choose({}, opts);
+  await assert.rejects(ai.choose({}, opts), e => e.kind === 'cap'); assert.equal(calls, 2);
+  assert.equal(ai.status().ready, false); assert.equal(ai.status().blocked.kind, 'cap');
+  t += 3600e3 + 1; await ai.choose({}, opts); assert.equal(calls, 3); // a new hour frees the hourly cap
+  t += 3600e3 + 1; await assert.rejects(ai.choose({}, opts), e => e.kind === 'cap'); assert.equal(calls, 3); // the daily cap still holds
+  t += 24 * 3600e3; await ai.choose({}, opts); assert.equal(calls, 4);
+  const life = { id: 'moss.x', balance: '100', life: { name: 'moss', active: true, goal: 0, pending: false, genome: { job: 1, price: 4, floor: 4 } } };
+  const snap = { season: { turn: 1, demand: 1, demand_version: 1, target_turns: 8 }, lives: [life], jobs: [{ id: 'j1', kind: 1, state: 'open', demand_version: 1, expiry_turn: 3, reward: '60', bids: [] }] };
+  const capped = nearAiAdapter({ key: KEY, cap: { perHour: 0, perDay: 0 }, fetchImpl: async () => { throw new Error('must not call'); } });
+  const d = await decide(life, snap, modelChain([capped]));
+  assert.equal(d.mode, 'fixed-policy'); assert.equal(d.provider_label, 'Fixed rules backup'); assert.equal(d.skipped[0].kind, 'cap');
+});
+test('NEAR AI asks for a short answer so one call stays tiny', async () => {
+  let body;
+  const ai = nearAiAdapter({ key: KEY, fetchImpl: async (u, init) => { body = JSON.parse(init.body); return answer({ choice: 0, reason: 'Rest.' }); } });
+  const r = await ai.choose({}, opts);
+  assert.equal(body.model, 'Qwen/Qwen3-VL-30B-A3B-Instruct'); assert.ok(body.max_tokens <= 80);
+  assert.equal(r.model, 'Qwen/Qwen3-VL-30B-A3B-Instruct');
 });

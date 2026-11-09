@@ -9,7 +9,14 @@ import { SYSTEM, modelAdapter } from './policy.mjs';
 
 export const NEAR_AI_BASE = 'https://cloud-api.near.ai/v1';
 // Open weights, hosted by NEAR AI itself, structured outputs, no reasoning tokens, $0.15 in / $0.55 out per million tokens.
+// Tested on 9 Nov 2026 against real season 2 snapshots, 8 of 8 legal JSON answers, about 0.8 s each,
+// about 340 tokens in and 33 out per decision. Reasoning models (deepseek v4.1 flash, gpt-5-nano) spent
+// the token cap thinking or refused temperature, so this stays the default.
 export const NEAR_AI_DEFAULT_MODEL = 'Qwen/Qwen3-VL-30B-A3B-Instruct';
+// Spend guard. Each call is capped at 80 tokens out, and the keeper makes at most this many
+// NEAR AI calls per hour and per day. Past the cap the creatures use the fixed rules backup
+// and every note says so. At about $0.00007 a call, a full day at the cap costs about $0.14.
+export const NEAR_AI_CAP = { perHour: 240, perDay: 2000 };
 
 /** Local Qwen only when FERAL_LOCAL_MODEL is set. Off by default for 512 MB hosts. */
 export function localModelEnabled(env = process.env) {
@@ -59,13 +66,20 @@ class ProviderError extends Error { constructor(kind, msg) { super(msg); this.ki
 
 /** NEAR AI Cloud, OpenAI compatible chat completions with a JSON schema answer. */
 // state: optional { load(), save(json) } so a billing block survives keeper restarts and is not re-probed early.
-export function nearAiAdapter({ key, model = NEAR_AI_DEFAULT_MODEL, base = NEAR_AI_BASE, fetchImpl = fetch, now = () => Date.now(), timeoutMs = 30000, state = null } = {}) {
+export function nearAiAdapter({ key, model = NEAR_AI_DEFAULT_MODEL, base = NEAR_AI_BASE, fetchImpl = fetch, now = () => Date.now(), timeoutMs = 20000, state = null, cap = NEAR_AI_CAP } = {}) {
   if (!key) return null;
+  const spent = [];
+  const overCap = () => {
+    const t = now(); while (spent.length && spent[0] < t - 24 * 3600e3) spent.shift();
+    return spent.length >= cap.perDay || spent.filter(x => x > t - 3600e3).length >= cap.perHour;
+  };
   const breaker = new Breaker(now).restore(state?.load?.());
   for (const m of ['trip', 'ok']) { const f = breaker[m].bind(breaker); breaker[m] = (...a) => { f(...a); try { state?.save?.(breaker.toJSON()); } catch { /* best effort */ } }; }
   const scrub = s => String(s ?? '').split(key).join('[key]').slice(0, 160);
   async function complete(messages, schema, maxTokens) {
     if (breaker.open()) throw new ProviderError(breaker.kind, `skipped, ${breaker.reason}`);
+    if (overCap()) throw new ProviderError('cap', 'skipped, the hourly or daily spend cap is reached');
+    spent.push(now());
     const t0 = now();
     let r;
     try {
@@ -88,7 +102,7 @@ export function nearAiAdapter({ key, model = NEAR_AI_DEFAULT_MODEL, base = NEAR_
   }
   return {
     provider: 'near-ai', label: 'NEAR AI Cloud', model, url: base,
-    status() { return { provider: 'near-ai', label: 'NEAR AI Cloud', model, ready: !breaker.open(), confirmed: !!breaker.confirmed, blocked: breaker.status() }; },
+    status() { const capped = overCap(); return { provider: 'near-ai', label: 'NEAR AI Cloud', model, ready: !breaker.open() && !capped, confirmed: !!breaker.confirmed, blocked: breaker.status() ?? (capped ? { kind: 'cap', reason: 'spend cap reached for now' } : null) }; },
     async choose(observation, opts) {
       const list = opts.map((o, i) => `${i}. ${JSON.stringify(o)}`).join('\n');
       const user = `Your situation:\n${JSON.stringify(observation)}\n\nLegal actions:\n${list}\n\nPick one legal action by its number. The outcome is not known yet. In one short first person sentence under 20 words, say why you are choosing it. Do not claim any result.`;

@@ -101,10 +101,10 @@ export async function decide(life, snap, model) {
       return { action: validate(r.decision, opts), mode: 'live-model', provider: r.provider ?? 'local-qwen', provider_label: r.provider_label ?? 'Local Qwen', model: r.model, seconds: r.seconds, options: opts.length,
         reason: typeof r.reason === 'string' && r.reason.length <= 200 ? r.reason : null, ...(r.skipped?.length ? { skipped: r.skipped } : {}) };
     } catch (e) {
-      return { action: fixedPolicy(life, opts), mode: 'fixed-policy', provider: 'fixed-policy', provider_label: 'Fixed policy', reason: 'no model answered, ' + String(e.message).slice(0, 160), options: opts.length, ...(e.skipped ? { skipped: e.skipped } : {}) };
+      return { action: fixedPolicy(life, opts), mode: 'fixed-policy', provider: 'fixed-policy', provider_label: 'Fixed rules backup', reason: 'no model answered, ' + String(e.message).slice(0, 160), options: opts.length, ...(e.skipped ? { skipped: e.skipped } : {}) };
     }
   }
-  return { action: fixedPolicy(life, opts), mode: 'fixed-policy', provider: 'fixed-policy', provider_label: 'Fixed policy', reason: 'no model endpoint on this host', options: opts.length };
+  return { action: fixedPolicy(life, opts), mode: 'fixed-policy', provider: 'fixed-policy', provider_label: 'Fixed rules backup', reason: 'no model endpoint on this host', options: opts.length };
 }
 const SPANISH = { 'Fresh bread every morning.': 'Pan fresco cada mañana.', 'Thank you for watching.': 'Gracias por mirar.', 'The market opens at nine.': 'El mercado abre a las nueve.', 'Rain is coming tonight.': 'Esta noche viene la lluvia.', 'Meet me at the river.': 'Nos vemos en el río.', 'Our shop is open today.': 'Nuestra tienda abre hoy.', 'Every balance can be checked on the chain.': 'Cada saldo se puede comprobar en la cadena.' };
 export const LINES = Object.keys(SPANISH);

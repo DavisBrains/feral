@@ -1,7 +1,7 @@
 // Who steers the live season. The chain keeps the visitor who started it. The
 // keeper keeps the current helm in meta, so an idle season can pass to the next
 // visitor and the showcase season keeps going instead of being wiped.
-export const TAKEOVER_MS = Number(process.env.FERAL_TAKEOVER_MS || 10 * 60 * 1000);
+export const TAKEOVER_MS = Number(process.env.FERAL_TAKEOVER_MS || 2 * 60 * 1000);
 export const isEnded = s => !s || !!s.closed || ['won', 'lost', 'failed'].includes(s.status) || String(s.status).startsWith('abandoned');
 export function helmOf(meta, s) {
   if (!s) return null;

@@ -119,8 +119,8 @@ export function startPlay(host: PlayHost, api: string) {
 
   const mname = (m: any) => String(m ?? '').replace(/^.*\//, '').replace('-Instruct', '');
   // who actually answered: NEAR AI Cloud, the local Qwen fallback, or neither
-  const via = (x: any) => x?.provider === 'near-ai' ? `NEAR AI Cloud · ${mname(x.model)}` : x?.provider === 'local-qwen' || (x?.mode === 'live-model' && !x?.provider) ? `Local Qwen · ${mname(x.model)}` : 'Fixed policy';
-  const skippedNote = (x: any) => x?.skipped?.length ? ` · ${x.skipped.map((k: any) => `${k.label} ${k.kind === 'billing' ? 'out of credits' : k.kind === 'rate' ? 'rate limited' : 'unavailable'}`).join(', ')}` : '';
+  const via = (x: any) => x?.provider === 'near-ai' ? `NEAR AI Cloud · ${mname(x.model)}` : x?.provider === 'local-qwen' || (x?.mode === 'live-model' && !x?.provider) ? `Local Qwen · ${mname(x.model)}` : 'Fixed rules backup';
+  const skippedNote = (x: any) => x?.skipped?.length ? ` · ${x.skipped.map((k: any) => `${k.label} ${k.kind === 'billing' ? 'out of credits' : k.kind === 'rate' ? 'rate limited' : k.kind === 'cap' ? 'paused by the spend cap' : 'unavailable'}`).join(', ')}` : '';
   function answeredBy(turn = lastTurn()) {
     const rows = seasonLog().filter((e: any) => e.kind === 'decision' && e.turn === turn).map((e: any) => e.translation ?? e.decision).filter((x: any) => x && x.mode !== 'only-legal-action');
     const names = [...new Set(rows.map((x: any) => via(x).split(' · ')[0]))];
@@ -130,11 +130,11 @@ export function startPlay(host: PlayHost, api: string) {
     return seasonLog().filter((e: any) => e.kind === 'decision' && e.turn === turn).map((e: any) => {
       const l = lives().find(x => x.id === e.actor), name = cap(l?.life.name ?? 'creature'), key = l ? artOf(l.id) : 'pip';
       const t = e.translation, d = e.decision, a = d?.action ?? {};
-      if (t) return { key, who: name, act: `Translated “${t.en}”`, why: `“${t.es}”`, whyKind: 'translation', src: t.mode === 'live-model' ? `Translated this turn · ${via(t)} · ${t.seconds}s · unreviewed${skippedNote(t)}` : `Supplied translation · no model answered${skippedNote(t)}`, dim: false } as NoteData;
+      if (t) return { key, who: name, act: `Translated “${t.en}”`, why: `“${t.es}”`, whyKind: 'translation', src: t.mode === 'live-model' ? `Translated this turn · ${via(t)} · ${t.seconds}s · unreviewed${skippedNote(t)}` : `Supplied translation backup · NEAR AI did not answer${skippedNote(t)}`, dim: false } as NoteData;
       const act = a.action === 'bid' ? `Bid ${a.price} on job ${a.job}` : a.action === 'wait' ? 'Waited' : a.action === 'breed' || a.action === 'reproduce' ? 'Paid for a child' : cap(String(a.action ?? 'acted'));
       if (d?.mode === 'live-model') return { key, who: name, act, why: d.reason ?? null, whyKind: 'model', src: `Decided this turn · ${via(d)} · 1 of ${d.options} legal moves${d.reason ? ' · its own words' : ''}${skippedNote(d)}`, dim: !l?.life.active } as NoteData;
       if (d?.mode === 'only-legal-action') return { key, who: name, act, why: 'It had one legal move, so no model was asked.', whyKind: 'policy', src: 'Only legal move · no model call', dim: !l?.life.active } as NoteData;
-      return { key, who: name, act, why: `Its written policy ${e.policy ?? ''}`.trim(), whyKind: 'policy', src: `Fixed policy · no model answered${skippedNote(d)}`, dim: !l?.life.active } as NoteData;
+      return { key, who: name, act, why: `Backup rule ${e.policy ?? ''}`.trim(), whyKind: 'policy', src: `Fixed rules backup · NEAR AI did not answer${skippedNote(d)}`, dim: !l?.life.active } as NoteData;
     });
   }
 
@@ -151,7 +151,7 @@ export function startPlay(host: PlayHost, api: string) {
       if (!api) {
         put(hero, `<div class="f-panel f-empty"><img src="${rootCorner}" alt=""><b>Live keeper not linked yet</b><span>This build has no keeper address, so only the recorded proof run is available.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
       } else if (waking) {
-        put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Waking the terrarium</b><span>The free keeper sleeps after a long quiet stretch. Cold start can take a few minutes while the model loads. Hang on, or watch the recorded proof run.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
+        put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Waking the terrarium</b><span>The free keeper sleeps after a long quiet stretch. Cold start can take about a minute. Hang on, or watch the recorded proof run.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
       } else {
         put(hero, `<div class="f-panel f-empty err"><img src="${rootCorner}" alt=""><b>The keeper went quiet</b><span>Live play needs the keeper service. The recorded proof run still works.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
       }
@@ -160,9 +160,9 @@ export function startPlay(host: PlayHost, api: string) {
     if (!st) { put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Reading the chain</b><span>Asking the arena contract for this season.</span></div>`); return; }
     const s = st.chain.season, m = st.model;
     const near = (m.providers ?? []).find((p: any) => p.provider === 'near-ai');
-    const nearDown = near && !near.ready ? ` NEAR AI Cloud is ${near.blocked?.kind === 'billing' ? 'out of credits' : near.blocked?.kind === 'rate' ? 'rate limited' : 'unavailable'} for now.` : '';
-    const modelLine = m.mode !== 'live-model' ? `<b>${tip('Fixed policy.', 'fixed')}</b>${nearDown} No model is ready, so creatures follow their written policy. Every decision says so.`
-      : m.provider === 'near-ai' ? `Creatures decide with ${esc(mname(m.model))} on NEAR AI Cloud${near?.confirmed ? '' : ', tried first each turn'}. Each note says which model answered.`
+    const nearDown = near && !near.ready ? ` NEAR AI Cloud is ${near.blocked?.kind === 'billing' ? 'out of credits' : near.blocked?.kind === 'rate' ? 'rate limited' : near.blocked?.kind === 'cap' ? 'resting under its spend cap' : 'unavailable'} for now.` : '';
+    const modelLine = m.mode !== 'live-model' ? `<b>${tip('Fixed rules backup.', 'fixed')}</b>${nearDown} The creatures use their written rules until the AI is back. Every note says so.`
+      : m.provider === 'near-ai' ? `<b>${tip('Real NEAR AI.', 'nearai')}</b> The creatures think with ${esc(mname(m.model))} on NEAR AI Cloud. Fixed rules only step in if the AI fails, and each note says which one decided.`
       : `<b>${tip('Local Qwen.', 'qwen')}</b>${nearDown} Creatures decide with ${esc(mname(m.model))} on the keeper. Each note says which model answered.`;
     put(banner, `<div class="f-banner is-live"><span class="f-live"></span><span><b>Live season${s ? ' ' + s.id : ''}.</b> ${st.paused ? 'Watching only for now. The terrarium opens soon.' : 'Your moves are sent to NEAR testnet for real.'} ${modelLine}</span></div>`);
     const active = s && s.status === 'live' && !s.closed, you = st.you, pilot = you.pilot && active;
@@ -208,7 +208,7 @@ export function startPlay(host: PlayHost, api: string) {
       const ended = s && (s.status === 'won' || s.status === 'lost'), can = you.can_start;
       return `<div class="f-advance compact">${press(can ? '' : 'is-disabled', can ? 'season' : '', ended && s.status === 'won' ? SEAL.moss : SEAL.amber, 'Start a new season', !can)}<div><h4>${ended ? (s.status === 'won' ? 'Season won. Start another?' : 'Season lost. Try again?') : 'Start a live season'}</h4><p>Mints a fresh 1,000 MUNCH seed and creates three founder accounts on NEAR testnet. You get a 120 MUNCH pouch.</p><div class="tx">${can ? 'One season at a time. It is yours while you play.' : `Free again in ${Math.ceil(you.lease_left_ms / 60000)} min, or when it ends.`}</div></div></div>`;
     }
-    if (!you.pilot && you.can_take) return `<div class="f-advance compact">${press('', 'takeover', SEAL.amber, 'Take over this season')}<div><h4>This season is free</h4><p>Take over and play. Every creature stays as it is, fossils too.</p><div class="tx">The last visitor has been quiet for 10 minutes. <button class="f-btn f-btn--s" data-act="takeover">Take over</button></div></div></div>`;
+    if (!you.pilot && you.can_take) return `<div class="f-advance compact">${press('', 'takeover', SEAL.amber, 'Take over this season')}<div><h4>This season is free</h4><p>Take over and play. Every creature stays as it is, fossils too.</p><div class="tx">The last visitor has been quiet for ${Math.round((st.takeover_ms ?? 120000) / 60000)} minutes. <button class="f-btn f-btn--s" data-act="takeover">Take over</button></div></div></div>`;
     if (!you.pilot) return `<div class="f-advance compact">${press('is-disabled', '', SEAL.amber, 'Advance is held by another visitor', true)}<div><h4>You are watching season ${s.id}</h4><p>Another visitor is playing this season. Everything here is read from the chain.</p><div class="tx">It is free to take over in ${Math.max(1, Math.ceil(you.lease_left_ms / 60000))} min if it sits idle.</div></div></div>`;
     const dis = blocked();
     return `<div class="f-advance compact">${press(dis ? 'is-disabled' : '', 'turn', SEAL.amber, 'Advance the turn', dis)}<div><h4>Advance the turn</h4><p>Everyone alive pays ${UPKEEP} MUNCH. That is their ${tip('upkeep', 'upkeep')}. Then they bid, work and ${tip('settle', 'settle')}.</p><div class="tx">Turn ${s.turn + 1} is next · ${alive} alive · ${alive * UPKEEP} MUNCH will burn</div><button class="f-link pl-reset" data-act="season">${ico('season', 'ico-s')}Close this season and start fresh</button></div></div>`;

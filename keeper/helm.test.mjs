@@ -32,3 +32,8 @@ test('paused keeper offers nothing', () => {
   const y = you({ lastActivity: 0 }, S, 'B', 10 * M, { paused: true });
   assert.deepEqual([y.can_take, y.can_start], [false, false]);
 });
+test('an idle season frees up after two minutes by default', () => {
+  const meta = { lastActivity: 0 };
+  assert.equal(you(meta, S, 'B', 2 * 60 * 1000 - 1).can_take, false);
+  assert.equal(you(meta, S, 'B', 2 * 60 * 1000 + 1).can_take, true);
+});

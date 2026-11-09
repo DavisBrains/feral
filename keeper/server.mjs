@@ -8,9 +8,10 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import * as near from './near.mjs';
 import { Engine } from './engine.mjs';
-import { you as youOf, takeOver, helmOf, isEnded } from './helm.mjs';
+import { you as youOf, takeOver, helmOf, isEnded, TAKEOVER_MS } from './helm.mjs';
 import { describe, LINES, KINDS, CHANGES, GOALS } from './policy.mjs';
-import { loadEnvFile, nearAiAdapter, localAdapter, modelChain, localModelEnabled } from './models.mjs';
+import { keepAwake } from './awake.mjs';
+import { loadEnvFile, nearAiAdapter, localAdapter, modelChain, localModelEnabled, NEAR_AI_CAP } from './models.mjs';
 
 const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || '127.0.0.1';
@@ -26,7 +27,7 @@ const MIN_ALLOWANCE = 20_000_000_000_000_000_000_000n; // 0.02 NEAR of gas left 
 const jsonState = f => ({ load: () => existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null, save: j => { mkdirSync(path.dirname(f), { recursive: true }); writeFileSync(f, JSON.stringify(j)); } });
 loadEnvFile(process.env.FERAL_NEAR_AI_ENV_FILE ?? '/home/box/.secrets/near-ai.env');
 const model = modelChain([
-  process.env.FERAL_NEAR_AI === '0' ? null : nearAiAdapter({ key: process.env.NEAR_AI_KEY, model: process.env.NEAR_AI_MODEL || undefined, state: jsonState(path.join(DATA, 'near-ai-state.json')) }),
+  process.env.FERAL_NEAR_AI === '0' ? null : nearAiAdapter({ key: process.env.NEAR_AI_KEY, model: process.env.NEAR_AI_MODEL || undefined, cap: { perHour: Number(process.env.FERAL_NEAR_AI_PER_HOUR || NEAR_AI_CAP.perHour), perDay: Number(process.env.FERAL_NEAR_AI_PER_DAY || NEAR_AI_CAP.perDay) }, state: jsonState(path.join(DATA, 'near-ai-state.json')) }),
   localModelEnabled() ? localAdapter(process.env.FERAL_MODEL_URL || 'http://127.0.0.1:11436') : null,
 ]);
 // Plain translation demand is on by default after the arena upgrade. Set FERAL_TRANSLATION_DEMAND=0 to hide it.
@@ -53,12 +54,12 @@ function limited(key, perMin, burst) {
   buckets.set(key, b); if (b.n < 1) return true; b.n -= 1; return false;
 }
 const seasonStarts = [];
-let modelState = model ? { mode: 'checking', model: null, checked: 0 } : { mode: 'fixed-policy', model: null, provider: 'fixed-policy', label: 'Fixed policy', providers: [], checked: 0, note: 'no model is configured on this keeper, using the labelled fixed policy' };
+let modelState = model ? { mode: 'checking', model: null, checked: 0 } : { mode: 'fixed-policy', model: null, provider: 'fixed-policy', label: 'Fixed rules backup', providers: [], checked: 0, note: 'no model is configured on this keeper, using the labelled fixed rules backup' };
 async function checkModel() {
   if (!model) return modelState;
   if (Date.now() - modelState.checked < 20000) return modelState;
   try { const h = await model.health(); modelState = { mode: 'live-model', model: h.model, provider: h.provider, label: h.label, providers: h.providers, checked: Date.now() }; }
-  catch (e) { modelState = { mode: 'fixed-policy', model: null, provider: 'fixed-policy', label: 'Fixed policy', providers: e.providers ?? [], checked: Date.now(), note: 'no model provider is ready, using the labelled fixed policy' }; }
+  catch (e) { modelState = { mode: 'fixed-policy', model: null, provider: 'fixed-policy', label: 'Fixed rules backup', providers: e.providers ?? [], checked: Date.now(), note: 'no model provider is ready, using the labelled fixed rules backup' }; }
   return modelState;
 }
 let keyCache = { at: 0, v: null };
@@ -113,7 +114,7 @@ async function state(req) {
     contract: near.CONTRACT, keeper_account: near.KEEPER, explorer: near.explorerAccount(near.CONTRACT),
     you: youOf(engine.meta, s, me, Date.now(), { paused: PAUSED }),
     paused: PAUSED, paused_note: PAUSED ? PAUSE_NOTE : null,
-    busy: engine.busy, progress: engine.progress, model: m, key, translation_demand: TRANSLATION_DEMAND,
+    busy: engine.busy, progress: engine.progress, takeover_ms: TAKEOVER_MS, model: m, key, translation_demand: TRANSLATION_DEMAND,
     lines: LINES, kinds: KINDS, changes: CHANGES, goals: GOALS,
     log: s ? publicLog(s.id) : [],
   };
@@ -157,6 +158,8 @@ async function api(req, res, url) {
     snapCache.at = 0; return json(res, r.ok ? 200 : 502, { entry: r });
   }
   if (!s || helmOf(engine.meta, s) !== me) return json(res, 403, { error: 'Only the visitor who holds this season can act. Take it over when it sits idle.' });
+  // A turn can call the model once per creature, so turns get their own tighter limit per IP.
+  if (url.pathname === '/api/turn' && limited('t:' + ipOf(req), 4, 3)) return json(res, 429, { error: 'Too many turns. Wait a few seconds.', retry_after_s: 20 });
   if (url.pathname === '/api/turn') { const r = await engine.turn(me); snapCache.at = 0; return json(res, 200, { entry: r }); }
   if (url.pathname === '/api/action') { const r = await engine.visitor(me, b); snapCache.at = 0; return json(res, r.ok ? 200 : 422, { entry: r }); }
   return json(res, 404, { error: 'not found' });
@@ -170,6 +173,8 @@ function serveStatic(req, res, url) {
   res.writeHead(200, { 'content-type': TYPES[path.extname(f)] ?? 'application/octet-stream', 'cache-control': f.includes('/assets/') ? 'public, max-age=31536000, immutable' : 'no-cache', 'x-content-type-options': 'nosniff' });
   res.end(readFileSync(f));
 }
+// Keep awake through judging, see awake.mjs. The ping only hits /healthz.
+if (process.env.FERAL_KEEP_AWAKE_URL) keepAwake({ url: process.env.FERAL_KEEP_AWAKE_URL, until: process.env.FERAL_KEEP_AWAKE_UNTIL, everyMs: Number(process.env.FERAL_KEEP_AWAKE_MS || 10 * 60e3) });
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try {

@@ -55,9 +55,9 @@ export const TIPS: Record<string, string> = {
   sponsor: 'Sponsoring gives a creature extra MUNCH from your pouch. Only the holder of its life NFT may do it.',
   lineage: 'A lineage is one family line, a founder plus every child born from it.',
   goal: 'Keep two family lines alive until the last turn of the season to win.',
-  fixed: 'No AI model is running here, so each creature follows its written rules. Every note says so.',
+  fixed: 'The creatures think with NEAR AI. When the AI can not answer in time, each creature uses its written rules as a backup, and the note says so.',
   qwen: 'A small open AI model on the keeper picks each move from the moves the contract allows.',
-  nearai: 'An AI model on NEAR AI Cloud picks each move from the moves the contract allows.',
+  nearai: 'A real AI model on NEAR AI Cloud thinks for each creature and picks one of the moves the contract allows. If it ever fails, the written rules step in as a backup.',
   proof: 'A replay of a real run that already happened on NEAR testnet. Nothing new is sent.',
   stone: 'A creature that cannot pay upkeep dies and becomes a fossil. The contract refuses anything it tries after that.',
 };
