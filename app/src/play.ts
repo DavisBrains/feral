@@ -111,7 +111,7 @@ export function startPlay(host: PlayHost, api: string) {
   const seasonLog = () => (st?.log ?? []).filter((e: any) => e.season === st?.chain?.season?.id);
   const lastTurn = () => Math.max(0, ...seasonLog().filter((e: any) => e.kind === 'decision').map((e: any) => e.turn));
   const pouch = (s: any) => ({ left: Number(s.budget_left), total: Number(s.budget) });
-  const blocked = () => !!pending || !!st?.busy || Date.now() < limitedUntil;
+  const blocked = () => !!st?.paused || !!pending || !!st?.busy || Date.now() < limitedUntil;
 
   const mname = (m: any) => String(m ?? '').replace(/^.*\//, '').replace('-Instruct', '');
   // who actually answered: NEAR AI Cloud, the local Qwen fallback, or neither
@@ -160,7 +160,7 @@ export function startPlay(host: PlayHost, api: string) {
     const modelLine = m.mode !== 'live-model' ? `<b>Fixed policy.</b>${nearDown} No model is ready, so creatures follow their written policy. Every decision says so.`
       : m.provider === 'near-ai' ? `Creatures decide with ${esc(mname(m.model))} on NEAR AI Cloud${near?.confirmed ? '' : ', tried first each turn'}. Each note says which model answered.`
       : `<b>Local Qwen.</b>${nearDown} Creatures decide with ${esc(mname(m.model))} on the keeper. Each note says which model answered.`;
-    put(banner, `<div class="f-banner is-live"><span class="f-live"></span><span><b>Live season${s ? ' ' + s.id : ''}.</b> Your moves are sent to NEAR testnet for real. ${modelLine}</span></div>`);
+    put(banner, `<div class="f-banner is-live"><span class="f-live"></span><span><b>Live season${s ? ' ' + s.id : ''}.</b> ${st.paused ? 'Watching only for now. The terrarium opens soon.' : 'Your moves are sent to NEAR testnet for real.'} ${modelLine}</span></div>`);
     const active = s && s.status === 'live' && !s.closed, you = st.you, pilot = you.pilot && active;
     put(lede, s ? `You get ${nf(s.budget)} MUNCH for the whole season. Spend it on meals, sponsors and jobs. The creatures decide the rest.` : 'Start a live season to play. Every move is a NEAR testnet transaction.');
     put(hero, heroHtml(s, active, you));
@@ -195,6 +195,7 @@ export function startPlay(host: PlayHost, api: string) {
   function advanceHtml(s: any, active: boolean, you: any) {
     const alive = lives().filter(l => l.life.active).length;
     const press = (cls: string, act: string, seal: string, label: string, dis = false) => `<button class="f-press ${cls}" ${act ? `data-act="${act}"` : ''} ${dis ? 'disabled' : ''} aria-label="${esc(label)}"><img src="${seal}" alt=""></button>`;
+    if (st.paused) return `<div class="f-advance compact">${press('is-disabled', '', SEAL.amber, 'The terrarium opens soon', true)}<div><h4>The terrarium opens soon</h4><p>You can watch everything live right now. Feeding, jobs and turns open shortly.</p><div class="tx">Everything here is read straight from NEAR testnet.</div></div></div>`;
     if (st.busy || pending === 'turn' || pending === 'season') {
       const last = seasonLog().filter((e: any) => e.tx).at(-1);
       return `<div class="f-advance compact">${press('is-pending', '', SEAL.amber, 'Settling', true)}<div><h4>${pending === 'season' ? 'Starting a season' : 'Settling on chain'}</h4><p>${pending === 'season' ? 'Minting the seed and creating founder accounts.' : 'Hold tight. Each step is its own transaction.'}</p><div class="tx"><span class="f-seeds"><i></i><i></i><i></i></span> ${esc(st.progress || 'sending')}${last ? ` · ${txLink(last.tx)}` : ''}</div></div></div>`;
@@ -265,6 +266,7 @@ export function startPlay(host: PlayHost, api: string) {
     return `<div class="f-paper f-act"><h4>Set a goal</h4><p>The life NFT also lets you steer. Save forbids breeding on chain. Breed tells it to have a child as soon as its reserve allows.</p>${picks(ui.goalPick, 'goalpick', l => l.life.active ? ['work', 'save', 'breed'][l.life.goal] : 'ended')}<div class="f-cost"><div class="f-seg" role="group" aria-label="Goal">${goals.map((g, i) => `<button class="${i === ui.goal ? 'on' : ''}" data-goal="${i}" aria-pressed="${i === ui.goal}">${g}</button>`).join('')}</div><button class="f-btn${sel && !blocked() ? '' : ' is-disabled'}" data-act="goal" ${sel && !blocked() ? '' : 'disabled'}>${ico('life_nft', 'ico-s')}${sel ? `Set ${esc(cap(sel.life.name))}` : 'Pick a creature'}</button></div><p class="f-help">Free. It changes the goal field on chain.</p></div>`;
   }
   function watchHtml(s: any, you: any) {
+    if (st.paused) return `<div class="f-panel f-empty"><img src="${sprout}" alt=""><b>The terrarium opens soon</b><span>Watch the creatures live while you wait. Every change you see comes from a chain read.</span></div>`;
     return `<div class="f-panel f-empty"><img src="${sprout}" alt=""><b>${s.status === 'live' ? 'You are watching' : 'This season has ended'}</b><span>${s.status === 'live' ? 'The visitor who started this season holds the controls. Every change you see comes from a chain read.' : 'Start a new season to play. The old one stays on chain.'}</span></div>`;
   }
   function treeHtml(s: any) {
@@ -326,7 +328,7 @@ export function startPlay(host: PlayHost, api: string) {
     const t = ev.target as HTMLElement;
     const go = t.closest<HTMLElement>('[data-mode]'); if (go) { const m = go.dataset.mode as 'live' | 'replay'; host.switchTo(m); render(); if (m === 'live') poll(true); return; }
     if (t.closest('[data-proof]')) { ui.sheet = ''; render(); document.getElementById('proof')?.scrollIntoView({ behavior: host.reduced() ? 'auto' : 'smooth' }); return; }
-    const sb = t.closest<HTMLElement>('[data-sheetbtn]'); if (sb) { if (!st?.you?.pilot) { toast('error', 'Start your own season to act', 'This one is held by another visitor. You can still watch every receipt.'); return; } const k = sb.dataset.sheetbtn as Sheet; ui.sheet = ui.sheet === k ? '' : k; render(); return; }
+    const sb = t.closest<HTMLElement>('[data-sheetbtn]'); if (sb) { if (st?.paused) { toast('ok', 'The terrarium opens soon', 'You can watch it live now. Play starts shortly.'); return; } if (!st?.you?.pilot) { toast('error', 'Start your own season to act', 'This one is held by another visitor. You can still watch every receipt.'); return; } const k = sb.dataset.sheetbtn as Sheet; ui.sheet = ui.sheet === k ? '' : k; render(); return; }
     if (host.mode() !== 'live') return;
     const d = t.closest<HTMLElement>('[data-demand]'); if (d) { ui.demandPick = Number(d.dataset.demand); render(); return; }
     const rs = t.closest<HTMLElement>('[data-rstep]'); if (rs) { ui.jobReward = Math.max(30, Math.min(100, ui.jobReward + Number(rs.dataset.rstep))); render(); return; }

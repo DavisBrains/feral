@@ -31,6 +31,9 @@ const model = modelChain([
 ]);
 // Plain translation demand is on by default after the arena upgrade. Set FERAL_TRANSLATION_DEMAND=0 to hide it.
 const TRANSLATION_DEMAND = process.env.FERAL_TRANSLATION_DEMAND !== '0';
+// While paused the keeper only reads. Every write and turn is refused, so nothing moves on chain.
+const PAUSED = /^(1|true|yes)$/i.test(String(process.env.FERAL_TURNS_PAUSED || ''));
+const PAUSE_NOTE = 'The terrarium opens soon. You can watch it now, and play starts shortly.';
 const engine = new Engine({ dataDir: DATA, model, translationDemand: TRANSLATION_DEMAND });
 const sha = s => createHash('sha256').update(s).digest('hex');
 
@@ -42,7 +45,7 @@ function limited(key, perMin, burst) {
   buckets.set(key, b); if (b.n < 1) return true; b.n -= 1; return false;
 }
 const seasonStarts = [];
-let modelState = { mode: model ? 'checking' : 'fixed-policy', model: null, checked: 0 };
+let modelState = model ? { mode: 'checking', model: null, checked: 0 } : { mode: 'fixed-policy', model: null, provider: 'fixed-policy', label: 'Fixed policy', providers: [], checked: 0, note: 'no model is configured on this keeper, using the labelled fixed policy' };
 async function checkModel() {
   if (!model) return modelState;
   if (Date.now() - modelState.checked < 20000) return modelState;
@@ -92,7 +95,8 @@ async function state(req) {
   return {
     chain: { ...chain, lives: chain.lives.map(l => ({ ...l, plain: describe(l.life.genome) })) },
     contract: near.CONTRACT, keeper_account: near.KEEPER, explorer: near.explorerAccount(near.CONTRACT),
-    you: { pilot, can_start: ended || pilot || idle > LEASE_MS, lease_left_ms: Math.max(0, LEASE_MS - idle) },
+    you: PAUSED ? { pilot: false, can_start: false, lease_left_ms: 0 } : { pilot, can_start: ended || pilot || idle > LEASE_MS, lease_left_ms: Math.max(0, LEASE_MS - idle) },
+    paused: PAUSED, paused_note: PAUSED ? PAUSE_NOTE : null,
     busy: engine.busy, progress: engine.progress, model: m, key, translation_demand: TRANSLATION_DEMAND,
     lines: LINES, kinds: KINDS, changes: CHANGES, goals: GOALS,
     log: s ? publicLog(s.id) : [],
@@ -110,6 +114,7 @@ async function api(req, res, url) {
     res.writeHead(200, { 'content-type': 'image/svg+xml', 'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'", 'cache-control': 'public, max-age=86400', ...cors() }); return res.end(readFileSync(f));
   }
   if (req.method !== 'POST') return json(res, 404, { error: 'not found' });
+  if (PAUSED) return json(res, 423, { error: PAUSE_NOTE, paused: true });
   const me = visitorOf(req);
   if (!me) return json(res, 400, { error: 'visitor id missing' });
   if (limited('p:' + ipOf(req), 20, 6) || limited('v:' + me, 20, 6)) return json(res, 429, { error: 'Too many actions. Wait a few seconds.', retry_after_s: 20 });
@@ -148,4 +153,4 @@ http.createServer(async (req, res) => {
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
     serveStatic(req, res, url);
   } catch (e) { console.error(e); json(res, e.status ?? 500, { error: String(e.message).slice(0, 200) }); }
-}).listen(PORT, HOST, () => console.log(`feral keeper on http://${HOST}:${PORT} · arena ${near.CONTRACT} · models ${model?.url ?? 'none (fixed policy)'}`));
+}).listen(PORT, HOST, () => console.log(`feral keeper on http://${HOST}:${PORT} · arena ${near.CONTRACT} · models ${model?.url ?? 'none (fixed policy)'}${PAUSED ? ' · turns paused' : ''}`));
