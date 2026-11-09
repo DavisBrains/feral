@@ -41,7 +41,20 @@ Screenshots are in `evidence/screenshots/`.
 
 ## Sepolia tool purchase
 
-`sepolia/purchase.mjs` buys a tool on Sepolia through NEAR Chain Signatures with the testnet MPC signer `v1.signer-prod.testnet`. No EVM private key exists. The relayer address `0x667e3DF0fb679593d4C31C7789926b4EAA7E4C10` is derived for `feral-039832.testnet` with path `feral-sepolia-relayer-v1`. The voucher signer `0x1DeD2a744F7F98cF7aA41B9F505656378Fe8b0a0` is derived for the controller with path `feral-sepolia-v1/moss.feral-039832.testnet`. Without `--execute` it only prints the plan, saved in `evidence/sepolia-tool-plan.json`. The relayer still needs test ETH before the purchase can run.
+`sepolia/purchase.mjs` buys a tool on Sepolia through NEAR Chain Signatures with the testnet MPC signer `v1.signer-prod.testnet`. No EVM private key exists. The relayer address `0x667e3DF0fb679593d4C31C7789926b4EAA7E4C10` is derived for `feral-039832.testnet` with path `feral-sepolia-relayer-v1`. The voucher signer `0x1DeD2a744F7F98cF7aA41B9F505656378Fe8b0a0` is derived for the controller with path `feral-sepolia-v1/moss.feral-039832.testnet`. Without `--execute` it only prints the plan, saved in `evidence/sepolia-tool-plan.json`. It has now run with `--execute`, and every step is recorded in `evidence/sepolia-tool-purchase.json`.
+
+| Step | Transaction |
+|---|---|
+| MPC sign, token deploy (NEAR) | [CUZ5Lz2x…](https://testnet.nearblocks.io/txns/CUZ5Lz2x1nJ9otg331eDV72YjYJ9wbwYvuufukZTkoV2) |
+| Deploy test TOOL token (Sepolia) | [0x3a7821ba…](https://sepolia.etherscan.io/tx/0x3a7821ba12b779ad73d9b26f0782874c9a0e6097d3d8188bd4bff824f2aad90d) at `0x791e035df4c255d4b0539Ca80FFAEbe3A623603E` |
+| MPC sign, treasury deploy (NEAR) | [F1aVfg4m…](https://testnet.nearblocks.io/txns/F1aVfg4mPLLce7wtFfJoeH2Kty8KkcF61obwC39jMinJ) |
+| Deploy FeralTreasury (Sepolia) | [0x1a9567a9…](https://sepolia.etherscan.io/tx/0x1a9567a9cf1de3a0b968699bd075f2d7dc5fa02145acde04eb4dc3e8a7ea4faa) at `0xCf6DEd4D863cb359F4D7E79734C99549E8Fd3A6C` |
+| configure_tools (NEAR) | [BCM6zKGP…](https://testnet.nearblocks.io/txns/BCM6zKGPz4NGfABh61GKZKgYG1MhGn7xEB5pc8fQW2Kd) |
+| request_tool_payment, controller MPC voucher signature (NEAR) | [C9SNWh3T…](https://testnet.nearblocks.io/txns/C9SNWh3TT9bqHaU7y6KcrRV6Zj2BtHE7m8FxFgRtR57C) |
+| MPC sign, redeem (NEAR) | [5pwAuWvp…](https://testnet.nearblocks.io/txns/5pwAuWvpDSJnCnn45fW6qxSRtN2jjiBASWDb8CSfZUeD) |
+| Redeem, ToolPaid 7 TOOL to `0xB06d3d94a063b90bAec90C7380a55D34ae10a32d` (Sepolia) | [0x74855dbb…](https://sepolia.etherscan.io/tx/0x74855dbbf8696a0b285c12b8343f44005bf1d9344957d881e352c6f609bfd128) |
+
+Before the irreversible payment request, the script checked that the local, treasury and controller tool digests all agreed.
 
 ## Honest boundaries
 

@@ -1,0 +1,115 @@
+{
+  "network": "NEAR testnet + Ethereum Sepolia",
+  "mpc_signer": "v1.signer-prod.testnet",
+  "relayer": {
+    "address": "0x667e3DF0fb679593d4C31C7789926b4EAA7E4C10",
+    "near_predecessor": "feral-039832.testnet",
+    "path": "feral-sepolia-relayer-v1",
+    "balance_eth": "0.05",
+    "nonce": 0
+  },
+  "voucher_signer": {
+    "address": "0x1DeD2a744F7F98cF7aA41B9F505656378Fe8b0a0",
+    "near_predecessor": "ctrl.feral-039832.testnet",
+    "path": "feral-sepolia-v1/moss.feral-039832.testnet",
+    "note": "Signs only the EIP 712 voucher. Needs no ETH."
+  },
+  "tool_provider": {
+    "address": "0xB06d3d94a063b90bAec90C7380a55D34ae10a32d",
+    "near_predecessor": "feral-039832.testnet",
+    "path": "feral-tool-provider-v1",
+    "note": "Receives the 7 TOOL test units. Address only."
+  },
+  "predicted": {
+    "token": "0x791e035df4c255d4b0539Ca80FFAEbe3A623603E",
+    "treasury": "0xCf6DEd4D863cb359F4D7E79734C99549E8Fd3A6C"
+  },
+  "job": {
+    "id": "bilingual-v1",
+    "paid": true,
+    "claimant": "moss.feral-039832.testnet",
+    "output_hash": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5"
+  },
+  "existing_tool_liability": null,
+  "needs_eth_wei": "2000000000000000",
+  "steps": [
+    {
+      "step": "mpc-sign-deploy-test-token",
+      "near_tx": "CUZ5Lz2x1nJ9otg331eDV72YjYJ9wbwYvuufukZTkoV2",
+      "near_explorer": "https://testnet.nearblocks.io/txns/CUZ5Lz2x1nJ9otg331eDV72YjYJ9wbwYvuufukZTkoV2",
+      "evm_hash_signed": "0xb9a49491106d1e40b1fc212edbe44537f6775ba812e60c5a47f55fd906b34c86"
+    },
+    {
+      "step": "deploy-test-token",
+      "sepolia_tx": "0x3a7821ba12b779ad73d9b26f0782874c9a0e6097d3d8188bd4bff824f2aad90d",
+      "sepolia_explorer": "https://sepolia.etherscan.io/tx/0x3a7821ba12b779ad73d9b26f0782874c9a0e6097d3d8188bd4bff824f2aad90d",
+      "block": 12096124,
+      "gas_used": "3393657",
+      "contract": "0x791e035df4c255d4b0539Ca80FFAEbe3A623603E"
+    },
+    {
+      "step": "mpc-sign-deploy-treasury",
+      "near_tx": "F1aVfg4mPLLce7wtFfJoeH2Kty8KkcF61obwC39jMinJ",
+      "near_explorer": "https://testnet.nearblocks.io/txns/F1aVfg4mPLLce7wtFfJoeH2Kty8KkcF61obwC39jMinJ",
+      "evm_hash_signed": "0x074e7fe9cca43fbc9fb4187478383232a9118feacf1c07b4b6ce236664dbe007"
+    },
+    {
+      "step": "deploy-treasury",
+      "sepolia_tx": "0x1a9567a9cf1de3a0b968699bd075f2d7dc5fa02145acde04eb4dc3e8a7ea4faa",
+      "sepolia_explorer": "https://sepolia.etherscan.io/tx/0x1a9567a9cf1de3a0b968699bd075f2d7dc5fa02145acde04eb4dc3e8a7ea4faa",
+      "block": 12096126,
+      "gas_used": "6894435",
+      "contract": "0xCf6DEd4D863cb359F4D7E79734C99549E8Fd3A6C"
+    },
+    {
+      "step": "configure-tools",
+      "near_tx": "BCM6zKGPz4NGfABh61GKZKgYG1MhGn7xEB5pc8fQW2Kd",
+      "near_explorer": "https://testnet.nearblocks.io/txns/BCM6zKGPz4NGfABh61GKZKgYG1MhGn7xEB5pc8fQW2Kd"
+    },
+    {
+      "step": "digest-agreement",
+      "local": "0x702f23a395a10a625ffc9b245b8a0c72126d97df1ea7061aaaa3f146f67a4cbd",
+      "treasury": "0x702f23a395a10a625ffc9b245b8a0c72126d97df1ea7061aaaa3f146f67a4cbd",
+      "controller": "702f23a395a10a625ffc9b245b8a0c72126d97df1ea7061aaaa3f146f67a4cbd"
+    },
+    {
+      "step": "request-tool-payment",
+      "near_tx": "C9SNWh3TT9bqHaU7y6KcrRV6Zj2BtHE7m8FxFgRtR57C",
+      "near_explorer": "https://testnet.nearblocks.io/txns/C9SNWh3TT9bqHaU7y6KcrRV6Zj2BtHE7m8FxFgRtR57C",
+      "returned": true
+    },
+    {
+      "step": "mpc-sign-redeem-tool-payment",
+      "near_tx": "5pwAuWvpDSJnCnn45fW6qxSRtN2jjiBASWDb8CSfZUeD",
+      "near_explorer": "https://testnet.nearblocks.io/txns/5pwAuWvpDSJnCnn45fW6qxSRtN2jjiBASWDb8CSfZUeD",
+      "evm_hash_signed": "0xcd3b13a1d4790e5cd2cd8f89516481e583223df6238a90542d480560e747beec"
+    },
+    {
+      "step": "redeem-tool-payment",
+      "sepolia_tx": "0x74855dbbf8696a0b285c12b8343f44005bf1d9344957d881e352c6f609bfd128",
+      "sepolia_explorer": "https://sepolia.etherscan.io/tx/0x74855dbbf8696a0b285c12b8343f44005bf1d9344957d881e352c6f609bfd128",
+      "block": 12096129,
+      "gas_used": "603406"
+    }
+  ],
+  "voucher": {
+    "campaign": "9bd989043e49341bf1d68edc4c9c425b6044da5292695a06ce576f3c2857f49b",
+    "job": "04753058e018d61a9466e8ffdc3e9fc1c31b4f0b7095f81957cce84948803d1f",
+    "creature": "1100ecce426fb996263f42f5d47ab2aed96dbc8662b059a9199170bfd796ebae",
+    "recipient": "b06d3d94a063b90baec90c7380a55d34ae10a32d",
+    "token": "791e035df4c255d4b0539ca80ffaebe3a623603e",
+    "amount": "7",
+    "output_hash": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5",
+    "nonce": 0,
+    "expiry": 1794212212
+  },
+  "voucher_digest": "0x702f23a395a10a625ffc9b245b8a0c72126d97df1ea7061aaaa3f146f67a4cbd",
+  "voucher_signature": "0xd69b599401809b9dde92704b786b0d33bc7eda0ce45160f84824ec3c14a606000f62633a915d8c70ce053dcbff9c9ec4b6e323abded7ab21a9d262c9324044821b",
+  "paid": {
+    "event": "ToolPaid",
+    "amount": "7",
+    "recipient": "0xB06d3d94a063b90bAec90C7380a55D34ae10a32d",
+    "sepolia_tx": "0x74855dbbf8696a0b285c12b8343f44005bf1d9344957d881e352c6f609bfd128"
+  },
+  "updated": "2026-11-09T07:47:28.189Z"
+}

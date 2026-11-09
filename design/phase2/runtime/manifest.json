@@ -17,7 +17,7 @@
             128.0,
             227.0
           ],
-          "bytes": 86216
+          "bytes": 87606
         },
         "128": {
           "file": "runtime/pip/pip_hatch_128.webp",
@@ -27,7 +27,7 @@
             64.0,
             113.5
           ],
-          "bytes": 32834
+          "bytes": 33468
         }
       },
       "frame_durations_ms": [
@@ -93,7 +93,7 @@
             128.0,
             227.0
           ],
-          "bytes": 83712
+          "bytes": 85116
         },
         "128": {
           "file": "runtime/ash/ash_death_128.webp",
@@ -103,7 +103,7 @@
             64.0,
             113.5
           ],
-          "bytes": 32390
+          "bytes": 32826
         }
       },
       "frame_durations_ms": [
@@ -162,7 +162,7 @@
             128.0,
             227.0
           ],
-          "bytes": 80732
+          "bytes": 78674
         },
         "128": {
           "file": "runtime/moss/moss_work_128.webp",
@@ -172,7 +172,7 @@
             64.0,
             113.5
           ],
-          "bytes": 27294
+          "bytes": 26642
         }
       }
     },
@@ -191,7 +191,7 @@
             128.0,
             227.0
           ],
-          "bytes": 19392
+          "bytes": 19978
         },
         "128": {
           "file": "runtime/moss/moss_fed_to_hungry_128.webp",
@@ -201,7 +201,7 @@
             64.0,
             113.5
           ],
-          "bytes": 7250
+          "bytes": 7548
         }
       },
       "duration_ms": 140,
@@ -223,7 +223,7 @@
             128.0,
             227.0
           ],
-          "bytes": 16654
+          "bytes": 17242
         },
         "128": {
           "file": "runtime/moss/moss_hungry_to_critical_128.webp",
@@ -233,7 +233,7 @@
             64.0,
             113.5
           ],
-          "bytes": 6414
+          "bytes": 6602
         }
       },
       "duration_ms": 140,
@@ -313,7 +313,7 @@
             128.0,
             227.0
           ],
-          "bytes": 15110
+          "bytes": 14522
         },
         "128": {
           "file": "runtime/echo/echo_fed_to_hungry_128.webp",
@@ -323,7 +323,7 @@
             64.0,
             113.5
           ],
-          "bytes": 6282
+          "bytes": 6144
         }
       },
       "duration_ms": 140,
@@ -345,7 +345,7 @@
             128.0,
             227.0
           ],
-          "bytes": 11666
+          "bytes": 13376
         },
         "128": {
           "file": "runtime/echo/echo_hungry_to_critical_128.webp",
@@ -355,7 +355,7 @@
             64.0,
             113.5
           ],
-          "bytes": 4974
+          "bytes": 5446
         }
       },
       "duration_ms": 140,

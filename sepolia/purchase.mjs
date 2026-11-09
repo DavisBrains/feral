@@ -9,7 +9,7 @@ import {writeFileSync, readFileSync, existsSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {JsonRpcProvider, Transaction, Interface, ContractFactory, getCreateAddress, formatEther, parseUnits, decodeBase58, toBeHex, computeAddress, Signature} from '../app/node_modules/ethers/lib.esm/index.js';
+import {JsonRpcProvider, Transaction, Interface, Contract, ContractFactory, getCreateAddress, formatEther, parseUnits, decodeBase58, toBeHex, computeAddress, Signature} from '../app/node_modules/ethers/lib.esm/index.js';
 import {digest as voucherDigest, parseSignature} from '../app/voucher.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -39,8 +39,8 @@ const derive = async (predecessor, p) => addrOf(await view(MPC, 'derived_public_
 async function nearCall(signer, receiver, method, args, gas, deposit) {
   const r = spawnSync('near', ['contract', 'call-function', 'as-transaction', receiver, method, 'json-args', JSON.stringify(args), 'prepaid-gas', gas, 'attached-deposit', deposit, 'sign-as', signer, 'network-config', 'testnet', 'sign-with-legacy-keychain', 'send'], {encoding: 'utf8', env: {...process.env, NO_COLOR: '1'}, timeout: 180000});
   const out = (r.stdout ?? '') + (r.stderr ?? '');
-  const hash = out.match(/Transaction ID:\s*([1-9A-HJ-NP-Za-km-z]{43,44})/)?.[1];
-  if (!hash) throw Error(`${method}: no transaction id (exit ${r.status})`);
+  const hash = (out.match(/Transaction ID:\s*([1-9A-HJ-NP-Za-km-z]{43,44})/) ?? out.match(/(?:transactions|txns)\/([1-9A-HJ-NP-Za-km-z]{43,44})/))?.[1];
+  if (!hash) { writeFileSync(path.join(here, `cli-${method}.log`), out.replace(/ed25519:[1-9A-HJ-NP-Za-km-z]{60,}/g, '[redacted]')); throw Error(`${method}: no transaction id (exit ${r.status})`); }
   let tx; for (let i = 0; i < 20; i++) { try { tx = await near('tx', {tx_hash: hash, sender_account_id: signer, wait_until: 'FINAL'}); break; } catch { await new Promise(s => setTimeout(s, 3000)); } }
   if (!tx) throw Error(`${method}: ${hash} not final`);
   if (tx.status.Failure) throw Error(`${method} failed ${hash}: ${JSON.stringify(tx.status.Failure)}`);
@@ -113,6 +113,14 @@ steps.push({step: 'configure-tools', near_tx: cfg.hash, near_explorer: cfg.explo
 const latest = await near('block', {finality: 'final'});
 const now = Math.floor(Number(latest.header.timestamp) / 1e9);
 const voucher = {campaign, job: hex32(JOB), creature: hex32(ACTOR), recipient: toolProvider.slice(2).toLowerCase(), token: tokenAddr.slice(2).toLowerCase(), amount: String(BILL), output_hash: job.output_hash, nonce: 0, expiry: now + 1800};
+// Three independent digests must agree before the one shot request:
+// local EIP 712, the deployed treasury, and the controller's Rust encoder.
+const evmVoucher = {campaign: '0x' + campaign, job: '0x' + voucher.job, creature: '0x' + voucher.creature, recipient: toolProvider, token: tokenAddr, amount: BILL, outputHash: '0x' + job.output_hash, nonce: 0n, expiry: BigInt(voucher.expiry)};
+const localDigest = voucherDigest({chain_id: Number(CHAIN_ID), treasury: treasuryAddr}, {...voucher, recipient: toolProvider, token: tokenAddr});
+const treasuryDigest = await new Contract(treasuryAddr, treasuryArt.abi, provider).digest(evmVoucher);
+const rustDigest = await view(CTRL, 'preview_tool_digest', {voucher});
+steps.push({step: 'digest-agreement', local: localDigest, treasury: treasuryDigest, controller: rustDigest}); save();
+if (localDigest !== treasuryDigest || localDigest.slice(2) !== rustDigest) throw Error('digest disagreement, refusing to request a signature');
 const req = await nearCall(ROOT, CTRL, 'request_tool_payment', {actor: ACTOR, job_id: JOB, voucher}, '300 Tgas', '0 NEAR');
 steps.push({step: 'request-tool-payment', near_tx: req.hash, near_explorer: req.explorer, returned: req.value}); save();
 const liability = await view(CTRL, 'tool_liability', {nonce: 0});
@@ -123,7 +131,7 @@ const voucherSig = parseSignature(JSON.parse(liability.signature), d, voucherSig
 
 // 5: redeem on Sepolia. A NEAR signature alone is never treated as paid.
 const iface = new Interface(treasuryArt.abi);
-const redeemData = iface.encodeFunctionData('redeem', [{campaign: '0x' + campaign, job: '0x' + voucher.job, creature: '0x' + voucher.creature, recipient: toolProvider, token: tokenAddr, amount: BILL, outputHash: '0x' + job.output_hash, nonce: 0n, expiry: BigInt(voucher.expiry)}, voucherSig]);
+const redeemData = iface.encodeFunctionData('redeem', [evmVoucher, voucherSig]);
 const rc = await evmTx(redeemData, treasuryAddr, nonce + 2, 'redeem-tool-payment');
 const paid = rc.logs.map(l => { try { return iface.parseLog(l); } catch { return null; } }).find(e => e?.name === 'ToolPaid');
 if (!paid || paid.args.amount !== BILL) throw Error('ToolPaid event missing');

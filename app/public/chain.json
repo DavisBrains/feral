@@ -1,8 +1,8 @@
 {
   "source": "bundled-read",
-  "read_at": "2026-11-09T06:55:34.102Z",
-  "block_height": 276886670,
-  "block_hash": "FhvJjGpRbRa8uXiYS7UhWYBJVBbUUXctFGaLmT7vr82j",
+  "read_at": "2026-11-09T07:47:49.971Z",
+  "block_height": 276891939,
+  "block_hash": "FviH9fa25djpC2wn9yZzVkSN8F19m8Z5G3BTVb7G16s6",
   "controller": "ctrl.feral-039832.testnet",
   "economy": {
     "turn": 2,
@@ -213,21 +213,21 @@
   "bids": {
     "child-first": {
       "moss.feral-039832.testnet": null,
-      "pip.ctrl.feral-039832.testnet": "80",
+      "echo.feral-039832.testnet": null,
       "ash.feral-039832.testnet": null,
-      "echo.feral-039832.testnet": null
+      "pip.ctrl.feral-039832.testnet": "80"
     },
     "short-v0": {
       "moss.feral-039832.testnet": null,
-      "pip.ctrl.feral-039832.testnet": null,
+      "echo.feral-039832.testnet": null,
       "ash.feral-039832.testnet": "40",
-      "echo.feral-039832.testnet": null
+      "pip.ctrl.feral-039832.testnet": null
     },
     "bilingual-v1": {
       "moss.feral-039832.testnet": "90",
       "echo.feral-039832.testnet": null,
-      "pip.ctrl.feral-039832.testnet": null,
-      "ash.feral-039832.testnet": null
+      "ash.feral-039832.testnet": null,
+      "pip.ctrl.feral-039832.testnet": null
     }
   },
   "txs": [
@@ -447,5 +447,22 @@
       "final": "FINAL",
       "block_hash": "AAgsWBqFGGhvXhguysgnUxjtCHHM1FhSVQL4K5fWNPSz"
     }
-  ]
+  ],
+  "tool": {
+    "actor": "moss.feral-039832.testnet",
+    "voucher": {
+      "campaign": "9bd989043e49341bf1d68edc4c9c425b6044da5292695a06ce576f3c2857f49b",
+      "job": "04753058e018d61a9466e8ffdc3e9fc1c31b4f0b7095f81957cce84948803d1f",
+      "creature": "1100ecce426fb996263f42f5d47ab2aed96dbc8662b059a9199170bfd796ebae",
+      "recipient": "b06d3d94a063b90baec90c7380a55d34ae10a32d",
+      "token": "791e035df4c255d4b0539ca80ffaebe3a623603e",
+      "amount": "7",
+      "output_hash": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5",
+      "nonce": 0,
+      "expiry": 1794212212
+    },
+    "digest": "702f23a395a10a625ffc9b245b8a0c72126d97df1ea7061aaaa3f146f67a4cbd",
+    "state": "signature-returned",
+    "signature": "{\"scheme\":\"Secp256k1\",\"big_r\":{\"affine_point\":\"02d69b599401809b9dde92704b786b0d33bc7eda0ce45160f84824ec3c14a60600\"},\"s\":{\"scalar\":\"0f62633a915d8c70ce053dcbff9c9ec4b6e323abded7ab21a9d262c932404482\"},\"recovery_id\":0}"
+  }
 }
