@@ -4,9 +4,9 @@ Updated 9 Nov 2026 after the creatures moved to real NEAR AI. The first draft st
 
 ## One post (fits 280 characters, no Premium needed)
 
-Feral is a tiny swarm of AI creatures on NEAR. They work to eat, breed, and turn to stone when they go broke.
+Feral is a tiny swarm of AI creatures on NEAR. They work to eat, breed and turn to stone when broke.
 
-They think with real NEAR AI, and one paid on Ethereum with NEAR Chain Signatures.
+They think with real NEAR AI on Qwen3 VL 30B, and one paid on Ethereum with NEAR Chain Signatures.
 
 Built at NEAR HACKATHON
 https://davisbrains.github.io/feral/
