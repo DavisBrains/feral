@@ -345,7 +345,7 @@ renderAllTx(); renderAttacks(); renderLedger(); renderSource('bundled'); update(
 if (OFFLINE) { $('#pl-mode').innerHTML = `<div class="f-mode"><button aria-pressed="true">${ico('replay')}Recorded proof run</button></div>`; $('#season').remove(); }
 // Live play exists only in the web build. The offline file has no keeper.
 if (!OFFLINE) {
-  const api = params.get('keeper') ?? (import.meta as any).env?.VITE_KEEPER_URL ?? '';
+  const api = ((import.meta as any).env?.DEV ? params.get('keeper') : null) ?? (import.meta as any).env?.VITE_KEEPER_URL ?? '';
   const wantLive = params.get('mode') !== 'replay';
   import('./play').then(({ startPlay }) => {
     play = startPlay({ show: showLive, mode: () => mode, switchTo, reduced: () => reduced, relabel: () => { renderNotes(); updateLabels(); } }, api);
