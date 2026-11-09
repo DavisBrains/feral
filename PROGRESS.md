@@ -10,3 +10,7 @@
 - Live cards now use design/phase3/card/render-card.mjs (copied to keeper/card.mjs), inlined in the page after a SHA-256 check against the settled hash. Proof run card untouched.
 - Season 2 turn 2: Moss bid 8qdF2RRk…, award HKqDqmqK…, buy_translation 8EbtUJJA…, settle AFCxJUYe… (first field case card, s2-t1-m), tick 56DTZi7M….
 - Tests: app 30 pass, keeper 9 pass, arena cargo 30 pass. Offline file 1.13 MB gzip (budget 1.2 MB), habitat art re-encoded for the offline file only.
+- NEAR AI Cloud adapter (keeper/models.mjs). Order NEAR AI Cloud (Qwen/Qwen3-VL-30B-A3B-Instruct), local Qwen fallback, fixed policy. One probe call returned 402 no_limit_configured. Billing, auth and rate errors open a breaker that is saved to keeper/data, so no repeat calls until the wait ends. Key read from env or /home/box/.secrets/near-ai.env, never logged or committed.
+- Season 2 turn 3 answered by the local fallback with NEAR AI skipped for no credits, no NEAR AI call made. post_job H7rHsJ7E…, bid CRYmiu9H…, award 28Fi9eJR…, buy_translation mebytnvN…, settle CNf6QhD1…, tick FnRpdrNz….
+- Plain translation demand. Arena change and tests done (33 cargo tests), wasm built to arena/pending (sha256 522b7d1d…). Deploy was blocked pending David's approval, so the option shows switched off until FERAL_TRANSLATION_DEMAND=1.
+- README merged into docs/release/README.draft.md with a phone PDF, LICENSE MIT added, HOSTING.md rewritten for free no card hosting.

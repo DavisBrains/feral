@@ -11,8 +11,8 @@ const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
 
 const sha = s => createHash('sha256').update(s).digest('hex');
 export class Engine {
-  constructor({ dataDir, model, chain = near, now = () => Date.now() }) {
-    this.dir = dataDir; this.model = model; this.chain = chain; this.now = now;
+  constructor({ dataDir, model, chain = near, now = () => Date.now(), translationDemand = false }) {
+    this.dir = dataDir; this.model = model; this.chain = chain; this.now = now; this.translationDemand = translationDemand;
     mkdirSync(path.join(dataDir, 'out'), { recursive: true });
     this.journalFile = path.join(dataDir, 'journal.jsonl');
     this.log = existsSync(this.journalFile) ? readFileSync(this.journalFile, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
@@ -63,8 +63,8 @@ export class Engine {
       const life = id => { const l = snap.lives.find(x => x.id === id); if (!l) throw Object.assign(new Error('unknown creature'), { status: 400 }); return l; };
       let r;
       if (a.type === 'demand') {
-        const kind = Number(a.kind); if (![0, 1].includes(kind)) throw Object.assign(new Error('demand'), { status: 400 });
-        r = await this.tx('set_demand', { kind }, { ...ctx, label: `You pinned ${kind === 1 ? 'bilingual caption cards' : 'short captions'} on the demand board` });
+        const kind = Number(a.kind); if (![0, 1, ...(this.translationDemand ? [2] : [])].includes(kind)) throw Object.assign(new Error('demand'), { status: 400 });
+        r = await this.tx('set_demand', { kind }, { ...ctx, label: `You pinned ${['short captions', 'bilingual caption cards', 'plain translation'][kind]} on the demand board` });
       } else if (a.type === 'feed') {
         const l = life(a.actor); r = await this.tx('feed', { actor: l.id }, { ...ctx, label: `You fed ${cap(l.life.name)} one meal of 10 MUNCH` });
       } else if (a.type === 'sponsor') {
@@ -119,13 +119,20 @@ export class Engine {
         const winner = snap.lives.find(l => l.id === aw.result);
         const en = this.meta.lines[j.id] ?? LINES[0];
         let es = null, translator = null, tmode = null;
+        if (j.kind === 2) { // plain translation, Spanish only, no card
+          this.progress = `${winner.life.name} is translating`;
+          const t = await translate(en, this.model);
+          this.record({ ...ctx, kind: 'decision', label: `${cap(winner.life.name)} translated the line (${t.mode === 'live-model' ? t.provider_label : 'supplied fallback'})`, actor: winner.id, translation: { en, es: t.es, ...t } });
+          await this.tx('settle', { job_id: j.id, output_hash: sha(t.es) }, { ...ctx, kind: 'turn', label: `${cap(winner.life.name)} delivers the Spanish line and is paid` });
+          continue;
+        }
         if (j.kind === 1) {
           const tr = snap.lives.filter(l => l.life.active && l.life.genome.job === 2 && l.id !== winner.id).sort((a, b) => a.life.genome.price - b.life.genome.price)[0];
           if (!tr) { this.record({ ...ctx, kind: 'turn', label: `${cap(winner.life.name)} found no living translator. The bilingual card cannot be delivered.` }); continue; }
           this.progress = `${tr.life.name} is translating`;
           const t = await translate(en, this.model);
-          es = t.es; translator = tr.life.name; tmode = t.mode === 'live-model' ? `${t.model} live` : 'supplied text';
-          this.record({ ...ctx, kind: 'decision', label: `${cap(tr.life.name)} translated the line (${t.mode === 'live-model' ? 'live model' : 'supplied fallback'})`, actor: tr.id, translation: { en, es, ...t } });
+          es = t.es; translator = tr.life.name; tmode = t.mode === 'live-model' ? `${t.model} via ${t.provider_label} live` : 'supplied text';
+          this.record({ ...ctx, kind: 'decision', label: `${cap(tr.life.name)} translated the line (${t.mode === 'live-model' ? t.provider_label : 'supplied fallback'})`, actor: tr.id, translation: { en, es, ...t } });
           const bt = await this.tx('buy_translation', { job_id: j.id, provider: tr.id, translation_hash: sha(es) }, { ...ctx, kind: 'turn', label: `${cap(winner.life.name)} pays ${cap(tr.life.name)} for the translation` });
           if (!bt.ok) continue;
         }

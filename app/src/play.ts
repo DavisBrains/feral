@@ -57,7 +57,7 @@ export function startPlay(host: PlayHost, api: string) {
     if (body.type === 'feed') return [`Fed ${nameOf(body.actor)} ${UPKEEP} MUNCH`, 'It went straight to their balance on chain.'];
     if (body.type === 'sponsor') return [`You back ${nameOf(body.actor)}`, `${body.amount} MUNCH moved from your pouch to their balance.`];
     if (body.type === 'job') return ['Job pinned', `Bids open next turn. ${body.reward} MUNCH waits in escrow.`];
-    if (body.type === 'demand') return ['Notice pinned', `${body.kind === 1 ? 'Bilingual cards' : 'Short captions'} pay ${MARKET_JOB} from next turn.`];
+    if (body.type === 'demand') return ['Notice pinned', `${['Short captions', 'Bilingual cards', 'Plain translations'][body.kind] ?? 'That work'} pay ${MARKET_JOB} from next turn.`];
     if (body.type === 'goal') return ['Goal set', `${nameOf(body.actor)} will ${['work', 'save and not breed', 'breed when it can'][body.goal]}.`];
     return [e.label, 'Confirmed on NEAR testnet.'];
   }
@@ -97,16 +97,24 @@ export function startPlay(host: PlayHost, api: string) {
   const pouch = (s: any) => ({ left: Number(s.budget_left), total: Number(s.budget) });
   const blocked = () => !!pending || !!st?.busy || Date.now() < limitedUntil;
 
+  const mname = (m: any) => String(m ?? '').replace(/^.*\//, '').replace('-Instruct', '');
+  // who actually answered: NEAR AI Cloud, the local Qwen fallback, or neither
+  const via = (x: any) => x?.provider === 'near-ai' ? `NEAR AI Cloud · ${mname(x.model)}` : x?.provider === 'local-qwen' || (x?.mode === 'live-model' && !x?.provider) ? `Local Qwen fallback · ${mname(x.model)}` : 'Fixed policy';
+  const skippedNote = (x: any) => x?.skipped?.length ? ` · ${x.skipped.map((k: any) => `${k.label} ${k.kind === 'billing' ? 'out of credits' : k.kind === 'rate' ? 'rate limited' : 'unavailable'}`).join(', ')}` : '';
+  function answeredBy(turn = lastTurn()) {
+    const rows = seasonLog().filter((e: any) => e.kind === 'decision' && e.turn === turn).map((e: any) => e.translation ?? e.decision).filter((x: any) => x && x.mode !== 'only-legal-action');
+    const names = [...new Set(rows.map((x: any) => via(x).split(' · ')[0]))];
+    return names.length ? ` · answered by ${esc(names.join(' and '))}` : '';
+  }
   function decisionNotes(turn = lastTurn()): NoteData[] {
     return seasonLog().filter((e: any) => e.kind === 'decision' && e.turn === turn).map((e: any) => {
       const l = lives().find(x => x.id === e.actor), name = cap(l?.life.name ?? 'creature'), key = l ? artOf(l.id) : 'pip';
       const t = e.translation, d = e.decision, a = d?.action ?? {};
-      if (t) return { key, who: name, act: `Translated “${t.en}”`, why: `“${t.es}”`, whyKind: 'translation', src: t.mode === 'live-model' ? `Translated this turn · ${String(t.model).replace('Qwen/', '').replace('-Instruct', '')} · ${t.seconds}s · unreviewed` : `Supplied translation · ${t.reason ?? 'no model reachable'}`, dim: false } as NoteData;
+      if (t) return { key, who: name, act: `Translated “${t.en}”`, why: `“${t.es}”`, whyKind: 'translation', src: t.mode === 'live-model' ? `Translated this turn · ${via(t)} · ${t.seconds}s · unreviewed${skippedNote(t)}` : `Supplied translation · no model answered${skippedNote(t)}`, dim: false } as NoteData;
       const act = a.action === 'bid' ? `Bid ${a.price} on job ${a.job}` : a.action === 'wait' ? 'Waited' : a.action === 'breed' || a.action === 'reproduce' ? 'Paid for a child' : cap(String(a.action ?? 'acted'));
-      const model = String(d?.model ?? '').replace('Qwen/', '').replace('-Instruct', '');
-      if (d?.mode === 'live-model') return { key, who: name, act, why: d.reason ?? null, whyKind: 'model', src: `Decided this turn · ${model} · 1 of ${d.options} legal moves${d.reason ? ' · its own words' : ''}`, dim: !l?.life.active } as NoteData;
+      if (d?.mode === 'live-model') return { key, who: name, act, why: d.reason ?? null, whyKind: 'model', src: `Decided this turn · ${via(d)} · 1 of ${d.options} legal moves${d.reason ? ' · its own words' : ''}${skippedNote(d)}`, dim: !l?.life.active } as NoteData;
       if (d?.mode === 'only-legal-action') return { key, who: name, act, why: 'It had one legal move, so no model was asked.', whyKind: 'policy', src: 'Only legal move · no model call', dim: !l?.life.active } as NoteData;
-      return { key, who: name, act, why: `Its written policy ${e.policy ?? ''}`.trim(), whyKind: 'policy', src: `Fixed policy · ${d?.reason ?? 'no model reachable'}`, dim: !l?.life.active } as NoteData;
+      return { key, who: name, act, why: `Its written policy ${e.policy ?? ''}`.trim(), whyKind: 'policy', src: `Fixed policy · no model answered${skippedNote(d)}`, dim: !l?.life.active } as NoteData;
     });
   }
 
@@ -120,14 +128,18 @@ export function startPlay(host: PlayHost, api: string) {
     if (err && !st) { put(banner, ''); put(hero, `<div class="f-panel f-empty err"><img src="${rootCorner}" alt=""><b>The keeper went quiet</b><span>Live play needs the keeper service. The recorded proof run still works.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`); put(body, ''); dock(null); return; }
     if (!st) { put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Reading the chain</b><span>Asking the arena contract for this season.</span></div>`); return; }
     const s = st.chain.season, m = st.model;
-    const modelLine = m.mode === 'live-model' ? `Creatures decide with ${esc(String(m.model).replace('Qwen/', ''))}, live on the keeper.` : `<b>Fixed policy.</b> No model is reachable from this host, so creatures follow their written policy. Every decision says so.`;
+    const near = (m.providers ?? []).find((p: any) => p.provider === 'near-ai');
+    const nearDown = near && !near.ready ? ` NEAR AI Cloud is ${near.blocked?.kind === 'billing' ? 'out of credits' : near.blocked?.kind === 'rate' ? 'rate limited' : 'unavailable'} for now.` : '';
+    const modelLine = m.mode !== 'live-model' ? `<b>Fixed policy.</b>${nearDown} No model is ready, so creatures follow their written policy. Every decision says so.`
+      : m.provider === 'near-ai' ? `Creatures decide with ${esc(mname(m.model))} on NEAR AI Cloud${near?.confirmed ? '' : ', tried first each turn'}. Each note says which model answered.`
+      : `<b>Local Qwen fallback.</b>${nearDown} Creatures decide with ${esc(mname(m.model))} on the keeper. Each note says which model answered.`;
     put(banner, `<div class="f-banner is-live"><span class="f-live"></span><span><b>Live season${s ? ' ' + s.id : ''}.</b> Your moves are sent to NEAR testnet for real. ${modelLine}</span></div>`);
     const active = s && s.status === 'live' && !s.closed, you = st.you, pilot = you.pilot && active;
     put(lede, s ? `You get ${nf(s.budget)} MUNCH for the whole season. Spend it on meals, sponsors and jobs. The creatures decide the rest.` : 'Start a live season to play. Every move is a NEAR testnet transaction.');
     put(hero, heroHtml(s, active, you));
     put(body, !s ? '' : `<div class="rowA">${outcomeHtml(s)}${pilot ? pouchHtml(s) : watchHtml(s, you)}${receiptHtml(s)}</div>
       ${pilot ? `<div class="rowB">${demandHtml(s)}${sponsorHtml(s)}${feedHtml(s)}${jobHtml(s)}</div>` : ''}
-      <div class="rowC">${logHtml(s)}<div class="chose"><span class="caps c2">What they chose · turn ${lastTurn()}</span><div class="notes">${decisionNotes().map(noteHtml).join('') || '<div class="f-panel f-empty"><img src="' + sprout + '" alt=""><b>No decisions yet</b><span>Advance a turn and their choices land here.</span></div>'}</div></div></div>
+      <div class="rowC">${logHtml(s)}<div class="chose"><span class="caps c2">What they chose · turn ${lastTurn()}${answeredBy()}</span><div class="notes">${decisionNotes().map(noteHtml).join('') || '<div class="f-panel f-empty"><img src="' + sprout + '" alt=""><b>No decisions yet</b><span>Advance a turn and their choices land here.</span></div>'}</div></div></div>
       <div class="rowE">${treeHtml(s)}${pilot ? goalSetHtml(s) : ''}${workHtml(s)}${keyHtml()}</div>`);
     dock(s, pilot);
   }
@@ -196,9 +208,9 @@ export function startPlay(host: PlayHost, api: string) {
   const grab = '<div class="grab" aria-hidden="true"></div>';
   function demandHtml(s: any) {
     const pick = ui.demandPick < 0 ? s.demand : ui.demandPick, changed = pick !== s.demand, dis = blocked();
-    const opt = (k: number, t: string, sub: string) => `<button class="f-opt${pick === k ? ' is-on' : ''}" data-demand="${k}" aria-pressed="${pick === k}"><span class="rad"></span><span class="t">${t}<small>${sub}</small></span><span class="pay">${MARKET_JOB} MUNCH</span></button>`;
+    const opt = (k: number, t: string, sub: string, off = false) => `<button class="f-opt${pick === k ? ' is-on' : ''}${off ? ' is-disabled' : ''}" data-demand="${k}" aria-pressed="${pick === k}"${off ? ' disabled' : ''}><span class="rad"></span><span class="t">${t}<small>${sub}</small></span><span class="pay">${off ? 'Soon' : `${MARKET_JOB} MUNCH`}</span></button>`;
     const shock = seasonLog().filter((e: any) => e.method === 'set_demand' && e.ok).at(-1);
-    return `<div class="f-paper f-notice acts sheet-demand${sheetCls('demand')}" data-sheet="demand">${grab}<img class="pin" src="${pinBrass}" alt=""><span class="kick caps">Field notice · turn ${s.turn}</span><h3>Wanted this turn</h3><p>The market posts one ${MARKET_JOB} MUNCH job each turn for the work pinned here. Changing it is your demand shock. Old jobs lose their market.</p><div class="opts">${opt(0, 'Short captions', 'One line, English only')}${opt(1, 'Bilingual caption cards', 'English and Spanish on one card')}</div><div class="f-cost"><span class="c">${changed ? 'Costs nothing from your pouch' : shock ? `You pinned this on turn ${shock.turn}` : 'Season default'}</span><button class="f-btn${changed && !dis ? '' : ' is-disabled'}" data-act="demand" ${changed && !dis ? '' : 'disabled'}>${pending === 'demand' ? '<span class="f-seeds"><i></i><i></i><i></i></span>Pinning' : changed ? `${ico('job', 'ico-s')}Pin the new notice` : 'Already pinned'}</button></div>${changed ? '' : '<span class="f-stampmark">Pinned</span>'}</div>`;
+    return `<div class="f-paper f-notice acts sheet-demand${sheetCls('demand')}" data-sheet="demand">${grab}<img class="pin" src="${pinBrass}" alt=""><span class="kick caps">Field notice · turn ${s.turn}</span><h3>Wanted this turn</h3><p>The market posts one ${MARKET_JOB} MUNCH job each turn for the work pinned here. Changing it is your demand shock. Old jobs lose their market.</p><div class="opts">${opt(0, 'Short captions', 'One line, English only')}${opt(1, 'Bilingual caption cards', 'English and Spanish on one card')}${opt(2, 'Plain translation', st.translation_demand ? 'Spanish only, no card' : 'Spanish only, no card. Waits on an arena upgrade', !st.translation_demand)}</div><div class="f-cost"><span class="c">${changed ? 'Costs nothing from your pouch' : shock ? `You pinned this on turn ${shock.turn}` : 'Season default'}</span><button class="f-btn${changed && !dis ? '' : ' is-disabled'}" data-act="demand" ${changed && !dis ? '' : 'disabled'}>${pending === 'demand' ? '<span class="f-seeds"><i></i><i></i><i></i></span>Pinning' : changed ? `${ico('job', 'ico-s')}Pin the new notice` : 'Already pinned'}</button></div>${changed ? '' : '<span class="f-stampmark">Pinned</span>'}</div>`;
   }
   const picks = (sel: string, attr: string, sub: (l: any) => string) => `<div class="f-choose">${lives().map(l => `<button class="f-pick${l.id === sel ? ' is-on' : ''}${l.life.active ? '' : ' is-disabled'}" data-${attr}="${esc(l.id)}" ${l.life.active ? '' : 'disabled'} aria-pressed="${l.id === sel}"><img src="${imgOf(l)}" alt="">${esc(cap(l.life.name))} <span class="sub">${sub(l)}</span></button>`).join('')}</div>`;
   const spentBtn = (left: number, need: number, ok: boolean, act: string, icon: string, label: string, verb: string) => {
@@ -215,7 +227,7 @@ export function startPlay(host: PlayHost, api: string) {
   }
   function jobHtml(s: any) {
     const { left } = pouch(s), ok = left >= ui.jobReward && !blocked();
-    return `<div class="f-paper f-notice acts tilt-r${sheetCls('job')}" data-sheet="job">${grab}<img class="pin" src="${pinBrass}" alt=""><span class="kick caps">Job posting · ${s.demand === 1 ? 'bilingual card' : 'short caption'}</span><h3>Post a job</h3><p>Pay comes from your pouch and waits in escrow. Creatures bid next turn and the lowest fair bid wins.</p>
+    return `<div class="f-paper f-notice acts tilt-r${sheetCls('job')}" data-sheet="job">${grab}<img class="pin" src="${pinBrass}" alt=""><span class="kick caps">Job posting · ${['short caption', 'bilingual card', 'plain translation'][s.demand] ?? 'job'}</span><h3>Post a job</h3><p>Pay comes from your pouch and waits in escrow. Creatures bid next turn and the lowest fair bid wins.</p>
     <div class="f-field"><label for="pl-line">What needs doing</label><select id="pl-line" class="f-input">${st.lines.map((l: string, i: number) => `<option value="${i}"${i === ui.jobLine ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div>
     <div class="jobgrid"><div class="f-field"><label>Reward</label><div class="f-step"><button data-rstep="-10" aria-label="Less" ${ui.jobReward <= 30 ? 'disabled' : ''}>−</button><span>${ui.jobReward}</span><button data-rstep="10" aria-label="More" ${ui.jobReward >= 100 ? 'disabled' : ''}>+</button></div><span class="f-help">MUNCH, from 30</span></div>
     <div class="f-field"><label>Open for</label><div class="f-seg" role="group" aria-label="Open for turns">${[1, 2, 3].map(n => `<button class="${n === ui.jobTurns ? 'on' : ''}" data-turns="${n}" aria-pressed="${n === ui.jobTurns}">${n}</button>`).join('')}</div><span class="f-help">turns</span></div></div>

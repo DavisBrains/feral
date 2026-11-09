@@ -8,7 +8,8 @@ export const CHANGES = ['price down', 'price up', 'breeding floor down', 'breedi
 export const GOALS = ['work', 'save', 'breed'];
 export const UPKEEP = 10, CHILD_MUNCH = 60, PARENT_FLOOR = 20, MAX_LIVES = 7;
 
-export const canTake = (g, kind) => g.job === 0 ? kind === 0 : g.job === 1 ? kind <= 1 : false;
+// mirrors Genome::can_take in arena/src/lib.rs (translators take plain translation jobs after the pending arena upgrade)
+export const canTake = (g, kind) => g.job === 0 ? kind === 0 : g.job === 1 ? kind <= 1 : kind === 2;
 export function mutate(g, change) {
   const c = { ...g };
   if (change === 0) { if (c.price === 0) return null; c.price--; }
@@ -32,7 +33,7 @@ export const breedNeed = g => Math.max(FLOORS[g.floor], CHILD_MUNCH + PARENT_FLO
 export function options(life, snap) {
   const l = life.life, g = l.genome, bal = Number(life.balance), s = snap.season;
   const out = [{ action: 'wait' }];
-  if (!l.active || g.job === 2) return out;
+  if (!l.active) return out;
   for (const j of snap.jobs) {
     if (j.state !== 'open' || j.demand_version !== s.demand_version || s.turn > j.expiry_turn || !canTake(g, j.kind)) continue;
     if (j.bids.some(b => b.actor === life.id)) continue;
@@ -97,12 +98,13 @@ export async function decide(life, snap, model) {
   if (model) {
     try {
       const r = await model.choose(observation(life, snap), opts);
-      return { action: validate(r.decision, opts), mode: 'live-model', model: r.model, seconds: r.seconds, options: opts.length, reason: typeof r.reason === 'string' && r.reason.length <= 200 ? r.reason : null };
+      return { action: validate(r.decision, opts), mode: 'live-model', provider: r.provider ?? 'local-qwen', provider_label: r.provider_label ?? 'Local Qwen', model: r.model, seconds: r.seconds, options: opts.length,
+        reason: typeof r.reason === 'string' && r.reason.length <= 200 ? r.reason : null, ...(r.skipped?.length ? { skipped: r.skipped } : {}) };
     } catch (e) {
-      return { action: fixedPolicy(life, opts), mode: 'fixed-policy', reason: 'model unavailable or invalid: ' + String(e.message).slice(0, 100), options: opts.length };
+      return { action: fixedPolicy(life, opts), mode: 'fixed-policy', provider: 'fixed-policy', provider_label: 'Fixed policy', reason: 'no model answered, ' + String(e.message).slice(0, 160), options: opts.length, ...(e.skipped ? { skipped: e.skipped } : {}) };
     }
   }
-  return { action: fixedPolicy(life, opts), mode: 'fixed-policy', reason: 'no model endpoint on this host', options: opts.length };
+  return { action: fixedPolicy(life, opts), mode: 'fixed-policy', provider: 'fixed-policy', provider_label: 'Fixed policy', reason: 'no model endpoint on this host', options: opts.length };
 }
 const SPANISH = { 'Fresh bread every morning.': 'Pan fresco cada mañana.', 'Thank you for watching.': 'Gracias por mirar.', 'The market opens at nine.': 'El mercado abre a las nueve.', 'Rain is coming tonight.': 'Esta noche viene la lluvia.', 'Meet me at the river.': 'Nos vemos en el río.', 'Our shop is open today.': 'Nuestra tienda abre hoy.', 'Every balance can be checked on the chain.': 'Cada saldo se puede comprobar en la cadena.' };
 export const LINES = Object.keys(SPANISH);
@@ -114,8 +116,8 @@ export function checkTranslation(en, es) {
 }
 export async function translate(en, model) {
   if (model) {
-    try { const r = await model.translate(en); return { es: checkTranslation(en, r.es), mode: 'live-model', model: r.model, seconds: r.seconds }; }
-    catch (e) { return { es: SPANISH[en], mode: 'supplied-translation', reason: String(e.message).slice(0, 100) }; }
+    try { const r = await model.translate(en); return { es: checkTranslation(en, r.es), mode: 'live-model', provider: r.provider ?? 'local-qwen', provider_label: r.provider_label ?? 'Local Qwen', model: r.model, seconds: r.seconds, ...(r.skipped?.length ? { skipped: r.skipped } : {}) }; }
+    catch (e) { return { es: SPANISH[en], mode: 'supplied-translation', provider: 'supplied', provider_label: 'Supplied text', reason: String(e.message).slice(0, 160), ...(e.skipped ? { skipped: e.skipped } : {}) }; }
   }
   return { es: SPANISH[en], mode: 'supplied-translation', reason: 'no model endpoint on this host' };
 }

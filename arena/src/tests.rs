@@ -333,3 +333,30 @@ fn tool_reconcile_twice_refused() {
     a.reconcile_tool_paid(n, format!("0x{}", "1".repeat(64)));
     a.reconcile_tool_paid(n, format!("0x{}", "2".repeat(64)));
 }
+
+#[test]
+fn plain_translation_job_paid_to_translator_without_card() {
+    let mut a = setup();
+    a.set_demand(2);
+    a.post_job("t1".into(), U128(60), true, 2);
+    a.bid(echo(1), "t1".into(), U128(40));
+    assert_eq!(a.award("t1".into()), echo(1));
+    a.settle("t1".into(), h(4));
+    assert_eq!(bal(&a, &echo(1)), 90);
+    assert_eq!(a.season_ref().budget_left.0, 110); // 20 unspent reward returns to the visitor
+    conserved(&a);
+}
+#[test]
+#[should_panic(expected = "policy does not take this job")]
+fn card_maker_cannot_take_plain_translation() {
+    let mut a = setup();
+    a.set_demand(2);
+    a.post_job("t1".into(), U128(60), true, 2);
+    a.bid(moss(1), "t1".into(), U128(60));
+}
+#[test]
+#[should_panic(expected = "demand change bounds")]
+fn demand_kind_out_of_range_refused() {
+    let mut a = setup();
+    a.set_demand(3);
+}

@@ -3,12 +3,13 @@
 // on-chain visitor budget, a global season cap, and a gas floor check on the
 // keeper's function-call key.
 import http from 'node:http';
-import { readFileSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, statSync, writeFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import * as near from './near.mjs';
 import { Engine } from './engine.mjs';
-import { modelAdapter, describe, LINES, KINDS, CHANGES, GOALS } from './policy.mjs';
+import { describe, LINES, KINDS, CHANGES, GOALS } from './policy.mjs';
+import { loadEnvFile, nearAiAdapter, localAdapter, modelChain } from './models.mjs';
 
 const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || '127.0.0.1';
@@ -18,8 +19,17 @@ const ORIGIN = process.env.FERAL_ALLOW_ORIGIN || '';
 const LEASE_MS = Number(process.env.FERAL_LEASE_MS || 15 * 60 * 1000);
 const SEASONS_PER_HOUR = Number(process.env.FERAL_SEASONS_PER_HOUR || 6);
 const MIN_ALLOWANCE = 20_000_000_000_000_000_000_000n; // 0.02 NEAR of gas left on the key
-const model = modelAdapter(process.env.FERAL_MODEL_URL ?? 'http://127.0.0.1:11436');
-const engine = new Engine({ dataDir: DATA, model });
+// NEAR AI Cloud first, local Qwen as the labelled fallback, fixed policy last.
+// The key comes from NEAR_AI_KEY, or the env file on this box. It is never logged.
+const jsonState = f => ({ load: () => existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null, save: j => { mkdirSync(path.dirname(f), { recursive: true }); writeFileSync(f, JSON.stringify(j)); } });
+loadEnvFile(process.env.FERAL_NEAR_AI_ENV_FILE ?? '/home/box/.secrets/near-ai.env');
+const model = modelChain([
+  process.env.FERAL_NEAR_AI === '0' ? null : nearAiAdapter({ key: process.env.NEAR_AI_KEY, model: process.env.NEAR_AI_MODEL || undefined, state: jsonState(path.join(DATA, 'near-ai-state.json')) }),
+  process.env.FERAL_MODEL_URL === '' ? null : localAdapter(process.env.FERAL_MODEL_URL ?? 'http://127.0.0.1:11436'),
+]);
+// Plain translation demand needs the arena upgrade in arena/pending. Off until it is deployed.
+const TRANSLATION_DEMAND = process.env.FERAL_TRANSLATION_DEMAND === '1';
+const engine = new Engine({ dataDir: DATA, model, translationDemand: TRANSLATION_DEMAND });
 const sha = s => createHash('sha256').update(s).digest('hex');
 
 // ---------- limits ----------
@@ -34,8 +44,8 @@ let modelState = { mode: model ? 'checking' : 'fixed-policy', model: null, check
 async function checkModel() {
   if (!model) return modelState;
   if (Date.now() - modelState.checked < 20000) return modelState;
-  try { const h = await model.health(); modelState = { mode: 'live-model', model: h.model, checked: Date.now() }; }
-  catch { modelState = { mode: 'fixed-policy', model: null, checked: Date.now(), note: 'model endpoint unreachable, using the labelled fixed policy' }; }
+  try { const h = await model.health(); modelState = { mode: 'live-model', model: h.model, provider: h.provider, label: h.label, providers: h.providers, checked: Date.now() }; }
+  catch (e) { modelState = { mode: 'fixed-policy', model: null, provider: 'fixed-policy', label: 'Fixed policy', providers: e.providers ?? [], checked: Date.now(), note: 'no model provider is ready, using the labelled fixed policy' }; }
   return modelState;
 }
 let keyCache = { at: 0, v: null };
@@ -81,7 +91,7 @@ async function state(req) {
     chain: { ...chain, lives: chain.lives.map(l => ({ ...l, plain: describe(l.life.genome) })) },
     contract: near.CONTRACT, keeper_account: near.KEEPER, explorer: near.explorerAccount(near.CONTRACT),
     you: { pilot, can_start: ended || pilot || idle > LEASE_MS, lease_left_ms: Math.max(0, LEASE_MS - idle) },
-    busy: engine.busy, progress: engine.progress, model: m, key,
+    busy: engine.busy, progress: engine.progress, model: m, key, translation_demand: TRANSLATION_DEMAND,
     lines: LINES, kinds: KINDS, changes: CHANGES, goals: GOALS,
     log: s ? publicLog(s.id) : [],
   };
@@ -132,4 +142,4 @@ http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try { if (url.pathname.startsWith('/api/')) return await api(req, res, url); serveStatic(req, res, url); }
   catch (e) { console.error(e); json(res, e.status ?? 500, { error: String(e.message).slice(0, 200) }); }
-}).listen(PORT, HOST, () => console.log(`feral keeper on http://${HOST}:${PORT} · arena ${near.CONTRACT} · model ${model?.url ?? 'none (fixed policy)'}`));
+}).listen(PORT, HOST, () => console.log(`feral keeper on http://${HOST}:${PORT} · arena ${near.CONTRACT} · models ${model?.url ?? 'none (fixed policy)'}`));

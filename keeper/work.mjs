@@ -7,7 +7,7 @@ import { renderBilingual, renderShort } from './card.mjs';
 // Deterministic. Same inputs give the same SVG, so the hash settled on chain can be reproduced.
 export function renderCard({ en, es, maker, translator, job, season, turn, reward, translationMode }) {
   const M = maker[0].toUpperCase() + maker.slice(1), T = translator ? translator[0].toUpperCase() + translator.slice(1) : '';
-  const note = es && translationMode !== 'supplied text' ? `Spanish by ${String(translationMode).replace(/ live$/, '')}, unreviewed. Test tokens only.` : 'Valueless test tokens on NEAR testnet.';
+  const note = es && translationMode !== 'supplied text' ? `Spanish by ${String(translationMode).replace(/ live$/, '').replace(/^.*\//, '')}, unreviewed. Test tokens only.` : 'Valueless test tokens on NEAR testnet.';
   const svg = es
     ? renderBilingual({ title: `Season ${season} turn ${turn}`, segments: [{ en, es }], job, credit: `${T} ${translationMode === 'supplied text' ? 'used supplied Spanish' : 'translated live'}. ${M} set the card.`, paid: String(reward ?? ''), note })
     : renderShort({ caption: en, job, credit: `${M} wrote it alone.`, paid: String(reward ?? ''), note });

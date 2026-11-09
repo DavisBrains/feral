@@ -78,7 +78,8 @@ impl Genome {
         match self.job {
             0 => kind == 0,
             1 => kind == 0 || kind == 1,
-            _ => false,
+            // translators take plain translation jobs and sell translations to card makers
+            _ => kind == 2,
         }
     }
 }
@@ -302,7 +303,7 @@ impl Arena {
     pub fn set_demand(&mut self, kind: u8) {
         self.only_owner();
         let mut s = self.live_season();
-        require!(kind < 2 && kind != s.demand, "demand change bounds");
+        require!(kind < 3 && kind != s.demand, "demand change bounds");
         s.demand = kind;
         s.demand_version += 1;
         env::log_str(&format!("demand {} v{}", KINDS[kind as usize], s.demand_version));
