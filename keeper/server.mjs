@@ -174,7 +174,7 @@ function serveStatic(req, res, url) {
   res.end(readFileSync(f));
 }
 // Keep awake through judging, see awake.mjs. The ping only hits /healthz.
-if (process.env.FERAL_KEEP_AWAKE_URL) keepAwake({ url: process.env.FERAL_KEEP_AWAKE_URL, until: process.env.FERAL_KEEP_AWAKE_UNTIL, everyMs: Number(process.env.FERAL_KEEP_AWAKE_MS || 10 * 60e3) });
+if (process.env.FERAL_KEEP_AWAKE_URL) keepAwake({ url: process.env.FERAL_KEEP_AWAKE_URL, until: process.env.FERAL_KEEP_AWAKE_UNTIL, everyMs: Number(process.env.FERAL_KEEP_AWAKE_MS || 10 * 60e3), log: m => console.log(m) });
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try {
