@@ -1,0 +1,468 @@
+{
+  "source": "bundled-read",
+  "read_at": "2026-11-09T07:47:49.971Z",
+  "block_height": 276891939,
+  "block_hash": "FviH9fa25djpC2wn9yZzVkSN8F19m8Z5G3BTVb7G16s6",
+  "controller": "ctrl.feral-039832.testnet",
+  "economy": {
+    "turn": 2,
+    "demand": 1,
+    "market": "420",
+    "pending": "0",
+    "job_escrow": "90",
+    "burned": "50",
+    "supply": "950"
+  },
+  "creatures": [
+    {
+      "id": "moss.feral-039832.testnet",
+      "balance": "190",
+      "creature": {
+        "active": true,
+        "parent": null,
+        "strategy_hash": "8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf",
+        "mutation": 0,
+        "born_turn": 0,
+        "nonce": 1,
+        "pending": null,
+        "native_reserve": "140000000000000000000000"
+      },
+      "account": {
+        "amount": "10000000000000000000000",
+        "storage_usage": 182,
+        "code_hash": "11111111111111111111111111111111"
+      },
+      "life": {
+        "token_id": "moss.feral-039832.testnet",
+        "owner_id": "feral-039832.testnet",
+        "metadata": {
+          "title": "Feral life moss.feral-039832.testnet",
+          "description": "Goal and sponsorship permission. No right to drain creature funds.",
+          "media": null,
+          "media_hash": null,
+          "copies": null,
+          "issued_at": null,
+          "expires_at": null,
+          "starts_at": null,
+          "updated_at": null,
+          "extra": "{\"actor\":\"moss.feral-039832.testnet\",\"parent\":null,\"strategy_hash\":\"8f421e65e0d75e11096b3f73022f5c2002652aa507501038028e9df154430abf\"}",
+          "reference": null,
+          "reference_hash": null
+        },
+        "approved_account_ids": null
+      }
+    },
+    {
+      "id": "echo.feral-039832.testnet",
+      "balance": "155",
+      "creature": {
+        "active": true,
+        "parent": null,
+        "strategy_hash": "3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5",
+        "mutation": 2,
+        "born_turn": 0,
+        "nonce": 0,
+        "pending": null,
+        "native_reserve": "100000000000000000000000"
+      },
+      "account": {
+        "amount": "10000000000000000000000",
+        "storage_usage": 182,
+        "code_hash": "11111111111111111111111111111111"
+      },
+      "life": {
+        "token_id": "echo.feral-039832.testnet",
+        "owner_id": "feral-039832.testnet",
+        "metadata": {
+          "title": "Feral life echo.feral-039832.testnet",
+          "description": "Goal and sponsorship permission. No right to drain creature funds.",
+          "media": null,
+          "media_hash": null,
+          "copies": null,
+          "issued_at": null,
+          "expires_at": null,
+          "starts_at": null,
+          "updated_at": null,
+          "extra": "{\"actor\":\"echo.feral-039832.testnet\",\"parent\":null,\"strategy_hash\":\"3afa49b8ba6cc0816a2b1da6311b5cb87f3a194f8f4048b967cae5e8fce970b5\"}",
+          "reference": null,
+          "reference_hash": null
+        },
+        "approved_account_ids": null
+      }
+    },
+    {
+      "id": "ash.feral-039832.testnet",
+      "balance": "5",
+      "creature": {
+        "active": false,
+        "parent": null,
+        "strategy_hash": "f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a",
+        "mutation": 3,
+        "born_turn": 0,
+        "nonce": 0,
+        "pending": null,
+        "native_reserve": "20000000000000000000000"
+      },
+      "account": {
+        "amount": "9814053403811800000000",
+        "storage_usage": 182,
+        "code_hash": "11111111111111111111111111111111"
+      },
+      "life": {
+        "token_id": "ash.feral-039832.testnet",
+        "owner_id": "feral-039832.testnet",
+        "metadata": {
+          "title": "Feral life ash.feral-039832.testnet",
+          "description": "Goal and sponsorship permission. No right to drain creature funds.",
+          "media": null,
+          "media_hash": null,
+          "copies": null,
+          "issued_at": null,
+          "expires_at": null,
+          "starts_at": null,
+          "updated_at": null,
+          "extra": "{\"actor\":\"ash.feral-039832.testnet\",\"parent\":null,\"strategy_hash\":\"f632b56927977f9edbeb9cace93bb9445591d3899ec04071ddeb42133c34523a\"}",
+          "reference": null,
+          "reference_hash": null
+        },
+        "approved_account_ids": null
+      }
+    },
+    {
+      "id": "pip.ctrl.feral-039832.testnet",
+      "balance": "90",
+      "creature": {
+        "active": true,
+        "parent": "moss.feral-039832.testnet",
+        "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06",
+        "mutation": 1,
+        "born_turn": 1,
+        "nonce": 0,
+        "pending": null,
+        "native_reserve": "0"
+      },
+      "account": {
+        "amount": "60000000000000000000000",
+        "storage_usage": 100,
+        "code_hash": "11111111111111111111111111111111"
+      },
+      "life": {
+        "token_id": "pip.ctrl.feral-039832.testnet",
+        "owner_id": "feral-039832.testnet",
+        "metadata": {
+          "title": "Feral life pip.ctrl.feral-039832.testnet",
+          "description": "Goal and sponsorship permission. No right to drain creature funds.",
+          "media": null,
+          "media_hash": null,
+          "copies": null,
+          "issued_at": null,
+          "expires_at": null,
+          "starts_at": null,
+          "updated_at": null,
+          "extra": "{\"actor\":\"pip.ctrl.feral-039832.testnet\",\"parent\":\"moss.feral-039832.testnet\",\"strategy_hash\":\"b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06\"}",
+          "reference": null,
+          "reference_hash": null
+        },
+        "approved_account_ids": null
+      }
+    }
+  ],
+  "births": {
+    "pip.ctrl.feral-039832.testnet": {
+      "parent": "moss.feral-039832.testnet",
+      "child": "pip.ctrl.feral-039832.testnet",
+      "nonce": 1,
+      "native": "60000000000000000000000",
+      "strategy_hash": "b6c3a025eda13d83525dcafa6ab2ba3c0b14ee9e878d134211cbf243f94e1a06",
+      "mutation": 1,
+      "state": "complete"
+    }
+  },
+  "jobs": {
+    "child-first": {
+      "demand": 1,
+      "amount": "90",
+      "expiry_turn": 4,
+      "requirements_hash": "51513d6f780e21d9db90b9a64b749bfe0e3f0e3c5e96ef53477f5ffd82f7da23",
+      "claimant": null,
+      "output_hash": null,
+      "paid": false,
+      "agreed_price": null
+    },
+    "short-v0": {
+      "demand": 0,
+      "amount": "40",
+      "expiry_turn": 3,
+      "requirements_hash": "983b8a22da5524ffc5bf6bef7514731d1f2d2005d0fac5a1716d0f75c42408e3",
+      "claimant": null,
+      "output_hash": null,
+      "paid": true,
+      "agreed_price": null
+    },
+    "bilingual-v1": {
+      "demand": 1,
+      "amount": "90",
+      "expiry_turn": 4,
+      "requirements_hash": "51513d6f780e21d9db90b9a64b749bfe0e3f0e3c5e96ef53477f5ffd82f7da23",
+      "claimant": "moss.feral-039832.testnet",
+      "output_hash": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5",
+      "paid": true,
+      "agreed_price": "90"
+    }
+  },
+  "bids": {
+    "child-first": {
+      "moss.feral-039832.testnet": null,
+      "echo.feral-039832.testnet": null,
+      "ash.feral-039832.testnet": null,
+      "pip.ctrl.feral-039832.testnet": "80"
+    },
+    "short-v0": {
+      "moss.feral-039832.testnet": null,
+      "echo.feral-039832.testnet": null,
+      "ash.feral-039832.testnet": "40",
+      "pip.ctrl.feral-039832.testnet": null
+    },
+    "bilingual-v1": {
+      "moss.feral-039832.testnet": "90",
+      "echo.feral-039832.testnet": null,
+      "ash.feral-039832.testnet": null,
+      "pip.ctrl.feral-039832.testnet": null
+    }
+  },
+  "txs": [
+    {
+      "hash": "5x5KzkB1GAExJdijsqHzMJjjAu2BQxaZVFj2NzNNkLP1",
+      "label": "create-controller",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "D8JkucyTy3HrW64zqFkKL6CerZzFZhX2uSKqQRW7c9dx"
+    },
+    {
+      "hash": "913kMBrX2SQRS4dvyG6X6ccX52bLDA1fqyQv3i4E69LQ",
+      "label": "deploy-controller",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "3KbVM4pdKoZit5N6SNxxgSyHFLrm9ieJRCmCGLPRvAn2"
+    },
+    {
+      "hash": "6ZZDiiMMqAEqwfWZYvypY7P2by77og2p3rMroyynUvFE",
+      "label": "create-moss-account",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "5UBV35x6BVNNdf5JS7GMFjrkWDJ7FhRNmZET4xhSYVB3"
+    },
+    {
+      "hash": "6Wz8bEm7EnbFG7X7Hoi2ZxGxwd96fg9ptWKvmCz6iEwH",
+      "label": "create-echo-account",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "D8djB61HxY4UeXwX7uGrG2oHVc3yTcQ5ShBtxGGUhP3G"
+    },
+    {
+      "hash": "G6xUcPaMXVh1reuzdP5nL1CyP88piJQYQnSabtzT4chR",
+      "label": "create-ash-account",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "6WTrmK86Xv99YjA7C7rmAUHyotNg7pmRf2Pkvooa9Hxj"
+    },
+    {
+      "hash": "Bpau9a8naNbMZLruzrMUaSiSHTy97pojZDvfUEaRSqUD",
+      "label": "register-moss",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "5BVYoL44MmR7JdzJfcaGtkwGyoWmd8PeTxNvdLrCvMGQ"
+    },
+    {
+      "hash": "UuJF1a5rC2jQoaBnX23dPEouSC59rjpUwAakynNYKgZ",
+      "label": "register-echo",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "2pRcDnG2MYQbV9mZoYy7jRtyfm1no8yn2ZcoupbeU7JF"
+    },
+    {
+      "hash": "4tJ4iGeiMvzag4XZo5avabRfxefNBkXxzaFowQtQP2MJ",
+      "label": "register-ash",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "8qE31p4SA1XfpC9TbdM7hktA97rYGDMa5KoHwgcXGZbX"
+    },
+    {
+      "hash": "65Ns5r2ejQydVKFv1P7QCsR2wWrQ3TYjyEaCfCHufvZ7",
+      "label": "create-old-job",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "BkE3RgNyrBSBaJXqfm67fpsT81U8UqfhmwTehFEcedcP"
+    },
+    {
+      "hash": "DhE57JAk68VzhFQ3oF7NvMQDEJkFC77ny6nMeo4gJR2P",
+      "label": "old-short-bid",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "JAiXqsAxx3o34SSPgGyjhyWppFj2UZUaFigzST1FpEZx"
+    },
+    {
+      "hash": "HTMJvkEfbFJqPVHbAu4UHUsJxvXPcexxGGyDDEoiqioV",
+      "label": "demand-shock",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "9tkJjCMUTNaA6JhMyLadqgYceh1c4mnuRVkmTXxZ98Um"
+    },
+    {
+      "hash": "Bnhp46dtTXPmPcLUK4G8fKtE6w6WqunnVUq8nKpcJc5",
+      "label": "cancel-old-job",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "Au6q5CsnyrvzADt4q1WZsrnCYwRptgpQ6T1ZxmnHpp75"
+    },
+    {
+      "hash": "3g6q5jY88YuuvtbwWvCNSv7uvBRBTZXyBxi4e1tNJ7GD",
+      "label": "death-tick",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "ZmZHjFr8YZeHardLEoYv9PgAZ3Vaty9piwMZiiMSqfP"
+    },
+    {
+      "hash": "DVoUxvnNsea2y5mhzWbhhS13TyYEt7gwonnpbqbeAGQ5",
+      "label": "refused-post-death-spend",
+      "ok": false,
+      "failure": "{\"ActionError\":{\"index\":0,\"kind\":{\"FunctionCallError\":{\"ExecutionError\":\"Smart contract panicked: extinct\"}}}}",
+      "failedReceipts": 1,
+      "final": "FINAL",
+      "block_hash": "4KYJWQxLeEFcMa5tF8SxTPbWjEUHEhSe6eLCkT5mJY4U"
+    },
+    {
+      "hash": "EhUGWixagdkTvusrdrkVQhkK6FD8m48YnjDDE9efsE2D",
+      "label": "create-card-job",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "HYeE3K5eMqif63U4e593RW5dqZjvjepKhX1fVs4p1KU5"
+    },
+    {
+      "hash": "JWgjUCmQ7Eb5igHyEWpeW136jstkHBw5TrmPATsebxU",
+      "label": "paid-collaboration",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "2sFm2swpbYmCqwrCghoHMfvNxMBYiihBS63mecaf2Uyd"
+    },
+    {
+      "hash": "4fKtHSPKzu2s9J5kMY1nMbDhZAEYztask7hkEJSja3Ve",
+      "label": "parent-bid",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "8q4b4XN521huNoa8G3YHdfZxFgrM5NM9U9yDkjpsNod3"
+    },
+    {
+      "hash": "5bf8W3MhM1yV5VHUTBzm5kQFsg5sudNViiMKTff57j2T",
+      "label": "claim-card-job",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "9vkGjykLa3pJZSzVTSQmCnFhU5wSPZQ4xTFZsxuSxh35"
+    },
+    {
+      "hash": "CNbMKFQVGuEWFvEgV8sDF1jMzLYkhv1HbDokBN7Wd2Mq",
+      "label": "paid-job",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "GkSNBaDpjrY7rePLje8oEpn4ddmrU6XLaHjf7qhM6vt5"
+    },
+    {
+      "hash": "CspBKFjTTWCDd6PuCVqUGk1oquayXEtYf6vsagyryVt3",
+      "label": "lineage-goal",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "CMcTzDa97LTJBpQRrRTGqymJ81hhh1QBwXMXB4GeqQ2Q"
+    },
+    {
+      "hash": "9JaZwJ1Hd8JYGgsZP41c9PJPbafJR9uGqcamRDcHAtAL",
+      "label": "funded-child-account-creation",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "HbpdrqvXUEZP1j6UPSZgvjmBKFh6XzjVM5vwHXVXmn97"
+    },
+    {
+      "hash": "7tcYMuzRa11b2ovG6K7uVDMNGaybkYNoX53mM8JYyu1M",
+      "label": "second-upkeep",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "9LHAhGtHFZ1bUxTAU9X5XCGD3bncVTtLVuKoB2494eYD"
+    },
+    {
+      "hash": "Vic3gZxC4kDbMYnnYg4TeRUf63Dsqn74GxKXoxSCKsV",
+      "label": "create-child-job",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "ATJYgCACfeyyB2VWezPrHsz2m1gK2VRCvH2DurxiasLh"
+    },
+    {
+      "hash": "C3xYu9EH3qQVzX5MYoTDeqLRoDtGEgY8EtFBTwYFh5ar",
+      "label": "child-first-bid",
+      "ok": true,
+      "failure": null,
+      "failedReceipts": 0,
+      "final": "FINAL",
+      "block_hash": "AAgsWBqFGGhvXhguysgnUxjtCHHM1FhSVQL4K5fWNPSz"
+    }
+  ],
+  "tool": {
+    "actor": "moss.feral-039832.testnet",
+    "voucher": {
+      "campaign": "9bd989043e49341bf1d68edc4c9c425b6044da5292695a06ce576f3c2857f49b",
+      "job": "04753058e018d61a9466e8ffdc3e9fc1c31b4f0b7095f81957cce84948803d1f",
+      "creature": "1100ecce426fb996263f42f5d47ab2aed96dbc8662b059a9199170bfd796ebae",
+      "recipient": "b06d3d94a063b90baec90c7380a55d34ae10a32d",
+      "token": "791e035df4c255d4b0539ca80ffaebe3a623603e",
+      "amount": "7",
+      "output_hash": "76a65234714c67b4503c7670e5f575c582d3acdfdd1d22f866a45963318357e5",
+      "nonce": 0,
+      "expiry": 1794212212
+    },
+    "digest": "702f23a395a10a625ffc9b245b8a0c72126d97df1ea7061aaaa3f146f67a4cbd",
+    "state": "signature-returned",
+    "signature": "{\"scheme\":\"Secp256k1\",\"big_r\":{\"affine_point\":\"02d69b599401809b9dde92704b786b0d33bc7eda0ce45160f84824ec3c14a60600\"},\"s\":{\"scalar\":\"0f62633a915d8c70ce053dcbff9c9ec4b6e323abded7ab21a9d262c932404482\"},\"recovery_id\":0}"
+  }
+}
