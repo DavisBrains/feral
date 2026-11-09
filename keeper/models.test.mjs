@@ -55,7 +55,7 @@ test('chain falls back to local Qwen and says why, then to the fixed policy', as
   const life = { id: 'moss.x', balance: '100', life: { name: 'moss', active: true, goal: 0, pending: false, genome: { job: 1, price: 4, floor: 4 } } };
   const snap = { season: { turn: 1, demand: 1, demand_version: 1, target_turns: 8 }, lives: [life], jobs: [{ id: 'j1', kind: 1, state: 'open', demand_version: 1, expiry_turn: 3, reward: '60', bids: [] }] };
   const d = await decide(life, snap, chain);
-  assert.equal(d.mode, 'live-model'); assert.equal(d.provider, 'local-qwen'); assert.equal(d.provider_label, 'Local Qwen fallback');
+  assert.equal(d.mode, 'live-model'); assert.equal(d.provider, 'local-qwen'); assert.equal(d.provider_label, 'Local Qwen');
   assert.equal(d.skipped[0].provider, 'near-ai'); assert.match(d.skipped[0].reason, /no credits/);
   const t = await translate('Hello.', chain); assert.equal(t.provider, 'local-qwen'); assert.equal(t.es, 'Hola.');
   localUp = false;

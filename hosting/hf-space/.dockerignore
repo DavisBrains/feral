@@ -1,0 +1,5 @@
+keeper/node_modules
+keeper/data
+**/*.test.mjs
+**/__pycache__
+.git

@@ -1,6 +1,6 @@
 // Model providers for creature decisions and translations, tried in order:
-// NEAR AI Cloud first, the local Qwen server as a labelled fallback, and the
-// fixed policy (in policy.mjs) last. Each provider has a breaker so a billing,
+// NEAR AI Cloud first when a key is set, the local Qwen server next (main brain
+// on the Hugging Face Space), and the fixed policy (in policy.mjs) last. Each provider has a breaker so a billing,
 // auth or outage error stops calls for a while instead of hammering the API.
 // The NEAR AI key is read from the environment only. It is never logged,
 // returned, or written to the journal.
@@ -115,9 +115,9 @@ export function localAdapter(url, fetchImpl = fetch, now = () => Date.now()) {
     catch (e) { breaker.trip('other', String(e.message).slice(0, 120)); breaker.trip('other', String(e.message).slice(0, 120)); throw new ProviderError('other', String(e.message).slice(0, 120)); }
   };
   return {
-    provider: 'local-qwen', label: 'Local Qwen fallback', url,
+    provider: 'local-qwen', label: 'Local Qwen', url,
     get model() { return name; },
-    status() { return { provider: 'local-qwen', label: 'Local Qwen fallback', model: name, ready: !breaker.open(), confirmed: true, blocked: breaker.status() }; },
+    status() { return { provider: 'local-qwen', label: 'Local Qwen', model: name, ready: !breaker.open(), confirmed: true, blocked: breaker.status() }; },
     async probe() { if (breaker.open()) return; try { const h = await inner.health(); if (h?.model) name = h.model; } catch (e) { breaker.trip('other', 'not running'); breaker.trip('other', 'not running'); } },
     choose: guard(inner.choose), translate: guard(inner.translate),
   };

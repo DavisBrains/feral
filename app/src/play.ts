@@ -25,10 +25,10 @@ const put = (el: HTMLElement | null, html: string) => { if (el && (el as any)._h
 export function startPlay(host: PlayHost, api: string) {
   const vid = visitorId();
   let st: any = null, prev: LiveSnap | null = null, idx = 0, pending: string | null = null, timer: any, err: string | null = null, limitedUntil = 0;
-  // Render free sleeps after ~15 min idle and takes about a minute to wake. Keep
-  // retrying with a friendly message, then fall back to the recorded replay.
+  // Hugging Face free CPU Spaces sleep after ~48h idle. Cold start loads the
+  // local model and can take a few minutes. Keep retrying, then fall back to replay.
   let wakeStarted = 0, wakeFails = 0;
-  const WAKE_MS = 90_000;
+  const WAKE_MS = 300_000;
   const ui = { feedPick: '', sponsorPick: '', sponsorAmt: 20, demandPick: -1, jobLine: 0, jobReward: 60, jobTurns: 2, goalPick: '', goal: 0, sheet: '' as Sheet };
   const modeEl = document.getElementById('pl-mode')!;
   const banner = document.createElement('div'); banner.id = 'pl-banner'; banner.className = 'pl-banner';
@@ -40,7 +40,7 @@ export function startPlay(host: PlayHost, api: string) {
   async function get() {
     if (!api) throw new Error('keeper url missing');
     const ctrl = new AbortController();
-    // Cold starts on Render free can hold the first request for about a minute.
+    // Cold starts on a sleeping Hugging Face Space can hold the first request for a few minutes.
     const wait = wakeStarted && !st ? WAKE_MS : 20_000;
     const to = setTimeout(() => ctrl.abort(), wait);
     try {
@@ -115,7 +115,7 @@ export function startPlay(host: PlayHost, api: string) {
 
   const mname = (m: any) => String(m ?? '').replace(/^.*\//, '').replace('-Instruct', '');
   // who actually answered: NEAR AI Cloud, the local Qwen fallback, or neither
-  const via = (x: any) => x?.provider === 'near-ai' ? `NEAR AI Cloud · ${mname(x.model)}` : x?.provider === 'local-qwen' || (x?.mode === 'live-model' && !x?.provider) ? `Local Qwen fallback · ${mname(x.model)}` : 'Fixed policy';
+  const via = (x: any) => x?.provider === 'near-ai' ? `NEAR AI Cloud · ${mname(x.model)}` : x?.provider === 'local-qwen' || (x?.mode === 'live-model' && !x?.provider) ? `Local Qwen · ${mname(x.model)}` : 'Fixed policy';
   const skippedNote = (x: any) => x?.skipped?.length ? ` · ${x.skipped.map((k: any) => `${k.label} ${k.kind === 'billing' ? 'out of credits' : k.kind === 'rate' ? 'rate limited' : 'unavailable'}`).join(', ')}` : '';
   function answeredBy(turn = lastTurn()) {
     const rows = seasonLog().filter((e: any) => e.kind === 'decision' && e.turn === turn).map((e: any) => e.translation ?? e.decision).filter((x: any) => x && x.mode !== 'only-legal-action');
@@ -147,7 +147,7 @@ export function startPlay(host: PlayHost, api: string) {
       if (!api) {
         put(hero, `<div class="f-panel f-empty"><img src="${rootCorner}" alt=""><b>Live keeper not linked yet</b><span>This build has no keeper address, so only the recorded proof run is available.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
       } else if (waking) {
-        put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Waking the terrarium</b><span>The free keeper sleeps when quiet and takes about a minute to wake. Hang on, or watch the recorded proof run.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
+        put(hero, `<div class="f-panel f-empty"><span class="f-seeds"><i></i><i></i><i></i></span><b>Waking the terrarium</b><span>The free keeper sleeps after a long quiet stretch. Cold start can take a few minutes while the model loads. Hang on, or watch the recorded proof run.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
       } else {
         put(hero, `<div class="f-panel f-empty err"><img src="${rootCorner}" alt=""><b>The keeper went quiet</b><span>Live play needs the keeper service. The recorded proof run still works.</span><button class="f-btn f-btn--ghost" data-mode="replay">${ico('replay', 'ico-s')}Watch the proof run</button></div>`);
       }
@@ -159,7 +159,7 @@ export function startPlay(host: PlayHost, api: string) {
     const nearDown = near && !near.ready ? ` NEAR AI Cloud is ${near.blocked?.kind === 'billing' ? 'out of credits' : near.blocked?.kind === 'rate' ? 'rate limited' : 'unavailable'} for now.` : '';
     const modelLine = m.mode !== 'live-model' ? `<b>Fixed policy.</b>${nearDown} No model is ready, so creatures follow their written policy. Every decision says so.`
       : m.provider === 'near-ai' ? `Creatures decide with ${esc(mname(m.model))} on NEAR AI Cloud${near?.confirmed ? '' : ', tried first each turn'}. Each note says which model answered.`
-      : `<b>Local Qwen fallback.</b>${nearDown} Creatures decide with ${esc(mname(m.model))} on the keeper. Each note says which model answered.`;
+      : `<b>Local Qwen.</b>${nearDown} Creatures decide with ${esc(mname(m.model))} on the keeper. Each note says which model answered.`;
     put(banner, `<div class="f-banner is-live"><span class="f-live"></span><span><b>Live season${s ? ' ' + s.id : ''}.</b> Your moves are sent to NEAR testnet for real. ${modelLine}</span></div>`);
     const active = s && s.status === 'live' && !s.closed, you = st.you, pilot = you.pilot && active;
     put(lede, s ? `You get ${nf(s.budget)} MUNCH for the whole season. Spend it on meals, sponsors and jobs. The creatures decide the rest.` : 'Start a live season to play. Every move is a NEAR testnet transaction.');

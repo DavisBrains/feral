@@ -19,10 +19,10 @@ const ORIGIN = process.env.FERAL_ALLOW_ORIGIN || '';
 const LEASE_MS = Number(process.env.FERAL_LEASE_MS || 15 * 60 * 1000);
 const SEASONS_PER_HOUR = Number(process.env.FERAL_SEASONS_PER_HOUR || 6);
 const MIN_ALLOWANCE = 20_000_000_000_000_000_000_000n; // 0.02 NEAR of gas left on the key
-// Model order for a small host (Render free): NEAR AI Cloud if a key is set, then
-// the labelled fixed policy. The local Qwen model only loads when FERAL_LOCAL_MODEL
-// is set (it needs about 4 GB and will not fit on a 512 MB free instance).
-// The NEAR AI key comes from NEAR_AI_KEY, or the env file on this box. Never logged.
+// Model order: NEAR AI Cloud if a key is set, then local Qwen when
+// FERAL_LOCAL_MODEL is set (Hugging Face Space free CPU turns this on), then the
+// labelled fixed policy. The NEAR AI key comes from NEAR_AI_KEY, or the env file
+// on this box. Never logged.
 const jsonState = f => ({ load: () => existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null, save: j => { mkdirSync(path.dirname(f), { recursive: true }); writeFileSync(f, JSON.stringify(j)); } });
 loadEnvFile(process.env.FERAL_NEAR_AI_ENV_FILE ?? '/home/box/.secrets/near-ai.env');
 const model = modelChain([
@@ -143,7 +143,7 @@ function serveStatic(req, res, url) {
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try {
-    // Render and other hosts probe this. No secrets, no chain calls.
+    // Hosts probe this. No secrets, no chain calls.
     if (url.pathname === '/healthz') { res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store', ...cors() }); return res.end('ok'); }
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
     serveStatic(req, res, url);
